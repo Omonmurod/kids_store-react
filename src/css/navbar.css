@@ -58,8 +58,8 @@
   transition: all 0.2s;
 }
 
-.navbar .hover-line .underline {
+/* .navbar .hover-line .underline {
   color: orange;
   transition-delay: 0.2s;
   border-bottom: solid 2px orange;
-}
+} */
