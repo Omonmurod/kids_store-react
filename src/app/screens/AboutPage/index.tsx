@@ -252,7 +252,7 @@ export function AboutPage() {
                         href="http://localhost:3000/product"
                         style={{ textDecoration: "none" }}
                       >
-                        <div style={{ marginLeft: "20px", marginTop: "35px" }}>
+                        <div style={{ marginLeft: "20px", marginTop: "55px" }}>
                           <span
                             style={{
                               color: "#fd0200",
@@ -279,17 +279,18 @@ export function AboutPage() {
                       </div>
                     </Box>
                   </Stack>
-                  <Stack display={"flex"} style={{}}>
+                  <Stack display={"flex"}>
                     <Stack
                       flexDirection={"row"}
                       style={{ marginTop: "30px" }}
                       className="hover"
+                      justifyContent={""}
                     >
                       <Box>
                         <a href="http://localhost:3000/product">
                           <img
                             src="/icons/about3.png"
-                            style={{ width: "200px" }}
+                            style={{ width: "210px", marginLeft: "10px" }}
                           />
                         </a>
                       </Box>
@@ -297,7 +298,7 @@ export function AboutPage() {
                         <a href="http://localhost:3000/product">
                           <img
                             src="/icons/about5.png"
-                            style={{ width: "200px", marginLeft: "20px" }}
+                            style={{ width: "210px", marginLeft: "40px" }}
                           />
                         </a>
                       </Box>
@@ -305,7 +306,7 @@ export function AboutPage() {
                         <a href="http://localhost:3000/product">
                           <img
                             src="/icons/about4.png"
-                            style={{ width: "200px", marginLeft: "20px" }}
+                            style={{ width: "210px", marginLeft: "40px" }}
                           />
                         </a>
                       </Box>
@@ -314,7 +315,7 @@ export function AboutPage() {
                           <figure>
                             <img
                               src="/icons/about6.png"
-                              style={{ width: "200px", marginLeft: "20px" }}
+                              style={{ width: "210px", marginLeft: "px" }}
                             />
                           </figure>
                         </a>
@@ -323,7 +324,7 @@ export function AboutPage() {
                         <a href="http://localhost:3000/product">
                           <img
                             src="/icons/about7.png"
-                            style={{ width: "200px", marginLeft: "20px" }}
+                            style={{ width: "210px", marginLeft: "0px" }}
                           />
                         </a>
                       </Box>
