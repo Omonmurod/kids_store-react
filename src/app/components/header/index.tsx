@@ -28,7 +28,7 @@ export function Navbar() {
               >
                 Shop Now
                 <img
-                  src="/product/shop_now.png"
+                  src="/icons/shop_now.png"
                   style={{ marginLeft: "4px", width: "15px", height: "15px" }}
                 />
               </span>
@@ -58,7 +58,7 @@ export function Navbar() {
           <Stack flexDirection={"row"} justifyContent={"space-between"}>
             <Box>
               <img
-                src="/product/cropped-logo.png"
+                src="/icons/cropped-logo.png"
                 style={{
                   width: "130px",
                   height: "68px",
@@ -101,8 +101,8 @@ export function Navbar() {
               </Box>
 
               <Box className="hover-line">
-                <NavLink to="/help" activeClassName="underline">
-                  Help
+                <NavLink to="/about" activeClassName="underline">
+                  About Us
                 </NavLink>
               </Box>
               <Box className="hover-line" flexDirection={"row"}>
@@ -124,7 +124,7 @@ export function Navbar() {
                 <Box flexDirection={"row"}>
                 <Button
                   variant="contained"
-                  style={{ color: "#ffffff", background: "#ffa600" }}
+                  style={{ borderRadius: "10px", color: "#ffffff", background: "#ffa600" }}
                   //onClick={props.handleLoginOpen}
                 >
                   LogIn
@@ -133,7 +133,7 @@ export function Navbar() {
                 <Box flexDirection={"row"}>
                 <Button
                   variant="contained"
-                  style={{ color: "#ffffff", background: "#ffa600" }}
+                  style={{ borderRadius: "10px", color: "#ffffff", background: "#ffa600" }}
                   //onClick={props.handleLoginOpen}
                 >
                   REGISTER

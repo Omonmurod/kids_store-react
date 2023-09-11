@@ -1,0 +1,149 @@
+.help_page {
+  width: 100%;
+  display: inline-block;
+  padding-top: 120px;
+  background: url("/public/icons/bg_shapes1.png") lightgray 50% / cover
+    no-repeat;
+  background: url("/public/icons/bg_shapes2.png"),
+    url("/public/icons/bg_shapes1.png");
+  background-size: cover;
+}
+
+.help_page .help_menu .tab_txt {
+  font-family: "Arial";
+  color: #423127;
+  font-size: 16px;
+  font-weight: bold;
+  font-style: normal;
+}
+
+.help_page .help_main_content {
+  border-top: 2px solid orange;
+  margin-top: 10px;
+}
+
+.help_page .help_main_content .theRules_box1 {
+  width: 1224px;
+  height: 514px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 25px;
+  background: #e7f6dd;
+  margin-top: 15px;
+  padding: 25px;
+}
+
+.help_page .help_main_content .theRules_box1 .image-with-shadow {
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.help_page .help_main_content .theRules_box2 {
+  width: 1320px;
+  height: 580px;
+  margin-top: 25px;
+  padding: 25px;
+  background: url("/public/icons/about2.png");
+  background-size: cover;
+}
+
+.hover figure img {
+	-webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.hover01 figure:hover img {
+	-webkit-transform: scale(1.3);
+	transform: scale(1.3);
+}
+
+.help_page .help_main_content .theRules_box3 {
+  width: 920px;
+  height: 280px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 25px;
+  background: #f6f7ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 155px;
+  margin-right: 150px;
+}
+
+.help_page .help_main_content .admin_letter_box {
+  position: relative;
+  width: 612px;
+  height: 612px;
+  background-image: linear-gradient(#ffffff, #f4f6f8);
+  border: 1px solid #ededed;
+  box-shadow: 0px 20px 30px rgba(25, 25, 46, 0.04);
+  border-radius: 14px;
+}
+
+.help_page .help_main_content .admin_letter_container {
+  width: 550px;
+  margin: 0 auto;
+}
+
+.help_page .help_main_content .admin_letter_box .admin_letter_frame {
+  margin-top: 10px;
+  margin-left: 28px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.help_page .help_main_content .admin_letter_box .admin_letter_frame p {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 26px;
+  color: #4f547b;
+}
+
+.help_page .help_main_content .admin_letter_box .admin_letter_frame {
+  margin-top: 40px;
+  font-family: "Arial";
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.help_page
+  .help_main_content
+  .admin_letter_box
+  .admin_letter_frame
+  .admin_intro {
+  margin-top: 40px;
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.help_page .help_main_content .admin_letter_frame .admin_input_box {
+  display: flex;
+  flex-direction: column;
+}
+
+.help_page .help_main_content .admin_letter_frame .admin_input_box label {
+  margin-bottom: 6px;
+  font-size: 16px;
+}
+
+.help_page .help_main_content .admin_letter_frame .admin_input_box input,
+.help_page .help_main_content .admin_letter_frame .admin_input_box textarea {
+  width: 550px;
+  height: 50px;
+  background-image: linear-gradient(#ffe3c2, #f0d6b7);
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  padding-left: 20px;
+  font-size: 18px;
+}
+
+.help_page .help_main_content .admin_letter_frame .admin_input_box textarea {
+  width: 550px;
+  height: 150px;
+  padding-top: 20px;
+  position: relative;
+}

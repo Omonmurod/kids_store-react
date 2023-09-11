@@ -14,7 +14,10 @@ export function Footer() {
           >
             <Stack className="info" flexDirection={"column"}>
               <Box>
-                <img src={"/product/cropped-logo.png"} />
+                <img
+                  src={"/icons/cropped-logo.png"}
+                  style={{ width: "150px" }}
+                />
               </Box>
               <Box className="text">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -26,10 +29,10 @@ export function Footer() {
                   <img src={"/icons/facebook.svg"} />
                 </Box>
                 <Box>
-                  <img src={"/icons/twitter.svg"} />
+                  <img src={"/icons/instagram.svg"} />
                 </Box>
                 <Box>
-                  <img src={"/icons/instagram.svg"} />
+                  <img src={"/icons/twitter.svg"} />
                 </Box>
                 <Box>
                   <img src={"/icons/youtube.svg"} />
@@ -83,8 +86,8 @@ export function Footer() {
                   </NavLink>
                 </Box>
                 <Box className="hover-line">
-                  <NavLink to="/help" activeClassName="underline">
-                    Help
+                  <NavLink to="/about" activeClassName="underline">
+                    About Us
                   </NavLink>
                 </Box>
               </Box>
@@ -99,6 +102,16 @@ export function Footer() {
               </Stack>
               <Stack className="details">
                 <Box>E. kidsworld@kids.com</Box>
+              </Stack>
+              <Stack flexDirection={"row"} className="baby_icons">
+                <Box className="icons">
+                  <img src="/icons/huggies.png" style={{ height: "60px" }} />{" "}
+                  <img src="/icons/babybasket.png" style={{ height: "60px" }} />
+                </Box>
+                <Box className="icons">
+                  <img src="/icons/pampers.png" style={{ height: "60px" }} />{" "}
+                  <img src="/icons/happybaby.png" style={{ height: "60px" }} />
+                </Box>
               </Stack>
             </Stack>
           </Stack>
@@ -136,14 +149,13 @@ export function Footer() {
             className="footer_bottom"
           >
             <Box className="footer_txt">
-              Copyright Papays 2023, All right reserved. <br />
-              Designed by Omonmurod(Jacob)
+              Copyright KidsWorld 2023, All right reserved.
             </Box>
             <Box className="footer_icon" flexDirection={"row"}>
-              <img src="/product/Maestro.png" />
-              <img src="/product/Visa.png" />
-              <img src="/product/MasterCard.png" />
-              <img src="/product/WesternUnion.png" />
+              <img src="/icons/Visa.png" />
+              <img src="/icons/bitcoin.png" style={{ height: "50px" }} />
+              <img src="/icons/MasterCard.png" />
+              <img src="/icons/WesternUnion.png" />
             </Box>
           </Stack>
         </Container>
