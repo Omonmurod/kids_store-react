@@ -4,9 +4,11 @@
   flex-direction: column;
   width: 100%;
   height: 400px;
-  background-image: url("/public/product/bgfooter.png");
-  background: url("/public/product/bgfooter-1.png"), url("/public/product/bgfooter.png");
-  background-size: cover;
+  background-image: url("/public/product/bgfooter.png"), width;
+  background: url("/public/product/bgfooter-1.png"),
+    url("/public/product/bgfooter.png");
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .footer .footer_top {

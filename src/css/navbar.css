@@ -39,7 +39,7 @@
 .navbar .navbar_bottom {
   width: 100%;
   height: 98px;
-  background-color: white ;
+  background-color: white;
 }
 
 .navbar .navbar_bottom .navbar_links {
@@ -74,4 +74,27 @@
   color: orange;
   transition-delay: 0.2s;
   border-bottom: solid 2px orange;
+}
+
+.navbar .shop_now a {
+  text-decoration: none;
+}
+
+.navbar .shop_now a {
+  color: #1876d2;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: all 0.2s;
+
+  font-family: "Arial Rounded MT Bold";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.navbar .shop_now a:hover {
+  color: orange;
+  transition: all 0.2s;
 }

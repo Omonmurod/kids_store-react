@@ -1,4 +1,12 @@
-import { Badge, Box, Button, Container, IconButton, Stack } from "@mui/material";
+import { Widgets } from "@mui/icons-material";
+import {
+  Badge,
+  Box,
+  Button,
+  Container,
+  IconButton,
+  Stack,
+} from "@mui/material";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
@@ -12,32 +20,17 @@ export function Navbar() {
             justifyContent={"space-between"}
             className="navbar_top_txt"
           >
-            <Box>
+            <Box className={"shop_now"}>
               New sale Season - Up to 20%
-              <span
-                style={{
-                  color: "#FF961A",
-                  fontFamily: "Arial",
-                  fontSize: "14px",
-                  fontStyle: "normal",
-                  fontWeight: "900",
-                  lineHeight: "normal",
-                  textTransform: "uppercase",
-                  marginLeft: "10px",
-                }}
-              >
+              <NavLink to="/product" activeClassName="underline">
                 Shop Now
-                <img
-                  src="/icons/shop_now.png"
-                  style={{ marginLeft: "4px", width: "15px", height: "15px" }}
-                />
-              </span>
+              </NavLink>
             </Box>
             <Box>
               Customer Care Services:
               <span
                 style={{
-                  color: "#FF961A",
+                  color: "#1876d2",
                   fontFamily: "Arial",
                   fontSize: "14px",
                   fontStyle: "normal",
@@ -120,20 +113,34 @@ export function Navbar() {
                     />
                   </Badge>
                 </IconButton>
-                </Box>
-                <Box flexDirection={"row"}>
+              </Box>
+              <Box flexDirection={"row"}>
                 <Button
                   variant="contained"
-                  style={{ borderRadius: "10px", color: "#ffffff", background: "#ffa600" }}
+                  style={{
+                    borderRadius: "30px",
+                    color: "#ffffff",
+                    background: "#ffa600",
+                    fontFamily: "Nunito",
+                    height: "50px",
+                    width: "100px"
+                  }}
                   //onClick={props.handleLoginOpen}
                 >
                   LogIn
                 </Button>
-                </Box>
-                <Box flexDirection={"row"}>
+              </Box>
+              <Box flexDirection={"row"}>
                 <Button
                   variant="contained"
-                  style={{ borderRadius: "10px", color: "#ffffff", background: "#ffa600" }}
+                  style={{
+                    borderRadius: "30px",
+                    color: "#ffffff",
+                    background: "#ffa600",
+                    fontFamily: "Nunito",
+                    height: "50px",
+                    width: "130px"
+                  }}
                   //onClick={props.handleLoginOpen}
                 >
                   REGISTER
