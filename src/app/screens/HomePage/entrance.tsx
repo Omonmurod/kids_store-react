@@ -31,6 +31,8 @@ export function Entrance() {
                 height: "55px",
                 marginTop: "40px",
                 marginLeft: "60px",
+                fontWeight: "800",
+                fontSize: "16px"
               }}
             >
               <NavLink to="/product" style={{ textDecoration: "none", color: "white", cursor: "pointer"}}>

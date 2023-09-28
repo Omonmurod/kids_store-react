@@ -30,14 +30,14 @@ export function Navbar() {
               Customer Care Services:
               <span
                 style={{
-                  color: "#1876d2",
+                  color: "#1976d2",
                   fontFamily: "Arial",
                   fontSize: "14px",
                   fontStyle: "normal",
                   fontWeight: "900",
                   lineHeight: "normal",
                   textTransform: "uppercase",
-                  marginLeft: "10px",
+                  marginLeft: "12px",
                 }}
               >
                 +8210 1234 5678
@@ -106,10 +106,10 @@ export function Navbar() {
                   aria-haspopup="true"
                   aria-expanded={undefined}
                 >
-                  <Badge badgeContent={5} color="secondary">
+                  <Badge badgeContent={5} color="primary">
                     <img
                       src="/icons/shopping_cart.svg"
-                      style={{ width: "18px" }}
+                      style={{ width: "20px" }}
                     />
                   </Badge>
                 </IconButton>
@@ -123,7 +123,9 @@ export function Navbar() {
                     background: "#ffa600",
                     fontFamily: "Nunito",
                     height: "50px",
-                    width: "100px"
+                    width: "100px",
+                    fontWeight: "800",
+                    fontSize: "16px"
                   }}
                   //onClick={props.handleLoginOpen}
                 >
@@ -139,7 +141,9 @@ export function Navbar() {
                     background: "#ffa600",
                     fontFamily: "Nunito",
                     height: "50px",
-                    width: "130px"
+                    width: "130px",
+                    fontWeight: "800",
+                    fontSize: "16px"
                   }}
                   //onClick={props.handleLoginOpen}
                 >

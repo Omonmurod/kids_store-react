@@ -252,7 +252,7 @@ export function AboutPage() {
                         href="http://localhost:3000/product"
                         style={{ textDecoration: "none" }}
                       >
-                        <div style={{ marginLeft: "20px", marginTop: "55px" }}>
+                        <div style={{ marginLeft: "20px", marginTop: "75px" }}>
                           <span
                             style={{
                               color: "#fd0200",
@@ -282,49 +282,79 @@ export function AboutPage() {
                   <Stack display={"flex"}>
                     <Stack
                       flexDirection={"row"}
-                      style={{ marginTop: "30px" }}
-                      className="hover"
+                      style={{ marginTop: "60px" }}
+                      className="img"
                       justifyContent={""}
                     >
-                      <Box>
+                      <Box className="img-icon">
                         <a href="http://localhost:3000/product">
                           <img
+                            className="icon"
                             src="/icons/about3.png"
-                            style={{ width: "210px", marginLeft: "10px" }}
+                            style={{
+                              width: "210px",
+                              marginLeft: "10px",
+                              boxShadow: "5px 5px 10px rgba(0, 0, 0, 0.4)",
+                              borderRadius: "50px",
+                            }}
                           />
                         </a>
                       </Box>
-                      <Box>
+                      <Box className="img-icon">
                         <a href="http://localhost:3000/product">
                           <img
+                            className="icon"
                             src="/icons/about5.png"
-                            style={{ width: "210px", marginLeft: "40px" }}
+                            style={{
+                              width: "210px",
+                              marginLeft: "40px",
+                              boxShadow: "5px 5px 10px rgba(0, 0, 0, 0.4)",
+                              borderRadius: "50px",
+                            }}
                           />
                         </a>
                       </Box>
-                      <Box>
+                      <Box className="img-icon">
                         <a href="http://localhost:3000/product">
                           <img
+                            className="icon"
                             src="/icons/about4.png"
-                            style={{ width: "210px", marginLeft: "40px" }}
+                            style={{
+                              width: "210px",
+                              marginLeft: "40px",
+                              boxShadow: "5px 5px 10px rgba(0, 0, 0, 0.4)",
+                              borderRadius: "50px",
+                            }}
                           />
                         </a>
                       </Box>
-                      <Box>
+                      <Box style={{ marginTop: "-14px"}} className="img-icon">
                         <a href="http://localhost:3000/product">
                           <figure>
                             <img
+                              className="icon"
                               src="/icons/about6.png"
-                              style={{ width: "210px", marginLeft: "px" }}
+                              style={{
+                                width: "205px",
+                                marginLeft: "7px",
+                                boxShadow: "5px 5px 10px rgba(0, 0, 0, 0.4)",
+                                borderRadius: "50px",
+                              }}
                             />
                           </figure>
                         </a>
                       </Box>
-                      <Box>
+                      <Box className="img-icon">
                         <a href="http://localhost:3000/product">
                           <img
+                            className="icon"
                             src="/icons/about7.png"
-                            style={{ width: "210px", marginLeft: "0px" }}
+                            style={{
+                              width: "210px",
+                              marginLeft: "5px",
+                              boxShadow: "5px 5px 10px rgba(0, 0, 0, 0.4)",
+                              borderRadius: "50px",
+                            }}
                           />
                         </a>
                       </Box>
@@ -349,7 +379,7 @@ export function AboutPage() {
                         <div
                           style={{
                             marginLeft: "-95px",
-                            marginTop: "35px",
+                            marginTop: "55px",
                             alignItems: "center",
                             justifyContent: "center",
                           }}
@@ -420,7 +450,7 @@ export function AboutPage() {
                 <Stack
                   className={"theRules_box3"}
                   flexDirection={"row"}
-                  style={{ marginTop: "65px" }}
+                  style={{ marginTop: "125px" }}
                 >
                   <Stack display={"flex"}>
                     <Box
@@ -433,18 +463,27 @@ export function AboutPage() {
                         letterSpacing: "1px",
                       }}
                     >
-                      <div style={{}}>New Born Babies Care</div>
+                      <div
+                        style={{
+                          fontFamily: "Nunito",
+                          color: "#00bbae",
+                          fontWeight: "900",
+                        }}
+                      >
+                        New Born Babies Care
+                      </div>
                     </Box>
                     <Box
                       style={{
-                        color: "#09168a",
-                        fontFamily: "Arial",
-                        fontWeight: "500",
+                        color: "#724D37",
+                        fontFamily: "Nunito",
+                        fontWeight: "700",
                         lineHeight: "normal",
                         fontSize: "18px",
                         letterSpacing: "1px",
                         marginTop: "20px",
-                        width: "500px",
+                        marginRight: "40px",
+                        width: "450px",
                       }}
                     >
                       If you're a first-time parent, put your fears aside and
@@ -465,9 +504,9 @@ export function AboutPage() {
                   </Stack>
                 </Stack>
                 <Stack
-                  className={"theRules_box3"}
+                  className={"theRules_box4"}
                   flexDirection={"row"}
-                  style={{ marginTop: "45px", marginBottom: "20px" }}
+                  style={{ marginTop: "65px", marginBottom: "20px" }}
                 >
                   <Stack>
                     <img
@@ -477,7 +516,7 @@ export function AboutPage() {
                         width: "350px",
                         height: "230px",
                         borderRadius: "40px",
-                        marginLeft: "25px"
+                        marginLeft: "25px",
                       }}
                     />
                   </Stack>
@@ -492,13 +531,22 @@ export function AboutPage() {
                         letterSpacing: "1px",
                       }}
                     >
-                      <div style={{marginLeft: "30px"}}>Happy Moments</div>
+                      <div
+                        style={{
+                          fontFamily: "Nunito",
+                          color: "#FF7E9A",
+                          fontWeight: "900",
+                          marginLeft: "30px",
+                        }}
+                      >
+                        Happy Moments
+                      </div>
                     </Box>
                     <Box
                       style={{
-                        color: "#09168a",
-                        fontFamily: "Arial",
-                        fontWeight: "500",
+                        color: "#724D37",
+                        fontFamily: "Nunito",
+                        fontWeight: "700",
                         lineHeight: "normal",
                         fontSize: "18px",
                         letterSpacing: "1px",
@@ -507,9 +555,11 @@ export function AboutPage() {
                         width: "500px",
                       }}
                     >
-                      Birthdays are for loved ones, friends, and family members
-                      who are still living. A celebration of life, on the other
-                      hand.
+                      <p>
+                        Birthdays are for loved ones, friends, and family
+                        members who are still living. A celebration of life,
+                        <br /> on the other hand.
+                      </p>
                     </Box>
                   </Stack>
                 </Stack>
@@ -519,7 +569,7 @@ export function AboutPage() {
                   <Stack className={"admin_letter_container"}>
                     <Box className={"admin_letter_frame"}>
                       <span>Contact Us</span>
-                      <p className="admin_intro">
+                      <p className="admin_intro" style={{ marginTop: "30px"}}>
                         Assalomu alaykum!
                         <br /> Please, fill the following blank to contact with
                         our admin!
@@ -581,9 +631,9 @@ export function AboutPage() {
                       style={{
                         marginLeft: "90px",
                         marginBottom: "20px",
-                        fontFamily: "Arial",
-                        fontWeight: "bold",
-                        fontSize: "28px",
+                        fontFamily: "Nunito",
+                        fontWeight: "850",
+                        fontSize: "38px",
                       }}
                     >
                       Our Location

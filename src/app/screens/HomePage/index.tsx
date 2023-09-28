@@ -8,16 +8,18 @@ import { PopularProducts } from "./popularProducts";
 import { OurOffers } from "./ourOffers";
 import { Articles } from "./articles";
 import "../../../css/home.css";
+import { Advertisements } from "./advertisements";
 
 export function HomePage() {
   return (
     <div className="homepage">
       <Entrance />
-      <Events />
-      <TopBrands />
       <Statistics />
+      <TopBrands />
       <PopularProducts />
+      <Advertisements />
       <OurOffers />
+      <Events />
       <Articles />
     </div>
   );

@@ -28,7 +28,7 @@
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
   background: #e7f6dd;
-  margin-top: 15px;
+  margin-top: 45px;
   padding: 25px;
 }
 
@@ -44,23 +44,33 @@
   background-size: cover;
 }
 
-.hover figure img {
-	-webkit-transform: scale(1);
-	transform: scale(1);
+.help_page .help_main_content .theRules_box2 .img .icon:hover {
+	transform: scale(1.2);
 	-webkit-transition: .3s ease-in-out;
 	transition: .3s ease-in-out;
+  -webkit-transform: scale(1.3);
 }
-.hover01 figure:hover img {
-	-webkit-transform: scale(1.3);
-	transform: scale(1.3);
-}
-
 .help_page .help_main_content .theRules_box3 {
   width: 920px;
   height: 280px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 10px 15px rgba(154, 235, 228, 0.25);
   border-radius: 25px;
-  background: #f6f7ff;
+  background: #f6fffe;
+  border: 3px dashed #a7eee9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 155px;
+  margin-right: 150px;
+}
+
+.help_page .help_main_content .theRules_box4 {
+  width: 920px;
+  height: 280px;
+  box-shadow: 0px 0px 10px 15px rgba(223, 178, 178, 0.25);
+  border-radius: 25px;
+  border: 3px dashed #ffd1db;
+  background: #fff2f5;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -72,10 +82,11 @@
   position: relative;
   width: 612px;
   height: 612px;
-  background-image: linear-gradient(#ffffff, #f4f6f8);
-  border: 1px solid #ededed;
-  box-shadow: 0px 20px 30px rgba(25, 25, 46, 0.04);
+  background: url("/public/icons/letter_box.png");
+  border: 3px dashed #bdc3f2;
+  box-shadow: 10px 0px 15px 1px rgba(0, 0, 0, 0.3);
   border-radius: 14px;
+  margin-top: 35px;
 }
 
 .help_page .help_main_content .admin_letter_container {
@@ -96,14 +107,14 @@
   font-weight: 400;
   font-size: 15px;
   line-height: 26px;
-  color: #4f547b;
+  color: #080809;
 }
 
 .help_page .help_main_content .admin_letter_box .admin_letter_frame {
   margin-top: 40px;
-  font-family: "Arial";
-  font-size: 30px;
-  font-weight: 700;
+  font-family: "Nunito";
+  font-size: 38px;
+  font-weight: 850;
 }
 
 .help_page
@@ -111,11 +122,11 @@
   .admin_letter_box
   .admin_letter_frame
   .admin_intro {
-  margin-top: 40px;
-  font-size: 16px;
+  font-family: "Nunito";
+  font-size: 18px;
   font-weight: 700;
   margin-top: 12px;
-  margin-bottom: 12px;
+  margin-bottom: -10px;
 }
 
 .help_page .help_main_content .admin_letter_frame .admin_input_box {
@@ -132,9 +143,10 @@
 .help_page .help_main_content .admin_letter_frame .admin_input_box textarea {
   width: 550px;
   height: 50px;
-  background-image: linear-gradient(#ffe3c2, #f0d6b7);
-  border: none;
-  border-radius: 8px;
+  background-color: white;
+  border: 3px dashed #ededed;
+  box-shadow: 1px 1px 5px 1px #4a5b734d;
+  border-radius: 18px;
   margin-bottom: 30px;
   padding-left: 20px;
   font-size: 18px;
