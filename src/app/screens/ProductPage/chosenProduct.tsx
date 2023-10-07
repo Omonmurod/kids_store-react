@@ -25,6 +25,8 @@ import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ArrowForwardIosNewIcon from "@mui/icons-material/ArrowForwardIos";
 
 const chosen_list = Array.from(Array(4).keys());
 
@@ -656,13 +658,20 @@ export function ChosenProduct() {
             <span className={"title"}>You also may like these</span>
           </Box>
           <Stack className="swiper">
+            <Box className={"prev_btn restaurant-prev"}>
+              <ArrowBackIosNewIcon
+                style={{ color: "#1876d2", fontSize: "40px" }}
+              />
+            </Box>
             <Swiper
               className={"swiper_wrapper"}
-              slidesPerView={5}
+              slidesPerView={4}
               centeredSlides={false}
-              spaceBetween={0}
-              navigation={true}
-              pagination={true}
+              spaceBetween={33}
+              navigation={{
+                nextEl: ".restaurant-next",
+                prevEl: ".restaurant-prev",
+              }}
             >
               {events_list.map((value, number) => {
                 return (
@@ -760,6 +769,14 @@ export function ChosenProduct() {
                 );
               })}
             </Swiper>
+            <Box
+              className={"next_btn restaurant-next"}
+              style={{ color: "white" }}
+            >
+              <ArrowForwardIosNewIcon
+                style={{ color: "#1876d2", fontSize: "40px" }}
+              />
+            </Box>
           </Stack>
         </Container>
       </div>

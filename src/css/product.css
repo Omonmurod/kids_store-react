@@ -1068,12 +1068,29 @@
 }
 
 .product_page .chosen_product .chosen_p_products_main .swiper {
-  width: 100%;
+  width: 94%;
   height: auto;
 
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+.product_page .chosen_product .chosen_p_products_main .swiper .prev_btn {
+  width: 3%;
+  height: 147px;
+  margin-top: 200px;
+  margin-right: px;
+  display: flex;
+  cursor: pointer;
+}
+
+.product_page .chosen_product .chosen_p_products_main .swiper .next_btn{
+  width: 3%;
+  height: 147px;
+  margin-top: 200px;
+  display: flex;
+  cursor: pointer;
 }
 
 .product_page
@@ -1103,14 +1120,6 @@
   cursor: pointer;
   width: 235px;
   margin-left: 10px;
-}
-
-.product_page
-  .chosen_product
-  .chosen_p_products_main
-  .swiper
-  .product_info_frame:hover {
-  transform: scale(1.05);
 }
 
 .product_page
