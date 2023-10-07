@@ -49,7 +49,7 @@ export function Navbar() {
       <div className="navbar_bottom">
         <Container>
           <Stack flexDirection={"row"} justifyContent={"space-between"}>
-            <Box>
+            <Box style={{ width: "18%" }}>
               <img
                 src="/icons/cropped-logo.png"
                 style={{
@@ -61,6 +61,7 @@ export function Navbar() {
               />
             </Box>
             <Stack
+              style={{ width: "50%" }}
               flexDirection={"row"}
               justifyContent={"space-evenly"}
               alignItems={"center"}
@@ -77,11 +78,15 @@ export function Navbar() {
                 </NavLink>
               </Box>
               <Box className="hover-line">
+                <NavLink to="/brand" activeClassName="underline">
+                  Brands
+                </NavLink>
+              </Box>
+              <Box className="hover-line">
                 <NavLink to="/orders" activeClassName="underline">
                   Orders
                 </NavLink>
               </Box>
-
               <Box className="hover-line">
                 <NavLink to="/community" activeClassName="underline">
                   Community
@@ -92,12 +97,18 @@ export function Navbar() {
                   My page
                 </NavLink>
               </Box>
-
               <Box className="hover-line">
                 <NavLink to="/about" activeClassName="underline">
                   About Us
                 </NavLink>
               </Box>
+            </Stack>
+            <Stack
+              style={{ width: "18.5%", marginLeft: "5%" }}
+              flexDirection={"row"}
+              justifyContent={"space-between"}
+              alignItems={"center"}
+            >
               <Box className="hover-line" flexDirection={"row"}>
                 <IconButton
                   aria-label="cart"
@@ -114,42 +125,38 @@ export function Navbar() {
                   </Badge>
                 </IconButton>
               </Box>
-              <Box flexDirection={"row"}>
-                <Button
-                  variant="contained"
-                  style={{
-                    borderRadius: "30px",
-                    color: "#ffffff",
-                    background: "#ffa600",
-                    fontFamily: "Nunito",
-                    height: "50px",
-                    width: "100px",
-                    fontWeight: "800",
-                    fontSize: "16px"
-                  }}
-                  //onClick={props.handleLoginOpen}
-                >
-                  LogIn
-                </Button>
-              </Box>
-              <Box flexDirection={"row"}>
-                <Button
-                  variant="contained"
-                  style={{
-                    borderRadius: "30px",
-                    color: "#ffffff",
-                    background: "#ffa600",
-                    fontFamily: "Nunito",
-                    height: "50px",
-                    width: "130px",
-                    fontWeight: "800",
-                    fontSize: "16px"
-                  }}
-                  //onClick={props.handleLoginOpen}
-                >
-                  REGISTER
-                </Button>
-              </Box>
+              <Button
+                variant="contained"
+                style={{
+                  borderRadius: "30px",
+                  color: "#ffffff",
+                  background: "#ffa600",
+                  fontFamily: "Nunito",
+                  height: "40px",
+                  width: "70px",
+                  fontWeight: "900",
+                  fontSize: "12px",
+                }}
+                //onClick={props.handleLoginOpen}
+              >
+                LogIn
+              </Button>
+              <Button
+                variant="contained"
+                style={{
+                  borderRadius: "30px",
+                  color: "#ffffff",
+                  background: "#ffa600",
+                  fontFamily: "Nunito",
+                  height: "40px",
+                  width: "110px",
+                  fontWeight: "900",
+                  fontSize: "12px",
+                }}
+                //onClick={props.handleLoginOpen}
+              >
+                REGISTER
+              </Button>
             </Stack>
           </Stack>
         </Container>

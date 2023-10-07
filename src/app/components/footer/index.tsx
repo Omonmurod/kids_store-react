@@ -66,7 +66,7 @@ export function Footer() {
                   </NavLink>
                 </Box>
                 <Box className="hover-line">
-                  <NavLink to="/product" activeClassName="underline">
+                  <NavLink to="/brand" activeClassName="underline">
                     Shop
                   </NavLink>
                 </Box>

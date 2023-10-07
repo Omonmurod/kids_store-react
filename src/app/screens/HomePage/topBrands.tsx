@@ -398,8 +398,8 @@ export function TopBrands() {
 
           //onClick={goRestaurantsHandler}
           >
-            <NavLink to="/product" className="see-btn success">
-              See All Shops
+            <NavLink to="/brand" className="see-btn success">
+              See All Brands
             </NavLink>
           </Button>
         </Stack>

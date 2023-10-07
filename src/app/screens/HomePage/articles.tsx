@@ -43,7 +43,7 @@ export function Articles() {
           <Stack className="article_box">
             <Stack className="article_img">
               <img
-                src="/icons/swiper3.jpeg"
+                src="/icons/swiper4.jpeg"
                 style={{
                   borderRadius: "19px 19px 0px 0px",
                   marginTop: "0.6px",
@@ -201,7 +201,7 @@ export function Articles() {
           <Stack className="article_box">
             <Stack className="article_img">
               <img
-                src="/icons/swiper3.jpeg"
+                src="/icons/swiper4.jpeg"
                 style={{
                   borderRadius: "19px 19px 0px 0px",
                   marginTop: "0.6px",

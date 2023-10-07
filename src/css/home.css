@@ -268,23 +268,32 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .homepage .p_products_main .p_products_text .title {
   font-family: "Nunito";
   font-style: normal;
   font-weight: 900;
-  font-size: 38px;
+  font-size: 46px;
   line-height: normal;
   text-align: center;
   color: #423127;
 }
 
-.homepage .p_products_main .product_info_frame {
+.homepage .p_products_main .swiper {
+  width: 100%;
+  height: auto;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.homepage .p_products_main .swiper .product_info_frame {
   width: 235px;
   height: auto;
-  margin-top: 40px;
+  margin-top: 35px;
   flex-shrink: 0;
   border-radius: 12px;
 
@@ -293,19 +302,20 @@
   flex-wrap: wrap;
 }
 
-.homepage .p_products_main .product_info_frame .product-box {
+.homepage .p_products_main .swiper .product_info_frame .product-box {
   height: auto;
   display: flex;
   align-items: center;
   cursor: pointer;
   width: 235px;
+  margin-left: 10px;
 }
 
-.homepage .p_products_main .product_info_frame:hover {
+.homepage .p_products_main .swiper .product_info_frame:hover {
   transform: scale(1.05);
 }
 
-.homepage .p_products_main .product_info_frame .product-box .dish_sale {
+.homepage .p_products_main .swiper .product_info_frame .product-box .dish_sale {
   width: 100px;
   height: 33px;
   flex-shrink: 0;
@@ -318,6 +328,7 @@
 
 .homepage
   .p_products_main
+  .swiper
   .product_info_frame
   .product-box
   .dish_sale
@@ -338,7 +349,12 @@
   font-weight: 850;
 }
 
-.homepage .p_products_main .product_info_frame .product-box .like_view_btn {
+.homepage
+  .p_products_main
+  .swiper
+  .product_info_frame
+  .product-box
+  .like_view_btn {
   position: absolute;
   top: 223px;
   padding: 5px;
@@ -357,20 +373,20 @@
   margin-top: 75px;
 }
 
-.homepage .p_products_main .product_info_frame:hover .like_view_btn {
+.homepage .p_products_main .swiper .product_info_frame:hover .like_view_btn {
   opacity: 1;
 }
 
-.homepage .p_products_main .product_info_frame .product-box .img {
+.homepage .p_products_main .swiper .product_info_frame .product-box .img {
   position: relative;
   width: 235px;
   height: 320px;
   background-size: cover;
   border-radius: 10px;
-  box-shadow: 0px 0px 15px 0px rgba(50, 50, 50, 0.3);
+  box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 0.15);
 }
 
-.homepage .p_products_main .product_info_frame .product_name {
+.homepage .p_products_main .swiper .product_info_frame .product_name {
   display: flex;
   width: 241px;
   height: 40px;
@@ -378,6 +394,7 @@
   justify-content: center;
   flex-shrink: 0;
   margin-top: 15px;
+  margin-left: 5px;
 
   color: #423127;
   text-align: center;
@@ -395,12 +412,17 @@
   flex-direction: row;
   height: 10px;
   justify-content: center;
+  color: rgb(250, 175, 0);
   margin-top: 5px;
   width: 100%;
-  margin-left: 28px;
 }
 
-.homepage .p_products_main .product_info_frame .rating_box .half-rating {
+.homepage
+  .p_products_main
+  .swiper
+  .product_info_frame
+  .rating_box
+  .half-rating {
   display: inline-flex;
   position: relative;
   font-size: 24px;
@@ -410,13 +432,13 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.homepage .p_products_main .product_info_frame .price {
+.homepage .p_products_main .swiper .product_info_frame .price {
   width: 80px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   margin-top: 15px;
-  margin-left: 80px;
+  margin-left: 90px;
 }
 
 /** Adds FRAME */
@@ -439,7 +461,7 @@
 
 .homepage .ads_frame .ad_video_frame .ads_video1 {
   width: 272px;
-  height: 538px;
+  height: 537px;
   margin-left: 35px;
   display: flex;
   border-radius: 20px;
@@ -864,13 +886,25 @@
   margin-left: 14px;
 }
 
-.homepage .articles_frame .articles .article_box .article_info .article_user .img {
+.homepage
+  .articles_frame
+  .articles
+  .article_box
+  .article_info
+  .article_user
+  .img {
   width: 60px;
   height: 60px;
   border-radius: 50%;
 }
 
-.homepage .articles_frame .articles .article_box .article_info .article_user .user {
+.homepage
+  .articles_frame
+  .articles
+  .article_box
+  .article_info
+  .article_user
+  .user {
   font-family: "Nunito";
   font-weight: 600;
   font-size: 18px;

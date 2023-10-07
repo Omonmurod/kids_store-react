@@ -107,6 +107,7 @@ export function AboutPage() {
               <TabList
                 value={value}
                 onChange={handleChange}
+                indicatorColor="primary"
                 aria-label="lab API tabs example"
                 style={{ display: "flex", justifyContent: "space-between" }}
               >
@@ -249,7 +250,7 @@ export function AboutPage() {
                       }}
                     >
                       <a
-                        href="http://localhost:3000/product"
+                        href="http://localhost:3000/brand"
                         style={{ textDecoration: "none" }}
                       >
                         <div style={{ marginLeft: "20px", marginTop: "75px" }}>
@@ -585,6 +586,7 @@ export function AboutPage() {
                           type={"text"}
                           name={"mb_nick"}
                           placeholder={"Your Name"}
+                          style={{ fontFamily: "Nunito" }}
                         />
                       </div>
                       <div className={"admin_input_box"}>
@@ -592,13 +594,14 @@ export function AboutPage() {
                           type={"text"}
                           name={"mb_email"}
                           placeholder={"Your Email"}
+                          style={{ fontFamily: "Nunito" }}
                         />
                       </div>
                       <div className={"admin_input_box"}>
                         <textarea
                           name={"mb_msg"}
                           placeholder={"Your Valuable Message"}
-                          style={{ fontFamily: "Arial" }}
+                          style={{ fontFamily: "Nunito" }}
                         />
                       </div>
                       <Box

@@ -7,12 +7,13 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { MemberPage } from "./screens/MemberPage";
 import { OrdersPage } from "./screens/OrdersPage";
 import { CommunityPage } from "./screens/CommunityPage";
-import { ShopPage } from "./screens/ShopPage";
+import { BrandPage } from "./screens/BrandPage";
 import { AboutPage } from "./screens/AboutPage";
 import { LoginPage } from "./screens/LoginPage";
 import { HomePage } from "./screens/HomePage";
 import { Navbar } from "./components/header";
 import { Footer } from "./components/footer";
+import { ProductPage } from "./screens/ProductPage";
 
 function App() {
   return (
@@ -20,7 +21,10 @@ function App() {
       <Navbar />
       <Switch>
         <Route path="/product">
-          <ShopPage />
+          <ProductPage />
+        </Route>
+        <Route path="/brand">
+          <BrandPage />
         </Route>
         <Route path="/community">
           <CommunityPage />

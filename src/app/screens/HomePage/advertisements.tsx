@@ -53,9 +53,9 @@ export function Advertisements() {
                   data-video-media=""
                 >
                   <source
-                    data-src="/icons/video1.mp4"
+                    data-src="/icons/video2.mp4"
                     type="video/mp4"
-                    src="/icons/video1.mp4"
+                    src="/icons/video2.mp4"
                   />
                 </video>
               </Box>
@@ -75,9 +75,9 @@ export function Advertisements() {
                   data-video-media=""
                 >
                   <source
-                    data-src="/icons/video2.mp4"
+                    data-src="/icons/video1.mp4"
                     type="video/mp4"
-                    src="/icons/video2.mp4"
+                    src="/icons/video1.mp4"
                   />
                 </video>
               </Box>
