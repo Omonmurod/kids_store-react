@@ -2,13 +2,283 @@
   position: relative;
   width: 100%;
   height: auto;
-  background: white;
+  background: url("/public/icons/bg_page.png"), white;
+  background-repeat: repeat;
+  background-size: cover;
+  background-position: unset;
 }
 
-.brand_page .all_brands {
-  padding-top: 140px;
+.brand_page .all_brands_frame {
+  width: 100%;
+  height: auto;
+  margin-top: 134px;
 }
 
+.brand_page .all_brands_frame .search {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.brand_page .all_brands_frame .search .search_box {
+  align-items: center;
+  background: #fffcfc;
+  border-radius: 18.5px;
+  box-shadow: 0 4px 4px hsla(0, 0%, 84%, 0.25);
+  box-shadow: 0 4px 40px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  display: flex;
+  height: 40px;
+  position: relative;
+  width: 500px;
+
+  color: rgb(34, 34, 34);
+  font-family: Nunito;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  margin-top: 44px;
+}
+
+.brand_page .all_brands_frame .search .search_form {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  width: 100%;
+}
+
+*,
+::before,
+::after {
+  box-sizing: inherit;
+}
+
+.brand_page .all_brands_frame .search .search_form .searchInput {
+  border: none;
+  border-radius: 18.5px;
+  color: #4f547b;
+  display: flex;
+  font-family: Nunito;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 400;
+  height: 40px;
+  line-height: 26px;
+  padding-left: 20px;
+  position: relative;
+  width: 500px;
+}
+
+.brand_page .all_brands_frame .search .category_box {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: 45px;
+  justify-content: space-between;
+  margin-top: 40px;
+  position: relative;
+  width: 600px;
+}
+
+.brand_page .all_brands_frame .search .category_box a {
+  position: relative;
+  font-size: 17px;
+  line-height: 25px;
+  font-family: Nunito;
+  color: #423127;
+  font-weight: 700;
+  vertical-align: top;
+  padding: 2px 9px;
+  border: 1px solid #ced4da;
+  border-radius: 12px;
+  box-shadow: 10px 7px 10px -4px rgba(50, 50, 50, 0.1);
+  height: 36px;
+  display: flex;
+  align-items: center;
+}
+
+.brand_page .all_brands_frame .search .category_box a:hover {
+  background-color: orange;
+  color: white;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  cursor: pointer;
+}
+
+.brand_page .all_brands_frame .search .category_box a::before,
+.category_box a::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  left: 0;
+}
+
+.brand_page .all_brands_frame .search .category_box a::before {
+  height: 2px;
+  bottom: 0;
+  transform-origin: 100% 50%;
+  transform: scaleX(0);
+  transition: transform 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.brand_page .all_brands_frame .search .category_box a::after {
+  content: attr(data-replace);
+  height: 100%;
+  top: 0;
+  transform-origin: 100% 50%;
+  transform: translate3d(200%, 0, 0);
+  transition: transform 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+  color: #d7b686;
+}
+
+.brand_page .all_brands_frame .search .category_box a:hover::before {
+  transform-origin: 0% 50%;
+  transform: scaleX(1);
+}
+
+.brand_page .all_brands_frame .search .category_box a:hover::after {
+  transform: translate3d(0, 0, 0);
+}
+
+.brand_page .all_brands_frame .search .category_box a span {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.brand_page .all_brands_frame .search .category_box a:hover span {
+  transform: translate3d(-200%, 0, 0);
+}
+
+.brand_page .all_brands_frame .brands {
+  width: 100%;
+  height: 960px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 45px;
+  color: rgb(34, 34, 34);
+  font-family: Nunito;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+}
+
+.brand_page .all_brands_frame .brands .pagination {
+  font-size: 20px;
+  margin-top: 33px;
+  font-family: "Nunito";
+  font-weight: 660;
+}
+
+.brand_page .all_brands_frame .top-brands {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.brand_page .all_brands_frame .top-brands .top-brands_box {
+  position: relative;
+  min-height: 420px;
+}
+
+.brand_page .all_brands_frame .top-brands .top-brands_box:hover .brand-info {
+  bottom: 44px;
+}
+
+.brand_page .all_brands_frame .top-brands .top-brands_box .brand-img {
+  width: 318px;
+  height: auto;
+  cursor: pointer;
+  transition: all 0.4s ease 0s;
+}
+
+.brand_page .all_brands_frame .top-brands .top-brands_box .brand-img .img {
+  border-radius: 8px;
+  object-fit: cover;
+  width: 90%;
+  height: 300px;
+  box-shadow: 0px 0px 15px 0px rgba(50, 50, 50, 0.3);
+}
+
+.brand_page .all_brands_frame .top-brands .top-brands_box .brand-info {
+  position: absolute;
+  bottom: 28px;
+  right: 43px;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  box-shadow: 0px 0px 15px 0px rgba(50, 50, 50, 0.3);
+  width: 263px;
+  height: 150px;
+  border-radius: 8px;
+  padding: 12px;
+  transition: 0.3s;
+}
+
+.brand_page
+  .all_brands_frame
+  .top-brands
+  .top-brands_box
+  .brand-info
+  .info-top {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #d7d5d5;
+  letter-spacing: 0.00938em;
+}
+.brand_page
+  .all_brands_frame
+  .top-brands
+  .top-brands_box
+  .brand-info
+  .info-top
+  .info-top_nick {
+  text-transform: uppercase;
+  font-family: "Nunito";
+  font-weight: 600;
+  font-size: 22px;
+  text-align: center;
+}
+
+.brand_page
+  .all_brands_frame
+  .top-brands
+  .top-brands_box
+  .brand-info
+  .info-top
+  .info-top_address {
+  font-size: 14px;
+  margin: 4px 0 6px 0;
+  display: flex;
+}
+
+.brand_page .all_brands_frame .see-btn {
+  text-decoration: none;
+  width: 180px;
+  height: 40px;
+  border-radius: 19px;
+  font-family: "Nunito";
+  font-size: 16px;
+  font-weight: 870;
+  padding: 7px;
+}
+
+.brand_page .all_brands_frame .success {
+  background-color: #fff8f0;
+  color: orange;
+}
+
+.brand_page .all_brands_frame .success:hover {
+  background-color: orange;
+  color: #fff8f0;
+}
 
 /** One BRAND*/
 .brand_page .category_title {
@@ -49,9 +319,7 @@
   overflow: hidden;
 }
 
-.brand_page .one_brand
-  .restaurant_avatars_wrapper
-  .restaurant_avatars {
+.brand_page .one_brand .restaurant_avatars_wrapper .restaurant_avatars {
   width: 108px;
   height: 100%;
   display: flex;
@@ -114,7 +382,8 @@
   border-radius: 12px;
 }
 
-.brand_page .one_brand
+.brand_page
+  .one_brand
   .left_shop
   .shop_products
   .shop_product-info
@@ -131,7 +400,8 @@
   cursor: pointer;
 }
 
-.brand_page .one_brand
+.brand_page
+  .one_brand
   .left_shop
   .shop_products
   .shop_product-info
@@ -147,7 +417,8 @@
   margin-left: 10px;
 }
 
-.brand_page .one_brand
+.brand_page
+  .one_brand
   .left_shop
   .shop_products
   .shop_product-info
@@ -170,7 +441,8 @@
   font-weight: 850;
 }
 
-.brand_page .one_brand
+.brand_page
+  .one_brand
   .left_shop
   .shop_products
   .shop_product-info
@@ -194,7 +466,8 @@
   margin-top: 75px;
 }
 
-.brand_page .one_brand
+.brand_page
+  .one_brand
   .left_shop
   .shop_products
   .shop_product-info:hover
@@ -202,7 +475,8 @@
   opacity: 1;
 }
 
-.brand_page .one_brand
+.brand_page
+  .one_brand
   .left_shop
   .shop_products
   .shop_product-info
@@ -216,7 +490,8 @@
   box-shadow: 0px 0px 15px 0px rgba(50, 50, 50, 0.3);
 }
 
-.brand_page .one_brand
+.brand_page
+  .one_brand
   .left_shop
   .shop_products
   .shop_product-info
@@ -238,7 +513,8 @@
   line-height: 22px; /* 122.222% */
 }
 
-.brand_page .one_brand
+.brand_page
+  .one_brand
   .left_shop
   .shop_products
   .shop_product-info
@@ -253,7 +529,8 @@
   width: 100%;
 }
 
-.brand_page .one_brand
+.brand_page
+  .one_brand
   .left_shop
   .shop_products
   .shop_product-info
@@ -268,11 +545,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.brand_page .one_brand
-  .left_shop
-  .shop_products
-  .shop_product-info
-  .price {
+.brand_page .one_brand .left_shop .shop_products .shop_product-info .price {
   width: 80px;
   display: flex;
   flex-direction: row;
@@ -335,11 +608,7 @@
   text-transform: uppercase;
 }
 
-.brand_page .one_brand
-  .right_shop
-  .right_shop-top
-  .search
-  .search_big_box {
+.brand_page .one_brand .right_shop .right_shop-top .search .search_big_box {
   position: relative;
   width: 320px;
   height: 60px;
@@ -354,7 +623,8 @@
   box-sizing: border-box;
 }
 
-.brand_page .one_brand
+.brand_page
+  .one_brand
   .right_shop
   .search
   .search_big_box
@@ -388,11 +658,7 @@
   margin-left: 30px;
 }
 
-.brand_page .one_brand
-  .right_shop
-  .right_shop-top
-  .category
-  .category_info {
+.brand_page .one_brand .right_shop .right_shop-top .category .category_info {
   width: 350px;
   display: flex;
   flex-direction: row;
@@ -400,11 +666,7 @@
   margin-top: 20px;
 }
 
-.brand_page .one_brand
-  .right_shop
-  .category
-  .category_info
-  .category_info1 {
+.brand_page .one_brand .right_shop .category .category_info .category_info1 {
   cursor: pointer;
   width: 200px;
   display: flex;
@@ -698,10 +960,582 @@
   line-height: 24px;
 } */
 
-
-
-
 /** Brand PRODUCT*/
 .brand_page .brand_product {
-  padding-top: 140px;
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: 120px;
+  display: flex;
+  flex-direction: column;
+  background: url("/public/icons/bg_shapes1.png"), url("/public/icons/bg2.png");
+  background-position: top, top;
+  background-size: 100% 720px, 100% 710px;
+  background-repeat: no-repeat;
+}
+
+.brand_page .brand_product .dish_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.brand_page .brand_product .chosen_dish_slider {
+  width: 48%;
+  height: 580px;
+}
+
+.brand_page .brand_product .dish_swiper {
+  --swiper-navigation-color: rgb(150, 149, 146);
+  --swiper-pagination-color: rgb(150, 149, 146);
+  width: 100%;
+  height: 780px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: 0px 0px 4px 4px rgba(80, 80, 80, 0.09);
+}
+
+.brand_page .brand_product .dish_swiper .img {
+  margin-left: 24%;
+  height: 100%;
+}
+
+.brand_page .brand_product .mySwiper {
+  width: 100%;
+  height: 275px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.brand_page .brand_product .mySwiper .img-bot {
+  width: 85%;
+  height: 96%;
+  margin-left: 6.6%;
+  margin-top: 1.9%;
+  margin-bottom: 1%;
+  border-radius: 15px;
+  box-shadow: 0px 0px 4px 4px rgba(80, 80, 80, 0.09);
+}
+
+.brand_page .brand_product .chosen_dish_info_container {
+  padding: 30px 40px;
+  width: 49%;
+  height: 482px;
+  display: flex;
+  border-radius: 16px;
+  background-color: white;
+  box-shadow: 0px 0px 4px 4px rgba(80, 80, 80, 0.09);
+}
+
+.brand_page .brand_product .chosen_dish_info_container .chosen_dish_box {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand_page .brand_product .chosen_dish_info_box .dish_txt {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 770;
+  font-size: 30px;
+  line-height: 38px;
+  color: #423127;
+}
+
+.brand_page .brand_product .chosen_dish_info_box .resto_name {
+  display: flex;
+  width: 300px;
+  height: 26px;
+  margin-top: 14px;
+  flex-direction: column;
+  flex-shrink: 0;
+  color: #747474;
+  font-family: "Nunito";
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 770;
+  line-height: normal;
+}
+
+.brand_page .brand_product .chosen_dish_info_box .rating_box {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: auto;
+  justify-content: space-between;
+  margin-top: 25px;
+  width: 100%;
+}
+
+.brand_page .brand_product .chosen_dish_info_box .rating_box .half-rating {
+  display: inline-flex;
+  position: relative;
+  font-size: 1.5rem;
+  cursor: pointer;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.brand_page .brand_product .chosen_dish_info_box .evaluation_box {
+  margin-right: 8px;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: auto;
+  width: auto;
+}
+
+.brand_page .brand_product .chosen_dish_info_box .dish_desc_info {
+  color: #423127;
+  margin-top: 35px;
+  font-family: Nunito;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 600;
+  height: 120px;
+  line-height: 25px;
+}
+.brand_page .brand_product .chosen_dish_info_box .dish_price_box {
+  margin-bottom: 20px;
+  margin-top: 20px;
+  width: 100%;
+  color: rgb(23, 43, 77);
+  font-family: Nunito;
+  font-weight: 770;
+  font-size: 20px;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  background-color: rgb(244, 246, 248);
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: auto;
+  justify-content: space-between;
+}
+
+.brand_page .brand_product .button_box {
+  align-items: center;
+  display: flex;
+  height: auto;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.brand_page .brand_product .comment_section {
+  width: 100%;
+  margin-top: 30px;
+  margin-left: 20px;
+  height: auto;
+}
+
+.brand_page .brand_product .comment_section .comment_title {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 30px;
+  line-height: normal;
+  text-align: left;
+  color: #423127;
+}
+
+.brand_page .brand_product .comment_section .comment {
+  width: 48%;
+  height: 750px;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand_page .brand_product .comment_section .comment .rating {
+  width: 100%;
+  height: 350px;
+  display: flex;
+}
+
+.brand_page .brand_product .comment_section .comment .rating .line {
+  width: 384px;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(22, 0, 108, 0.12);
+}
+
+.brand_page .brand_product .comment_section .comment .add_comment {
+  width: 100%;
+  height: 270px;
+  display: flex;
+  margin-top: 20px;
+}
+
+.brand_page
+  .brand_product
+  .comment_section
+  .comment
+  .add_comment
+  .admin_letter_frame {
+  font-style: normal;
+  line-height: 28px;
+
+  font-family: "Nunito";
+  font-size: 48px;
+  font-weight: 850;
+}
+
+.brand_page
+  .brand_product
+  .comment_section
+  .comment
+  .add_comment
+  .admin_letter_frame
+  p {
+  font-weight: 700;
+  font-size: 55px;
+  line-height: 26px;
+  color: #423127;
+}
+
+.brand_page
+  .brand_product
+  .comment_section
+  .comment
+  .add_comment
+  .admin_input_box {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand_page
+  .brand_product
+  .comment_section
+  .comment
+  .add_comment
+  .admin_input_box
+  label {
+  margin-bottom: 6px;
+  font-size: 16px;
+}
+
+.brand_page
+  .brand_product
+  .comment_section
+  .comment
+  .add_comment
+  .admin_input_box
+  input,
+.brand_page
+  .brand_product
+  .comment_section
+  .comment
+  .add_comment
+  .admin_input_box
+  textarea {
+  border-radius: 12px;
+  border: 1px solid #dcdcdc;
+  border-radius: 18px;
+  margin-bottom: 30px;
+  padding-left: 20px;
+  font-size: 18px;
+}
+
+.brand_page
+  .brand_product
+  .comment_section
+  .comment
+  .add_comment
+  .admin_input_box
+  textarea {
+  padding-top: 20px;
+  position: relative;
+}
+
+.brand_page .brand_product .comment_section .reviews {
+  width: 48%;
+}
+
+.brand_page .brand_product .comment_section .reviews .review_box {
+  width: 560px;
+  height: 200px;
+  margin-bottom: 24px;
+  margin-left: 20px;
+  border-radius: 12px;
+  border: 2px dashed #fde8cf;
+  background: #fffcf9;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.brand_page .brand_product .comment_section .reviews .review_box .review_txt {
+  color: #423127;
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.brand_page .brand_product .comment_section .reviews .review_box .review_date {
+  color: #724d37;
+  font-family: Lato;
+  font-size: 14px;
+  margin-top: 7px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.brand_page .brand_product .comment_section .reviews .review_box .review_info {
+  width: 375px;
+  height: 111px;
+  flex-shrink: 0;
+  color: #724d37;
+  font-family: Lato;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 175% */
+}
+
+.brand_page .brand_product .best_pro {
+  width: 100%;
+  background: url("/public/icons/bg_shapes2.png"), url("/public/icons/bg.png");
+  background-position: bottom;
+  background-size: 100% 640px, 100% 550px;
+  background-repeat: no-repeat;
+}
+
+.brand_page .brand_product .chosen_p_products_main {
+  width: 100%;
+  height: 666px;
+}
+
+.brand_page .brand_product .chosen_p_products_main .p_products_text {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+}
+
+.brand_page .brand_product .title {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 36px;
+  line-height: normal;
+  text-align: center;
+  color: #423127;
+}
+
+.brand_page .brand_product .chosen_p_products_main .swiper {
+  width: 94%;
+  height: auto;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.brand_page .brand_product .chosen_p_products_main .swiper .prev_btn {
+  width: 3%;
+  height: 147px;
+  margin-top: 200px;
+  display: flex;
+  cursor: pointer;
+}
+
+.brand_page .brand_product .chosen_p_products_main .swiper .next_btn {
+  width: 3%;
+  height: 147px;
+  margin-top: 200px;
+  display: flex;
+  cursor: pointer;
+}
+
+.brand_page .brand_product .chosen_p_products_main .swiper .product_info_frame {
+  width: 235px;
+  height: auto;
+  flex-shrink: 0;
+  border-radius: 12px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.brand_page
+  .brand_product
+  .chosen_p_products_main
+  .swiper
+  .product_info_frame
+  .product-box {
+  height: auto;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: 235px;
+  margin-left: 10px;
+}
+
+.brand_page
+  .brand_product
+  .chosen_p_products_main
+  .swiper
+  .product_info_frame
+  .product-box
+  .dish_sale {
+  width: 100px;
+  height: 33px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px dashed #1976d2;
+  background: #fff;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.brand_page
+  .brand_product
+  .chosen_p_products_main
+  .swiper
+  .product_info_frame
+  .product-box
+  .dish_sale
+  .dish_sale-txt {
+  display: flex;
+  width: 80px;
+  height: 19px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+
+  color: #1976d2;
+  text-align: center;
+  font-family: "Nunito";
+  margin: 6px;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 850;
+}
+
+.brand_page
+  .brand_product
+  .chosen_p_products_main
+  .swiper
+  .product_info_frame
+  .product-box
+  .like_view_btn {
+  position: absolute;
+  top: 223px;
+  padding: 5px;
+  min-width: 40px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  margin-top: 75px;
+}
+
+.brand_page
+  .brand_product
+  .chosen_p_products_main
+  .swiper
+  .product_info_frame:hover
+  .like_view_btn {
+  opacity: 1;
+}
+
+.brand_page
+  .brand_product
+  .chosen_p_products_main
+  .swiper
+  .product_info_frame
+  .product-box
+  .img {
+  position: relative;
+  width: 235px;
+  height: 320px;
+  background-size: cover;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 0.15);
+}
+
+.brand_page
+  .brand_product
+  .chosen_p_products_main
+  .swiper
+  .product_info_frame
+  .product_name {
+  display: flex;
+  width: 241px;
+  height: 40px;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 15px;
+  margin-left: 5px;
+
+  color: #423127;
+  text-align: center;
+  font-family: Nunito;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 22px; /* 122.222% */
+}
+
+.brand_page
+  .brand_product
+  .chosen_p_products_main
+  .product_info_frame
+  .rating_box {
+  align-items: center;
+  width: 200px;
+  display: flex;
+  flex-direction: row;
+  height: 10px;
+  justify-content: center;
+  margin-top: 5px;
+  width: 100%;
+}
+
+.brand_page
+  .brand_product
+  .chosen_p_products_main
+  .swiper
+  .product_info_frame
+  .rating_box
+  .half-rating {
+  display: inline-flex;
+  position: relative;
+  font-size: 24px;
+  color: #1976d2;
+  cursor: pointer;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.brand_page
+  .brand_product
+  .chosen_p_products_main
+  .swiper
+  .product_info_frame
+  .price {
+  width: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 15px;
+  margin-left: 90px;
 }

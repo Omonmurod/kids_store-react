@@ -329,7 +329,7 @@ export function AboutPage() {
                           />
                         </a>
                       </Box>
-                      <Box style={{ marginTop: "-14px"}} className="img-icon">
+                      <Box style={{ marginTop: "-14px" }} className="img-icon">
                         <a href="http://localhost:3000/product">
                           <figure>
                             <img
@@ -570,7 +570,7 @@ export function AboutPage() {
                   <Stack className={"admin_letter_container"}>
                     <Box className={"admin_letter_frame"}>
                       <span>Contact Us</span>
-                      <p className="admin_intro" style={{ marginTop: "30px"}}>
+                      <p className="admin_intro" style={{ marginTop: "30px" }}>
                         Assalomu alaykum!
                         <br /> Please, fill the following blank to contact with
                         our admin!

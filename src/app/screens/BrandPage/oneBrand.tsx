@@ -64,7 +64,7 @@ export function OneBrand() {
                     className={"restaurant_avatars"}
                   >
                     <img src={"/icons/swiper2.jpeg"} />
-                    <span>Burak</span>
+                    <span>Brand name</span>
                   </SwiperSlide>
                 );
               })}

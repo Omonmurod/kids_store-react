@@ -1,16 +1,8 @@
-import { Box, Button, Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
-import Typography from "@mui/joy/Typography";
-import { CssVarsProvider } from "@mui/joy/styles";
-import { CardOverflow, IconButton } from "@mui/joy";
 import Checkbox from "@mui/material/Checkbox";
-import {
-  CalendarMonth,
-  Favorite,
-  ThumbUp,
-  Visibility,
-} from "@mui/icons-material";
+import { CalendarMonth, ThumbUp, Visibility } from "@mui/icons-material";
 import { NavLink } from "react-router-dom";
 
 export function Articles() {
@@ -45,7 +37,7 @@ export function Articles() {
               <img
                 src="/icons/swiper4.jpeg"
                 style={{
-                  borderRadius: "19px 19px 0px 0px",
+                  borderRadius: "10px 10px 0px 0px",
                   marginTop: "0.6px",
                   marginLeft: "0.6px",
                 }}
@@ -124,7 +116,7 @@ export function Articles() {
               <img
                 src="/icons/swiper3.jpeg"
                 style={{
-                  borderRadius: "19px 19px 0px 0px",
+                  borderRadius: "10px 10px 0px 0px",
                   marginTop: "0.6px",
                   marginLeft: "0.6px",
                 }}
@@ -203,7 +195,7 @@ export function Articles() {
               <img
                 src="/icons/swiper4.jpeg"
                 style={{
-                  borderRadius: "19px 19px 0px 0px",
+                  borderRadius: "10px 10px 0px 0px",
                   marginTop: "0.6px",
                   marginLeft: "0.6px",
                 }}
@@ -282,7 +274,7 @@ export function Articles() {
               <img
                 src="/icons/swiper3.jpeg"
                 style={{
-                  borderRadius: "19px 19px 0px 0px",
+                  borderRadius: "10px 10px 0px 0px",
                   marginTop: "0.6px",
                   marginLeft: "0.6px",
                 }}

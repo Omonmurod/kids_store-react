@@ -1,0 +1,166 @@
+.community_page {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  margin-top: 100px;
+}
+
+.community_page .community_all_frame {
+  width: 100%;
+  height: auto;
+}
+
+.community_page .community_all_frame .article_tabs {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: 94px;
+  justify-content: center;
+  width: 100%;
+}
+
+.community_page .community_all_frame .article_tabs .article-name {
+  position: relative;
+  font-size: 16px;
+  line-height: 25px;
+  font-family: Nunito;
+  color: #423127;
+  font-weight: 770;
+  vertical-align: top;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.community_page .community_all_frame .pagination {
+  font-size: 18px;
+  margin-top: 22px;
+  font-family: "Nunito";
+  font-weight: 660;
+}
+
+.community_page .community_all_frame .article_main {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.community_page .community-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.community_page .article_box {
+  width: 404px;
+  height: 593px;
+  background-color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 0px 0px 15px 0px rgba(50, 50, 50, 0.2);
+}
+
+.community_page .article_box:hover {
+  box-shadow: 0px 3px 30px rgb(0 0 0 / 25%);
+  /* display: block;
+  transform: scale(1.2); */
+}
+
+.community_page .article_box .article_img {
+  width: 400px;
+  height: 244px;
+  flex-shrink: 0;
+  border-radius: 12px;
+}
+
+.community_page .article_box .article_img .img {
+  width: 403.3px;
+  height: 244px;
+}
+
+.community_page .article_box .article_info {
+  width: 404px;
+  height: 349px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 25px;
+}
+
+.community_page .article_box .article_info .article_user {
+  width: 360px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-top: 12px;
+}
+
+.community_page .article_box .article_info .article_user .img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.community_page .article_box .article_info .article_user .user {
+  font-family: "Nunito";
+  font-weight: 600;
+  font-size: 18px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 18px;
+  margin-top: 8px;
+}
+
+.community_page .article_box .article_info .title {
+  width: 360px;
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "Nunito";
+  font-weight: 800;
+  font-size: 26px;
+}
+
+.community_page .article_box .article_info .date_like_view {
+  width: 360px;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-family: "Nunito";
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.community_page .article_box .article_info .some-info {
+  width: 360px;
+  height: 118px;
+  color: #724d37;
+  font-family: Nunito;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+.community_page .article_box .article_info .link {
+  width: 360px;
+}
+
+.community_page .article_box .article_info .link .readmore {
+  text-decoration: none;
+  font-family: "Nunito";
+  font-size: 16px;
+  font-weight: 500;
+  color: orange;
+  margin-left: 40px;
+}
+
+.community_page .article_box .article_info .link .readmore:hover {
+  color: #6875df;
+}
