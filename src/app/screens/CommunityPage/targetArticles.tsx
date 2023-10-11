@@ -16,7 +16,7 @@ export function TargetArticles(props: any) {
                 <img
                   src="/icons/swiper3.jpeg"
                   style={{
-                    borderRadius: "10px 10px 0px 0px",
+                    borderRadius: "10px 10px 10px 10px",
                     marginTop: "0.6px",
                     marginLeft: "0.6px",
                   }}

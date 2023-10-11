@@ -56,10 +56,8 @@
 .community_page .article_box {
   width: 404px;
   height: 593px;
-  background-color: white;
-  border-radius: 20px;
+  border-radius: 10px;
   cursor: pointer;
-  box-shadow: 0px 0px 15px 0px rgba(50, 50, 50, 0.2);
 }
 
 .community_page .article_box:hover {
