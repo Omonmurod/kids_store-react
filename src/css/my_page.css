@@ -1,0 +1,760 @@
+.my_page {
+  width: 100%;
+  height: auto;
+  display: flex;
+  margin-top: 140px;
+}
+
+.my_page .css-heg063-MuiTabs-flexContainer {
+  flex-direction: column;
+}
+
+.my_page .css-mn3ro6-MuiTabs-indicator {
+  height: 0px;
+  width: 0px;
+}
+
+.my_page .css-1ujnqem-MuiTabs-root {
+  width: 100%;
+}
+
+.my_page .my_page_frame {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.my_page_frame .my_page_left {
+  width: 70%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.my_page_left .menu_name {
+  width: 100%;
+  height: 70px;
+  margin-top: -15px;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #423127;
+
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 880;
+  font-size: 48px;
+  color: #423127;
+}
+
+.my_page_left .menu_content {
+  margin-top: 10px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.my_page_left .write_content {
+  margin-top: 10px;
+  width: 100%;
+  height: auto;
+  display: flex;
+}
+
+.my_page .post_content {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 35px;
+}
+
+.my_page .post_content .article_box {
+  width: 404px;
+  height: 593px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.my_page .post_content .article_box:hover {
+  box-shadow: 0px 3px 30px rgb(0 0 0 / 25%);
+  /* display: block;
+  transform: scale(1.2); */
+}
+
+.my_page .post_content .article_box .article_img {
+  width: 400px;
+  height: 244px;
+  flex-shrink: 0;
+  border-radius: 12px;
+}
+
+.my_page .post_content .article_box .article_img .img {
+  width: 403.3px;
+  height: 244px;
+}
+
+.my_page .post_content .article_box .article_info {
+  width: 404px;
+  height: 349px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 25px;
+}
+
+.my_page .post_content .article_box .article_info .article_user {
+  width: 360px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-top: 12px;
+}
+
+.my_page .post_content .article_box .article_info .article_user .img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.my_page .post_content .article_box .article_info .article_user .user {
+  font-family: "Nunito";
+  font-weight: 600;
+  font-size: 18px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 18px;
+  margin-top: 8px;
+}
+
+.my_page .post_content .article_box .article_info .title {
+  width: 360px;
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "Nunito";
+  font-weight: 800;
+  font-size: 26px;
+}
+
+.my_page .post_content .article_box .article_info .date_like_view {
+  width: 360px;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-family: "Nunito";
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.my_page .post_content .article_box .article_info .some-info {
+  width: 360px;
+  height: 118px;
+  color: #724d37;
+  font-family: Nunito;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+.my_page .post_content .article_box .article_info .link {
+  width: 360px;
+}
+
+.my_page .post_content .article_box .article_info .link .readmore {
+  text-decoration: none;
+  font-family: "Nunito";
+  font-size: 16px;
+  font-weight: 500;
+  color: orange;
+  margin-left: 40px;
+}
+
+.my_page .post_content .article_box .article_info .link .readmore:hover {
+  color: #6875df;
+}
+
+.my_page .menu_content .follow_box {
+  margin-top: 15px;
+  padding: 25px 45px;
+  width: 100%;
+  height: 140px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: linear-gradient(
+    180deg,
+    rgba(38, 112, 129, 0.9) 0%,
+    rgba(21, 61, 70, 0.9) 100%
+  );
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15),
+    inset 3px 2px 9px rgba(255, 255, 255, 0.25);
+  border-radius: 17px;
+}
+
+.my_page .follow_box .username_text {
+  margin-top: 10px;
+  width: 100%;
+
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 12px;
+  color: #ffffff;
+}
+
+.my_page .follow_box .name_text {
+  margin-top: 16px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 24px;
+  color: #ffffff;
+}
+
+.my_page .follow_box .follow_btn {
+  width: 175px;
+  height: 57px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background: #30945e;
+  border: 1px solid #ffffff;
+  box-shadow: 1px 4px 6px rgba(211, 211, 211, 0.25),
+    inset 0px 4px 4px rgba(255, 255, 255, 0.25);
+  border-radius: 43px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 24px;
+  color: #ffffff;
+}
+
+.my_page .follow_box .follow_cancel_btn {
+  width: 185px;
+  height: 57px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background: #e81010b8;
+  border: 1px solid #ffffff;
+  box-shadow: 1px 4px 6px rgba(211, 211, 211, 0.25),
+    inset 0px 4px 4px rgba(255, 255, 255, 0.25);
+  border-radius: 43px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 24px;
+  color: #ffffff;
+}
+
+.my_page .follow_box .following_already {
+  margin-left: 11px;
+  width: 160px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background: #68c5cb;
+  box-shadow: 1px 4px 6px rgba(211, 211, 211, 0.25),
+    inset 0px 4px 4px rgba(255, 255, 255, 0.25);
+  border-radius: 26px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: #ffffff;
+}
+
+.my_page_frame .my_page_right {
+  margin-left: 30px;
+  width: 30%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.my_page .order_info_box {
+  position: relative;
+  padding: 20px;
+  width: 100%;
+  height: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #ffffff;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25),
+    inset 0px 4px 4px rgba(0, 0, 0, 0.25),
+    inset 0px 4px 16px rgba(242, 189, 87, 0.04);
+  border-radius: 16px;
+}
+
+.my_page .order_info_box .settings_btn {
+  position: absolute;
+  top: 6%;
+  right: 19%;
+  cursor: pointer;
+}
+
+.my_page .order_info_box .order_user_img {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.my_page .order_info_box .order_user_img .order_user_avatar {
+  width: 117px;
+  height: 112px;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 37px;
+}
+
+.my_page .order_info_box .order_user_icon_box {
+  position: absolute;
+  padding: 5px;
+  width: 37px;
+  height: 37px;
+  top: 81%;
+  right: 0;
+  display: flex;
+  background: rgb(209 209 209 / 33%);
+  border-radius: 37px;
+}
+
+.my_page .order_user_icon_box .order_user_prof_img {
+  /*filter: brightness(0) invert(1);*/
+}
+
+.my_page .order_info_box .order_user_name {
+  margin-top: 10px;
+  font-family: "Commissioner";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 36px;
+  color: #08090d;
+}
+
+.my_page .order_info_box .order_user_prof {
+  font-family: "Commissioner";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 36px;
+  color: #a1a1a1;
+}
+
+.my_page .order_info_box .user_media_box {
+  margin-top: 10px;
+  width: 60%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.my_page .order_info_box .user_desc {
+  margin-top: 30px;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #616164;
+}
+
+.my_page .order_info_box .follows {
+  margin-top: 30px;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #616164;
+}
+
+.my_page .order_info_box .css-1e3kzd4-MuiButtonBase-root-MuiButton-root {
+  margin-top: 15px;
+  min-width: 90%;
+  height: 44px;
+
+  text-transform: capitalize;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 25px;
+  line-height: 38px;
+  color: #ffffff;
+}
+
+.my_page .my_page_menu {
+  margin-top: 40px;
+  width: 100%;
+  height: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.my_page_menu .menu_box {
+  margin-bottom: 10px;
+  padding: 0px 20px;
+  width: 98%;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: inset 1px 4px 4px rgb(172 87 87 / 25%),
+    inset 0px 4px 4px rgb(0 0 0 / 25%), inset 0px 4px 4px rgb(0 0 0 / 25%);
+}
+
+.my_page .active {
+  background: red;
+}
+
+.my_page .menu_box img {
+  width: 25px;
+}
+
+.my_page .menu_box span {
+  margin-left: 30px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 25px;
+  line-height: 38px;
+  color: #000000;
+}
+
+.my_page .my_settings_page {
+  width: 100%;
+  height: auto;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.my_page .my_settings_page .input_frame {
+  margin-top: 25px;
+  width: 100%;
+  height: auto;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.my_page .my_settings_page .short_input {
+  width: 49%;
+  height: auto;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.my_page .my_settings_page .long_input {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.my_page .my_settings_page .spec_label {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 660;
+  font-size: 18px;
+  line-height: 25px;
+  color: #423127;
+}
+
+.my_page .my_settings_page .spec_input {
+  position: relative;
+  margin-top: 10px;
+  padding-left: 20px;
+  width: 100%;
+  height: 54px;
+  border: none;
+  background: #f7f7f7;
+  box-shadow: 1px 1px 14px 1px rgba(0, 0, 0, 0.35);
+  border-radius: 5px;
+
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 440;
+  font-size: 15px;
+  line-height: 26px;
+  color: #4f547b;
+}
+
+.my_page .my_settings_page .spec_textarea {
+  position: relative;
+  margin-top: 10px;
+  padding: 20px;
+  width: 100%;
+  height: 200px;
+  border: none;
+
+  background: #f7f7f7;
+  box-shadow: 1px 1px 14px 1px rgba(0, 0, 0, 0.35);
+  border-radius: 5px;
+
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 440;
+  font-size: 15px;
+  line-height: 26px;
+  color: #4f547b;
+}
+
+.my_page .my_settings_page .member_media_frame {
+  margin-top: 25px;
+  position: relative;
+  padding: 10px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  border-radius: 5px;
+  background: #f7f7f7;
+  box-shadow: 1px 1px 14px 1px rgba(0, 0, 0, 0.35);
+}
+
+.my_page .my_settings_page .media_change_box {
+  position: relative;
+  margin-left: 20px;
+  width: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.my_page .my_settings_page .media_change_box span {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 660;
+  font-size: 16px;
+  line-height: 18px;
+  color: #423127;
+}
+
+.my_page .my_settings_page .media_change_box p {
+  margin: 10px 0px 14px 0px;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 550;
+  font-size: 14px;
+  line-height: 16px;
+  color: #4f547b;
+}
+
+.my_page .my_settings_page .up_del_box {
+  position: relative;
+  width: 37px;
+  height: 37px;
+  display: flex;
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.my_page .my_settings_page .up_del_box input {
+  position: absolute;
+  width: 20px;
+  height: 16px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.my_page .wish_list {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+/* .my_page .wish_list .left_shop {
+  width: 825px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+} */
+
+.my_page .wish_list .shop_products {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: auto;
+  position: relative;
+}
+
+.my_page .wish_list .shop_products .shop_product-info {
+  width: 235px;
+  height: auto;
+  margin-top: 50px;
+  flex-shrink: 0;
+  border-radius: 12px;
+}
+
+.my_page .wish_list .shop_products .shop_product-info .product-box {
+  height: auto;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: 235px;
+}
+
+.my_page .wish_list .shop_products .shop_product-info:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.my_page .wish_list .shop_products .shop_product-info .product-box .dish_sale {
+  width: 100px;
+  height: 33px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px dashed #1976d2;
+  background: #fff;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.my_page
+  .wish_list
+  .shop_products
+  .shop_product-info
+  .product-box
+  .dish_sale
+  .dish_sale-txt {
+  display: flex;
+  width: 80px;
+  height: 19px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+
+  color: #1976d2;
+  text-align: center;
+  font-family: "Nunito";
+  margin: 6px;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 850;
+}
+
+.my_page
+  .wish_list
+  .shop_products
+  .shop_product-info
+  .product-box
+  .like_view_btn {
+  position: absolute;
+  top: 223px;
+  padding: 5px;
+  min-width: 40px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  margin-top: 75px;
+}
+
+.my_page .wish_list .shop_products .shop_product-info:hover .like_view_btn {
+  opacity: 1;
+}
+
+.my_page .wish_list .shop_products .shop_product-info .product-box .img {
+  position: relative;
+  width: 235px;
+  height: 320px;
+  background-size: cover;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px 0px rgba(50, 50, 50, 0.3);
+}
+
+.my_page .wish_list .shop_products .shop_product-info .product_name {
+  display: flex;
+  width: 241px;
+  height: 40px;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 15px;
+
+  color: #423127;
+  text-align: center;
+  font-family: Nunito;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 22px; /* 122.222% */
+}
+
+.my_page .wish_list .shop_products .shop_product-info .rating_box {
+  align-items: center;
+  width: 200px;
+  display: flex;
+  flex-direction: row;
+  height: 10px;
+  justify-content: center;
+  margin-top: 5px;
+  width: 100%;
+}
+
+.my_page .wish_list .shop_products .shop_product-info .rating_box .half-rating {
+  display: inline-flex;
+  position: relative;
+  font-size: 24px;
+  color: #1976d2;
+  cursor: pointer;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.my_page .wish_list .shop_products .shop_product-info .price {
+  width: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 15px;
+  margin-left: 80px;
+}

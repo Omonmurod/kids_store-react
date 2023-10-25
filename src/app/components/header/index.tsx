@@ -50,15 +50,24 @@ export function Navbar() {
         <Container>
           <Stack flexDirection={"row"} justifyContent={"space-between"}>
             <Box style={{ width: "18%" }}>
-              <img
-                src="/icons/cropped-logo.png"
+              <NavLink
+                to="/home"
                 style={{
-                  width: "130px",
-                  height: "68px",
-                  marginTop: "16px",
-                  marginBottom: "14px",
+                  textDecoration: "none",
+                  color: "white",
+                  cursor: "pointer",
                 }}
-              />
+              >
+                <img
+                  src="/icons/cropped-logo.png"
+                  style={{
+                    width: "130px",
+                    height: "68px",
+                    marginTop: "16px",
+                    marginBottom: "14px",
+                  }}
+                />
+              </NavLink>
             </Box>
             <Stack
               style={{ width: "50%" }}

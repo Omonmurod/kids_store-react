@@ -486,7 +486,7 @@ export function AllProducts() {
                     color: "#423127",
                     fontFamily: "Nunito",
                     fontWeight: "900",
-                    fontSize: "28px",
+                    fontSize: "28px",  
                   }}
                 >
                   Special Offer

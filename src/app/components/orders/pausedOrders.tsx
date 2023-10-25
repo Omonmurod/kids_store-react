@@ -186,7 +186,7 @@ export default function PausedOrders(props: any) {
                             id="creditCardName"
                             name="creditCardName"
                             className="cardNumberInput"
-                            placeholder={"Umarov Abdulloh"}
+                            placeholder={"Jacob Robertson"}
                           />
                         </form>
                         <div
