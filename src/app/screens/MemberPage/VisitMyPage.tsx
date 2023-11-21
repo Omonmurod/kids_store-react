@@ -19,6 +19,8 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme2 from "../../MaterialTheme/theme2";
 import { WishList } from "./wishList";
+import { TuiEditor } from "../../components/tuiEditor/TuiEditor";
+import TViewer from "../../components/tuiEditor/TViewer";
 
 export function VisitMyPage(props: any) {
   /** INITIALIZATIONS **/
@@ -172,12 +174,16 @@ export function VisitMyPage(props: any) {
 
                 <TabPanel value={"2"}>
                   <Box className={"menu_name"}>Writing an Article</Box>
-                  <Box className={"write_content"}></Box>
+                  <Box className={"write_content"}>
+                    <TuiEditor />
+                  </Box>
                 </TabPanel>
 
                 <TabPanel value={"6"}>
                   <Box className={"menu_name"}>Chosen Article</Box>
-                  <Box className={"menu_content"}></Box>
+                  <Box className={"menu_content"}>
+                    <TViewer text={`<h3>Hello</h3>`} />
+                  </Box>
                 </TabPanel>
 
                 <TabPanel value={"7"}>

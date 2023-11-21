@@ -11,7 +11,7 @@ export function BrandPage() {
   return (
     <div className="brand_page">
       <Switch>
-        <Route path={`${brand.path}/product/:product_id`}>
+        <Route path={`${brand.path}/products/:product_id`}>
           <BrandProduct />
         </Route>
         <Route path={`${brand.path}/:brand_id`}>

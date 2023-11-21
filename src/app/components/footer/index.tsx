@@ -26,16 +26,16 @@ export function Footer() {
               </Box>
               <Stack className="contact_links">
                 <Box>
-                  <img src={"/icons/facebook.svg"} />
+                  <img src={"/icons/facebook.svg"} className="underline"/>
                 </Box>
                 <Box>
-                  <img src={"/icons/instagram.svg"} />
+                  <img src={"/icons/instagram.svg"} className="underline"/>
                 </Box>
                 <Box>
-                  <img src={"/icons/twitter.svg"} />
+                  <img src={"/icons/twitter.svg"} className="underline"/>
                 </Box>
                 <Box>
-                  <img src={"/icons/youtube.svg"} />
+                  <img src={"/icons/youtube.svg"} className="underline"/>
                 </Box>
               </Stack>
             </Stack>
@@ -98,10 +98,10 @@ export function Footer() {
                 <Box>L. Seoul</Box>
               </Stack>
               <Stack className="details">
-                <Box>P. +8210 1234 5678</Box>
+                <Box>P. +8210 2049 9295</Box>
               </Stack>
               <Stack className="details">
-                <Box>E. kidsworld@kids.com</Box>
+                <Box>E. omonmurod@gmail.com</Box>
               </Stack>
               <Stack flexDirection={"row"} className="baby_icons">
                 <Box className="icons">

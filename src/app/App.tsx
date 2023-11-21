@@ -20,7 +20,7 @@ function App() {
     <Router>
       <Navbar />
       <Switch>
-        <Route path="/product">
+        <Route path="/products">
           <ProductPage />
         </Route>
         <Route path="/brand">

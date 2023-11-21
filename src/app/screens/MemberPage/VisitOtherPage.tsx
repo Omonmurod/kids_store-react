@@ -16,10 +16,11 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme2 from "../../MaterialTheme/theme2";
+import TViewer from "../../components/tuiEditor/TViewer";
 
 export function VisitOtherPage(props: any) {
   /** INITIALIZATIONS **/
-  const [value, setValue] = React.useState("1");
+  const [value, setValue] = React.useState("5");
 
   /** HANDLERS **/
   const handleChange = (event: any, newValue: string) => {
@@ -138,7 +139,9 @@ export function VisitOtherPage(props: any) {
                 </TabPanel>
                 <TabPanel value={"5"}>
                   <Box className={"menu_name"}>Tanlangan Maqola</Box>
-                  <Box className={"write_content"}></Box>
+                  <Box className={"write_content"}>
+                    <TViewer text={`<h3>Hello</h3>`} />
+                  </Box>
                 </TabPanel>
               </Box>
             </Stack>

@@ -35,9 +35,10 @@ export function AllBrands() {
           </Stack>
           <Stack className="category_box">
             <a>Newly added</a>
-            <a>Bestsellers</a>
-            <a>Trending</a>
-            <a>Newly added</a>
+            <a>High Ranking</a>
+            <a>Most Liked</a>
+            <a>Most Viewed</a>
+            <a>Most Reviewed</a>
           </Stack>
         </Stack>
         <Stack className="brands">

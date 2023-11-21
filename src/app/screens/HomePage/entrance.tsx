@@ -35,7 +35,7 @@ export function Entrance() {
                 fontSize: "16px"
               }}
             >
-              <NavLink to="/product" style={{ textDecoration: "none", color: "white", cursor: "pointer"}}>
+              <NavLink to="/products" style={{ textDecoration: "none", color: "white", cursor: "pointer"}}>
                 Shop Now
               </NavLink>
             </Button>

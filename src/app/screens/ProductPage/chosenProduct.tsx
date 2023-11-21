@@ -166,7 +166,7 @@ export function ChosenProduct() {
           >
             <Stack className="comment">
               <Stack className="rating">
-                <Box className="comment_title">Reviews for Product</Box>
+                <Box className="comment_title">Reviews for the Product</Box>
                 <Stack>
                   <div
                     style={{
@@ -179,7 +179,7 @@ export function ChosenProduct() {
                       marginBottom: "4px",
                     }}
                   >
-                    Average Rating
+                    Average Rating of the Product is
                   </div>
                   <div
                     style={{

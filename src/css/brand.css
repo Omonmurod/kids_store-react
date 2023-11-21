@@ -81,7 +81,7 @@
   justify-content: space-between;
   margin-top: 40px;
   position: relative;
-  width: 600px;
+  width: 730px;
 }
 
 .brand_page .all_brands_frame .search .category_box a {
@@ -1125,14 +1125,14 @@
   margin-top: 20px;
 }
 
-.brand_page .brand_product .comment_section {
+.brand_page .comment_section {
   width: 100%;
   margin-top: 30px;
   margin-left: 20px;
   height: auto;
 }
 
-.brand_page .brand_product .comment_section .comment_title {
+.brand_page .comment_section .comment_title {
   font-family: "Nunito";
   font-style: normal;
   font-weight: 900;
@@ -1142,27 +1142,27 @@
   color: #423127;
 }
 
-.brand_page .brand_product .comment_section .comment {
+.brand_page .comment_section .comment {
   width: 48%;
   height: 750px;
   display: flex;
   flex-direction: column;
 }
 
-.brand_page .brand_product .comment_section .comment .rating {
+.brand_page .comment_section .comment .rating {
   width: 100%;
   height: 350px;
   display: flex;
 }
 
-.brand_page .brand_product .comment_section .comment .rating .line {
+.brand_page .comment_section .comment .rating .line {
   width: 384px;
   height: 6px;
   border-radius: 3px;
   background: rgba(22, 0, 108, 0.12);
 }
 
-.brand_page .brand_product .comment_section .comment .add_comment {
+.brand_page .comment_section .comment .add_comment {
   width: 100%;
   height: 270px;
   display: flex;
@@ -1170,7 +1170,6 @@
 }
 
 .brand_page
-  .brand_product
   .comment_section
   .comment
   .add_comment
@@ -1197,7 +1196,6 @@
 }
 
 .brand_page
-  .brand_product
   .comment_section
   .comment
   .add_comment
@@ -1207,7 +1205,6 @@
 }
 
 .brand_page
-  .brand_product
   .comment_section
   .comment
   .add_comment
@@ -1218,14 +1215,12 @@
 }
 
 .brand_page
-  .brand_product
   .comment_section
   .comment
   .add_comment
   .admin_input_box
   input,
 .brand_page
-  .brand_product
   .comment_section
   .comment
   .add_comment
@@ -1240,7 +1235,6 @@
 }
 
 .brand_page
-  .brand_product
   .comment_section
   .comment
   .add_comment
@@ -1250,11 +1244,11 @@
   position: relative;
 }
 
-.brand_page .brand_product .comment_section .reviews {
+.brand_page .comment_section .reviews {
   width: 48%;
 }
 
-.brand_page .brand_product .comment_section .reviews .review_box {
+.brand_page .comment_section .reviews .review_box {
   width: 560px;
   height: 200px;
   margin-bottom: 24px;
@@ -1268,7 +1262,7 @@
   align-items: center;
 }
 
-.brand_page .brand_product .comment_section .reviews .review_box .review_txt {
+.brand_page .comment_section .reviews .review_box .review_txt {
   color: #423127;
   font-family: Nunito;
   font-size: 14px;
@@ -1278,7 +1272,7 @@
   text-transform: uppercase;
 }
 
-.brand_page .brand_product .comment_section .reviews .review_box .review_date {
+.brand_page .comment_section .reviews .review_box .review_date {
   color: #724d37;
   font-family: Lato;
   font-size: 14px;
@@ -1288,7 +1282,7 @@
   line-height: normal;
 }
 
-.brand_page .brand_product .comment_section .reviews .review_box .review_info {
+.brand_page .comment_section .reviews .review_box .review_info {
   width: 375px;
   height: 111px;
   flex-shrink: 0;

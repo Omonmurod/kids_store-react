@@ -288,7 +288,7 @@ export function AboutPage() {
                       justifyContent={""}
                     >
                       <Box className="img-icon">
-                        <a href="http://localhost:3000/product">
+                        <a href="http://localhost:3000/products">
                           <img
                             className="icon"
                             src="/icons/about3.png"
@@ -302,7 +302,7 @@ export function AboutPage() {
                         </a>
                       </Box>
                       <Box className="img-icon">
-                        <a href="http://localhost:3000/product">
+                        <a href="http://localhost:3000/products">
                           <img
                             className="icon"
                             src="/icons/about5.png"
@@ -316,7 +316,7 @@ export function AboutPage() {
                         </a>
                       </Box>
                       <Box className="img-icon">
-                        <a href="http://localhost:3000/product">
+                        <a href="http://localhost:3000/products">
                           <img
                             className="icon"
                             src="/icons/about4.png"
@@ -330,7 +330,7 @@ export function AboutPage() {
                         </a>
                       </Box>
                       <Box style={{ marginTop: "-14px" }} className="img-icon">
-                        <a href="http://localhost:3000/product">
+                        <a href="http://localhost:3000/products">
                           <figure>
                             <img
                               className="icon"
@@ -346,7 +346,7 @@ export function AboutPage() {
                         </a>
                       </Box>
                       <Box className="img-icon">
-                        <a href="http://localhost:3000/product">
+                        <a href="http://localhost:3000/products">
                           <img
                             className="icon"
                             src="/icons/about7.png"

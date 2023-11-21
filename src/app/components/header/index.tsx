@@ -22,7 +22,7 @@ export function Navbar() {
           >
             <Box className={"shop_now"}>
               New sale Season - Up to 20%
-              <NavLink to="/product" activeClassName="underline">
+              <NavLink to="/products" activeClassName="underline">
                 Shop Now
               </NavLink>
             </Box>
@@ -40,7 +40,7 @@ export function Navbar() {
                   marginLeft: "12px",
                 }}
               >
-                +8210 1234 5678
+                +8210 2049 9295
               </span>
             </Box>
           </Stack>
@@ -82,7 +82,7 @@ export function Navbar() {
                 </NavLink>
               </Box>
               <Box className="hover-line">
-                <NavLink to="/product" activeClassName="underline">
+                <NavLink to="/products" activeClassName="underline">
                   Shop
                 </NavLink>
               </Box>
