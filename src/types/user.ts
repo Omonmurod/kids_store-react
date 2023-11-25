@@ -1,5 +1,16 @@
 import { MeFollowed } from "./follow";
-import { MeLiked, MeViewed } from "./product";
+
+export interface MeLiked {
+  mb_id: string;
+  like_ref_id: string;
+  my_favorite: boolean;
+}
+
+export interface MeViewed {
+  mb_id: string;
+  view_ref_id: string;
+  my_view: boolean;
+}
 
 export interface Brand {
   _id: string;

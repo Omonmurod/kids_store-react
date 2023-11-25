@@ -6,8 +6,21 @@ import { CssVarsProvider } from "@mui/joy/styles";
 import { CardOverflow, IconButton } from "@mui/joy";
 import { Favorite, Visibility } from "@mui/icons-material";
 import { NavLink } from "react-router-dom";
+// REDUX
+import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { retrieveTopBrands } from "../../screens/HomePage/selector";
+import { Brand } from "../../../types/user";
+import { serverApi } from "../../../lib/config";
+
+/** REDUX SELECTOR */
+const topBrandsRetriever = createSelector(retrieveTopBrands, (topBrands) => ({
+  topBrands,
+}));
 
 export function TopBrands() {
+  const { topBrands } = useSelector(topBrandsRetriever);
+
   return (
     <div className="top_brands_frame">
       <Container
@@ -42,346 +55,112 @@ export function TopBrands() {
           flexDirection={"row"}
           justifyContent={"space-between"}
         >
-          <Stack className="top-brands_box">
-            <Stack className="brand-img">
-              <img src="/icons/swiper2.jpeg" className="img" />
-            </Stack>
-            <Stack className="brand-info">
-              <CssVarsProvider>
-                <Stack className="info-top">
-                  <Box className="info-top_nick">AGABANG</Box>
-                  <Box className="info-top_address">
-                    <img
-                      src="/icons/location.svg"
-                      style={{ marginRight: "8px" }}
-                    />
-                    서울 홍익로 동교동
-                  </Box>
-                  <Box className="info-top_address">
-                    <img src="/icons/call.svg" style={{ marginRight: "8px" }} />
-                    053 1234 5678
-                  </Box>
+          {topBrands.map((ele: Brand) => {
+            const image_path = `${serverApi}/${ele.mb_image}`;
+            return (
+              <Stack className="top-brands_box" key={ele._id}>
+                <Stack className="brand-img">
+                  <img src={image_path} className="img" />
                 </Stack>
-                <CardOverflow
-                  sx={{
-                    display: "flex",
-                    gap: 1.5,
-                    py: 0.4,
-                  }}
-                >
-                  <IconButton
-                    variant="solid"
-                    color="neutral"
-                    sx={{
-                      position: "absolute",
-                      zIndex: 2,
-                      borderRadius: "50%",
-                      right: "1rem",
-                      bottom: 45,
-                      transform: "translateY(70%)",
-                      color: "rgba(0, 0, 0, .4)",
-                    }}
-                  >
-                    <Favorite style={{ fill: "red" }} />
-                  </IconButton>
-                  <Typography
-                    //level="body3"
-                    sx={{
-                      fontWeight: "md",
-                      color: "#423126",
-                      alignItems: "center",
-                      display: "flex",
-                      fontSize: "15px",
-                    }}
-                  >
-                    <Visibility
+                <Stack className="brand-info">
+                  <CssVarsProvider>
+                    <Stack className="info-top">
+                      <Box className="info-top_nick">{ele.mb_nick}</Box>
+                      <Box className="info-top_address">
+                        <img
+                          src="/icons/location.svg"
+                          style={{ marginRight: "8px" }}
+                        />
+                        서울 강남구 가로수길 18
+                      </Box>
+                      <Box className="info-top_address">
+                        <img
+                          src="/icons/call.svg"
+                          style={{ marginRight: "8px" }}
+                        />
+                        {ele.mb_phone}
+                      </Box>
+                    </Stack>
+                    <CardOverflow
                       sx={{
-                        fontSize: 20,
-                        marginLeft: "5px",
-                        marginRight: "5px",
+                        display: "flex",
+                        gap: 1.5,
+                        py: 0.4,
                       }}
-                    />
-                    100
-                  </Typography>
-                  <Box sx={{ width: 2, bgcolor: "divider" }} />
-                  <Typography
-                    //level="body3"
-                    sx={{
-                      fontWeight: "md",
-                      color: "#423126",
-                      alignItems: "center",
-                      display: "flex",
-                      fontSize: "15px",
-                    }}
-                  >
-                    <Favorite
-                      sx={{
-                        fontSize: 20,
-                        marginLeft: "5px",
-                        marginRight: "5px",
-                      }}
-                    />
-                    5
-                  </Typography>
-                </CardOverflow>
-              </CssVarsProvider>
-            </Stack>
-          </Stack>
-          <Stack className="top-brands_box">
-            <Stack className="brand-img">
-              <img src="/icons/swiper2.jpeg" className="img" />
-            </Stack>
-            <Stack className="brand-info">
-              <CssVarsProvider>
-                <Stack className="info-top">
-                  <Box className="info-top_nick">AGABANG</Box>
-                  <Box className="info-top_address">
-                    <img
-                      src="/icons/location.svg"
-                      style={{ marginRight: "8px" }}
-                    />
-                    서울 홍익로 동교동
-                  </Box>
-                  <Box className="info-top_address">
-                    <img src="/icons/call.svg" style={{ marginRight: "8px" }} />
-                    053 1234 5678
-                  </Box>
+                    >
+                      <IconButton
+                        aria-label="Like minimal photography"
+                        size="md"
+                        variant="solid"
+                        color="neutral"
+                        sx={{
+                          position: "absolute",
+                          zIndex: 2,
+                          borderRadius: "50%",
+                          right: "1rem",
+                          bottom: 35,
+                          transform: "translateY(50%)",
+                          color: "rgba(0, 0, 0, .4)",
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
+                      >
+                        <Favorite
+                          //onClick={(e)=>targetLikeTop(e, ele._id)}
+                          style={{
+                            fill:
+                              ele?.me_liked && ele?.me_liked[0]?.my_favorite
+                                ? "red"
+                                : "white",
+                          }}
+                        />
+                      </IconButton>
+                      <Typography
+                        //level="body3"
+                        sx={{
+                          fontWeight: "md",
+                          color: "#423126",
+                          alignItems: "center",
+                          display: "flex",
+                          fontSize: "15px",
+                        }}
+                      >
+                        <Visibility
+                          sx={{
+                            fontSize: 20,
+                            marginLeft: "5px",
+                            marginRight: "5px",
+                          }}
+                        />
+                        {ele.mb_views}
+                      </Typography>
+                      <Box sx={{ width: 2, bgcolor: "divider" }} />
+                      <Typography
+                        //level="body3"
+                        sx={{
+                          fontWeight: "md",
+                          color: "#423126",
+                          alignItems: "center",
+                          display: "flex",
+                          fontSize: "15px",
+                        }}
+                      >
+                        <Favorite
+                          sx={{
+                            fontSize: 20,
+                            marginLeft: "5px",
+                            marginRight: "5px",
+                          }}
+                        />
+                        {ele.mb_likes}
+                      </Typography>
+                    </CardOverflow>
+                  </CssVarsProvider>
                 </Stack>
-                <CardOverflow
-                  sx={{
-                    display: "flex",
-                    gap: 1.5,
-                    py: 0.4,
-                  }}
-                >
-                  <IconButton
-                    variant="solid"
-                    color="neutral"
-                    sx={{
-                      position: "absolute",
-                      zIndex: 2,
-                      borderRadius: "50%",
-                      right: "1rem",
-                      bottom: 45,
-                      transform: "translateY(70%)",
-                      color: "rgba(0, 0, 0, .4)",
-                    }}
-                  >
-                    <Favorite style={{ fill: "white" }} />
-                  </IconButton>
-                  <Typography
-                    //level="body3"
-                    sx={{
-                      fontWeight: "md",
-                      color: "#423126",
-                      alignItems: "center",
-                      display: "flex",
-                      fontSize: "15px",
-                    }}
-                  >
-                    <Visibility
-                      sx={{
-                        fontSize: 20,
-                        marginLeft: "5px",
-                        marginRight: "5px",
-                      }}
-                    />
-                    100
-                  </Typography>
-                  <Box sx={{ width: 2, bgcolor: "divider" }} />
-                  <Typography
-                    //level="body3"
-                    sx={{
-                      fontWeight: "md",
-                      color: "#423126",
-                      alignItems: "center",
-                      display: "flex",
-                      fontSize: "15px",
-                    }}
-                  >
-                    <Favorite
-                      sx={{
-                        fontSize: 20,
-                        marginLeft: "5px",
-                        marginRight: "5px",
-                      }}
-                    />
-                    5
-                  </Typography>
-                </CardOverflow>
-              </CssVarsProvider>
-            </Stack>
-          </Stack>
-          <Stack className="top-brands_box">
-            <Stack className="brand-img">
-              <img src="/icons/swiper2.jpeg" className="img" />
-            </Stack>
-            <Stack className="brand-info">
-              <CssVarsProvider>
-                <Stack className="info-top">
-                  <Box className="info-top_nick">AGABANG</Box>
-                  <Box className="info-top_address">
-                    <img
-                      src="/icons/location.svg"
-                      style={{ marginRight: "8px" }}
-                    />
-                    서울 홍익로 동교동
-                  </Box>
-                  <Box className="info-top_address">
-                    <img src="/icons/call.svg" style={{ marginRight: "8px" }} />
-                    053 1234 5678
-                  </Box>
-                </Stack>
-                <CardOverflow
-                  sx={{
-                    display: "flex",
-                    gap: 1.5,
-                    py: 0.4,
-                  }}
-                >
-                  <IconButton
-                    variant="solid"
-                    color="neutral"
-                    sx={{
-                      position: "absolute",
-                      zIndex: 2,
-                      borderRadius: "50%",
-                      right: "1rem",
-                      bottom: 45,
-                      transform: "translateY(70%)",
-                      color: "rgba(0, 0, 0, .4)",
-                    }}
-                  >
-                    <Favorite style={{ fill: "white" }} />
-                  </IconButton>
-                  <Typography
-                    //level="body3"
-                    sx={{
-                      fontWeight: "md",
-                      color: "#423126",
-                      alignItems: "center",
-                      display: "flex",
-                      fontSize: "15px",
-                    }}
-                  >
-                    <Visibility
-                      sx={{
-                        fontSize: 20,
-                        marginLeft: "5px",
-                        marginRight: "5px",
-                      }}
-                    />
-                    100
-                  </Typography>
-                  <Box sx={{ width: 2, bgcolor: "divider" }} />
-                  <Typography
-                    //level="body3"
-                    sx={{
-                      fontWeight: "md",
-                      color: "#423126",
-                      alignItems: "center",
-                      display: "flex",
-                      fontSize: "15px",
-                    }}
-                  >
-                    <Favorite
-                      sx={{
-                        fontSize: 20,
-                        marginLeft: "5px",
-                        marginRight: "5px",
-                      }}
-                    />
-                    5
-                  </Typography>
-                </CardOverflow>
-              </CssVarsProvider>
-            </Stack>
-          </Stack>
-          <Stack className="top-brands_box">
-            <Stack className="brand-img">
-              <img src="/icons/swiper2.jpeg" className="img" />
-            </Stack>
-            <Stack className="brand-info">
-              <CssVarsProvider>
-                <Stack className="info-top">
-                  <Box className="info-top_nick">AGABANG</Box>
-                  <Box className="info-top_address">
-                    <img
-                      src="/icons/location.svg"
-                      style={{ marginRight: "8px" }}
-                    />
-                    서울 홍익로 동교동
-                  </Box>
-                  <Box className="info-top_address">
-                    <img src="/icons/call.svg" style={{ marginRight: "8px" }} />
-                    053 1234 5678
-                  </Box>
-                </Stack>
-                <CardOverflow
-                  sx={{
-                    display: "flex",
-                    gap: 1.5,
-                    py: 0.4,
-                  }}
-                >
-                  <IconButton
-                    variant="solid"
-                    color="neutral"
-                    sx={{
-                      position: "absolute",
-                      zIndex: 2,
-                      borderRadius: "50%",
-                      right: "1rem",
-                      bottom: 45,
-                      transform: "translateY(70%)",
-                      color: "rgba(0, 0, 0, .4)",
-                    }}
-                  >
-                    <Favorite style={{ fill: "white" }} />
-                  </IconButton>
-                  <Typography
-                    //level="body3"
-                    sx={{
-                      fontWeight: "md",
-                      color: "#423126",
-                      alignItems: "center",
-                      display: "flex",
-                      fontSize: "15px",
-                    }}
-                  >
-                    <Visibility
-                      sx={{
-                        fontSize: 20,
-                        marginLeft: "5px",
-                        marginRight: "5px",
-                      }}
-                    />
-                    100
-                  </Typography>
-                  <Box sx={{ width: 2, bgcolor: "divider" }} />
-                  <Typography
-                    //level="body3"
-                    sx={{
-                      fontWeight: "md",
-                      color: "#423126",
-                      alignItems: "center",
-                      display: "flex",
-                      fontSize: "15px",
-                    }}
-                  >
-                    <Favorite
-                      sx={{
-                        fontSize: 20,
-                        marginLeft: "5px",
-                        marginRight: "5px",
-                      }}
-                    />
-                    5
-                  </Typography>
-                </CardOverflow>
-              </CssVarsProvider>
-            </Stack>
-          </Stack>
+              </Stack>
+            );
+          })}
         </Stack>
         <Stack
           style={{

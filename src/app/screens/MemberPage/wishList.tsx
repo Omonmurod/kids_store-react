@@ -31,7 +31,7 @@ export function WishList(props: any) {
                         className={"like_view_btn"}
                         style={{ left: "36px" }}
                       >
-                        <Badge badgeContent={8} color="primary">
+                        <Badge badgeContent={8} color="secondary">
                           <Checkbox
                             icon={<Favorite style={{ color: "white" }} />}
                             checkedIcon={<Favorite style={{ color: "red" }} />}
@@ -43,7 +43,7 @@ export function WishList(props: any) {
                         className={"like_view_btn"}
                         style={{ right: "36px" }}
                       >
-                        <Badge badgeContent={16} color="primary">
+                        <Badge badgeContent={16} color="secondary">
                           <Checkbox
                             icon={<Visibility style={{ color: "white" }} />}
                             checkedIcon={

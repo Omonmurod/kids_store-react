@@ -1,14 +1,4 @@
-export interface MeLiked {
-  mb_id: string;
-  like_ref_id: string;
-  my_favorite: boolean;
-}
-
-export interface MeViewed {
-  mb_id: string;
-  view_ref_id: string;
-  my_view: boolean;
-}
+import { MeLiked, MeViewed } from "./user";
 
 export interface Product {
   _id: string;
@@ -40,7 +30,7 @@ export interface Discount {
   type: string;
   value: number;
   startDate: Date;
-  endDate: Date;
+  dueDate: Date;
 }
 
 export interface ProductRating {

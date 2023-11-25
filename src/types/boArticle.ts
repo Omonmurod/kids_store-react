@@ -1,4 +1,4 @@
-import { MeLiked, MeViewed } from "./product";
+import { MeLiked, MeViewed } from "./user";
 import { Member } from "./user";
 
 // interface bu custom typescripti biz yozib olgan

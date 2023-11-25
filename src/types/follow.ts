@@ -1,4 +1,4 @@
-import { MeLiked } from "./product";
+import { MeLiked } from "./user";
 import { Member, MemberComment } from "./user";
 
 export interface MeFollowed {

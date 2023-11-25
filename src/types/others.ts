@@ -8,9 +8,9 @@ export interface SearchObj {
 export interface ProductSearchObj {
   page: number;
   limit: number;
-  order: string;
-  restaurant_mb_id?: string;
-  product_name: string;
+  order?: string;
+  brand_mb_id?: string;
+  product_name?: string;
   product_collection?: string;
   product_size?: string;
   product_color?: string;

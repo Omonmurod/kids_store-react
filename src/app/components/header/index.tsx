@@ -10,7 +10,7 @@ import {
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-export function Navbar() {
+export function Navbar(props: any) {
   return (
     <div className="navbar">
       <div className="navbar_top">
@@ -101,11 +101,11 @@ export function Navbar() {
                   Community
                 </NavLink>
               </Box>
-              <Box className="hover-line">
-                <NavLink to="/member-page" activeClassName="underline">
-                  My page
-                </NavLink>
-              </Box>
+                <Box className="hover-line">
+                  <NavLink to="/member-page" activeClassName="underline">
+                    My page
+                  </NavLink>
+                </Box>
               <Box className="hover-line">
                 <NavLink to="/about" activeClassName="underline">
                   About Us
@@ -126,46 +126,47 @@ export function Navbar() {
                   aria-haspopup="true"
                   aria-expanded={undefined}
                 >
-                  <Badge badgeContent={5} color="primary">
+                  <Badge badgeContent={5} color="secondary">
                     <img
-                      src="/icons/shopping_cart.svg"
-                      style={{ width: "20px" }}
+                      src="/auth/shopping-cart.png"
+                      style={{ width: "30px" }}
                     />
                   </Badge>
                 </IconButton>
               </Box>
-              <Button
-                variant="contained"
-                style={{
-                  borderRadius: "30px",
-                  color: "#ffffff",
-                  background: "#ffa600",
-                  fontFamily: "Nunito",
-                  height: "40px",
-                  width: "70px",
-                  fontWeight: "900",
-                  fontSize: "12px",
-                }}
-                //onClick={props.handleLoginOpen}
-              >
-                LogIn
-              </Button>
-              <Button
-                variant="contained"
-                style={{
-                  borderRadius: "30px",
-                  color: "#ffffff",
-                  background: "#ffa600",
-                  fontFamily: "Nunito",
-                  height: "40px",
-                  width: "110px",
-                  fontWeight: "900",
-                  fontSize: "12px",
-                }}
-                //onClick={props.handleLoginOpen}
-              >
-                REGISTER
-              </Button>
+                <Button
+                  variant="contained"
+                  style={{
+                    borderRadius: "30px",
+                    color: "#ffffff",
+                    background: "#ffa600",
+                    fontFamily: "Nunito",
+                    height: "40px",
+                    width: "70px",
+                    fontWeight: "900",
+                    fontSize: "12px",
+                  }}
+                  //onClick={props.handleLoginOpen}
+                >
+                  LogIn
+                </Button>
+                
+                <Button
+                  variant="contained"
+                  style={{
+                    borderRadius: "30px",
+                    color: "#ffffff",
+                    background: "#ffa600",
+                    fontFamily: "Nunito",
+                    height: "40px",
+                    width: "110px",
+                    fontWeight: "900",
+                    fontSize: "12px",
+                  }}
+                  //onClick={props.handleSignUpOpen}
+                >
+                  SIGN UP
+                </Button>
             </Stack>
           </Stack>
         </Container>

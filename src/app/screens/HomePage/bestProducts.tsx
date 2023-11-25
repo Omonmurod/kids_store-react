@@ -1,23 +1,63 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Box, Stack, Button } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
+//import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
 import Rating from "@mui/material/Rating";
-import { useCountdown } from "../../components/useCountdown";
 import Checkbox from "@mui/material/Checkbox";
 import { Favorite, Visibility } from "@mui/icons-material";
 import Badge from "@mui/material/Badge";
-SwiperCore.use([Autoplay, Navigation, Pagination]);
+// REDUX
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
+import { setBestProducts } from "./slice";
+import { Product } from "../../../types/product";
+import ProductApiService from "../../apiServices/productApiService";
+import { retrieveBestProducts } from "./selector";
+import { createSelector } from "reselect";
+import { serverApi } from "../../../lib/config";
+import { useHistory } from "react-router-dom";
 
-export function PopularProducts() {
-  const events_list = Array.from(Array(10).keys());
+//SwiperCore.use([Autoplay, Navigation, Pagination]);
 
+/** REDUX SLICE */
+const actionDispatch = (dispach: Dispatch) => ({
+  setBestProducts: (data: Product[]) => dispach(setBestProducts(data)),
+});
+
+/** REDUX SELECTOR */
+const bestProductsRetriever = createSelector(
+  retrieveBestProducts,
+  (bestProducts) => ({
+    bestProducts,
+  })
+);
+
+//const events_list = Array.from(Array(10).keys());
+
+export function BestProducts() {
+  /** INITIALIZATIONS */
+  const history = useHistory();
+  const { setBestProducts } = actionDispatch(useDispatch());
+  const { bestProducts } = useSelector(bestProductsRetriever);
+
+  useEffect(() => {
+    const productService = new ProductApiService();
+    productService
+      .getTargetProducts({ product_collection: "clothing", page: 1, limit: 10 })
+      .then((data) => setBestProducts(data))
+      .catch((err) => console.log(err));
+  }, []);
+
+  /** HANDLERS */
+  const chosenProductHandler = (id: string) => {
+    history.push(`products/${id}`);
+  };
   return (
     <div className="p_products_frame">
       <Container sx={{ overflow: "hidden" }}>
         <Stack className={"p_products_main"}>
           <Box className={"p_products_text"}>
-            <span className={"title"}>Best Sellers this Week</span>
+            <span className={"title"}>Popular Sellers this Week</span>
           </Box>
           <Stack className="swiper">
             <Swiper
@@ -38,15 +78,18 @@ export function PopularProducts() {
                 disableOnInteraction: true,
               }}
             >
-              {events_list.map((value, number) => {
+              {bestProducts.map((product: Product) => {
+                const image_path = `${serverApi}/${product.product_images[0]}`;
                 return (
                   <SwiperSlide className={"product_info_frame"}>
                     <Stack className={"product-box"}>
                       <Box
                         className={"img"}
                         sx={{
-                          backgroundImage: `url("/icons/teddy-bear.jpeg")`,
+                          backgroundImage: `url(${image_path})`,
+                          
                         }}
+                        onClick={() => chosenProductHandler(product._id)}
                       >
                         <Box className={"dish_sale"}>
                           <div className={"dish_sale-txt"}>Sale 20%</div>
@@ -55,7 +98,7 @@ export function PopularProducts() {
                           className={"like_view_btn"}
                           style={{ left: "36px" }}
                         >
-                          <Badge badgeContent={8} color="primary">
+                          <Badge badgeContent={8} color="secondary">
                             <Checkbox
                               icon={<Favorite style={{ color: "white" }} />}
                               checkedIcon={
@@ -69,7 +112,7 @@ export function PopularProducts() {
                           className={"like_view_btn"}
                           style={{ right: "36px" }}
                         >
-                          <Badge badgeContent={16} color="primary">
+                          <Badge badgeContent={16} color="secondary">
                             <Checkbox
                               icon={<Visibility style={{ color: "white" }} />}
                               checkedIcon={
@@ -81,7 +124,9 @@ export function PopularProducts() {
                         </Button>
                       </Box>
                     </Stack>
-                    <Stack className={"product_name"}>Taddybear Toy</Stack>
+                    <Stack className={"product_name"}>
+                      {product.product_name}
+                    </Stack>
                     <Stack className={"rating_box"}>
                       <Rating
                         className="half-rating"
@@ -98,7 +143,7 @@ export function PopularProducts() {
                           fontSize: "19px",
                         }}
                       >
-                        $70
+                        {product.product_price}
                       </span>
                       <span
                         style={{
@@ -108,7 +153,7 @@ export function PopularProducts() {
                           fontSize: "20px",
                         }}
                       >
-                        $50
+                        {product.discountedPrice}
                       </span>
                     </Stack>
                     <Stack marginLeft={"45px"} marginTop={"15px"}>

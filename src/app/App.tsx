@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../css/App.css";
 import "../css/navbar.css";
 import "../css/footer.css";
-import { Container } from "@mui/material";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { MemberPage } from "./screens/MemberPage";
 import { OrdersPage } from "./screens/OrdersPage";
 import { CommunityPage } from "./screens/CommunityPage";
@@ -14,11 +13,14 @@ import { HomePage } from "./screens/HomePage";
 import { Navbar } from "./components/header";
 import { Footer } from "./components/footer";
 import { ProductPage } from "./screens/ProductPage";
+import AuthenticationModel from "./components/auth";
 
 function App() {
+  const [path, setPath] = useState();
+
   return (
     <Router>
-      <Navbar />
+      <Navbar setPath={setPath} />
       <Switch>
         <Route path="/products">
           <ProductPage />
@@ -46,6 +48,7 @@ function App() {
         </Route>
       </Switch>
       <Footer />
+      <AuthenticationModel />
     </Router>
   );
 }

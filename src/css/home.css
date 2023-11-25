@@ -208,9 +208,11 @@
   .info-top_nick {
   text-transform: uppercase;
   font-family: "Nunito";
-  font-weight: 600;
+  font-weight: 710;
   font-size: 22px;
   text-align: center;
+  letter-spacing: 1.5px;
+  color: #423127;
 }
 
 .homepage
@@ -246,7 +248,7 @@
   color: #fff8f0;
 }
 
-/** Popular Products FRAME */
+/** Best Products FRAME */
 .homepage .p_products_frame {
   width: 100%;
   height: 710px;
@@ -374,6 +376,10 @@
 }
 
 .homepage .p_products_main .swiper .product_info_frame:hover .like_view_btn {
+  opacity: 1;
+}
+
+.homepage .p_products_main .swiper .product_info_frame:hover .view_push {
   opacity: 1;
 }
 
@@ -735,6 +741,15 @@
   height: 140px;
 }
 
+.homepage .events_main .events_info .events-img .img-size:hover {
+  transform: scale(1.06);
+  -moz-transform: scale(1.106);
+  -webkit-transform: scale(1.06);
+  -o-transform: scale(1.06);
+  -ms-transform: scale(1.06);
+  transition: all 500ms;
+}
+
 .homepage .events_main .events_info .events-txt {
   height: 140px;
   width: 310px;
@@ -769,6 +784,14 @@
   font-style: normal;
   font-weight: 800;
   line-height: normal;
+}
+
+.homepage .events_main .events_info .events-txt .events-desc:hover {
+  color: #7c81ff;
+  font-family: Nunito;
+  font-weight: 800;
+  transition: all 500ms;
+  font-size: 23px;
 }
 
 /** Articles FRAME */

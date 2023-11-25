@@ -5,7 +5,36 @@ import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
 export function Events() {
-  const events_list = Array.from(Array(5).keys());
+  const events_list = [
+    {
+      desc: "100 Kids Birthday Party Ideas – The Best Resources for Activities",
+      author: "ZARA Kids",
+      date: "Dec 30, 2023",
+      location: "Seoul",
+      img: "/icons/swiper1.jpeg",
+    },
+    {
+      desc: "Indoor camping complete with  blanket tents and s'mores  in the toaste oven",
+      author: "H&M store",
+      date: "Jan 15, 2024",
+      location: "Busan",
+      img: "/icons/swiper2.jpeg",
+    },
+    {
+      desc: "5 Fun Things To Do Earth Day For Kids Of All Ages",
+      author: "Agabang",
+      date: "Jan 5, 2024",
+      location: "Daegu",
+      img: "/icons/swiper3.jpeg",
+    },
+    {
+      desc: "BIG List Of Best-Selling Preschool Workbooks Your Kids Will Love",
+      author: "Nike",
+      date: "Jan 20, 2024",
+      location: "Jeju",
+      img: "/icons/swiper4.jpeg",
+    },
+  ];
 
   return (
     <div className="events_frame">
@@ -51,7 +80,7 @@ export function Events() {
                     >
                       <Stack className={"events-img"}>
                         <img
-                          src="/icons/swiper1.jpeg"
+                          src={value.img}
                           className="img-size"
                           style={{ borderRadius: "12px" }}
                         />
@@ -63,26 +92,25 @@ export function Events() {
                               src="/icons/speaker.svg"
                               style={{ height: "14px", width: "14px" }}
                             />{" "}
-                            Kids World
+                            {value.author}
                           </Box>
                           <Box>
                             <img
                               src="/icons/calendar.svg"
                               style={{ height: "14px", width: "13px" }}
                             />{" "}
-                            Nov 10, 2023{" "}
+                            {value.date}{" "}
                           </Box>
                           <Box>
                             <img
                               src="/icons/location.svg"
                               style={{ height: "14px", width: "14px" }}
                             />{" "}
-                            Seul
+                            {value.location}
                           </Box>
                         </Stack>
                         <Box className="events-desc">
-                          Big List of Free Websites & Companies With Lesson
-                          Plans
+                          {value.desc}
                         </Box>
                       </Stack>
                     </Stack>
