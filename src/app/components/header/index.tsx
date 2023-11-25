@@ -146,7 +146,7 @@ export function Navbar(props: any) {
                     fontWeight: "900",
                     fontSize: "12px",
                   }}
-                  //onClick={props.handleLoginOpen}
+                  onClick={props.handleLoginOpen}
                 >
                   LogIn
                 </Button>
@@ -163,7 +163,7 @@ export function Navbar(props: any) {
                     fontWeight: "900",
                     fontSize: "12px",
                   }}
-                  //onClick={props.handleSignUpOpen}
+                  onClick={props.handleSignUpOpen}
                 >
                   SIGN UP
                 </Button>

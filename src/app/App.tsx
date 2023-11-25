@@ -16,11 +16,24 @@ import { ProductPage } from "./screens/ProductPage";
 import AuthenticationModel from "./components/auth";
 
 function App() {
+  /** INITIALIZATIONS */
   const [path, setPath] = useState();
+  const [signUpOpen, setSignUpOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
+
+  /** HANDLERS */
+  const handleSignUpOpen = () => setSignUpOpen(true);
+  const handleSignUpClose = () => setSignUpOpen(false);
+  const handleLoginOpen = () => setLoginOpen(true);
+  const handleLoginClose = () => setLoginOpen(false);
 
   return (
     <Router>
-      <Navbar setPath={setPath} />
+      <Navbar
+        setPath={setPath}
+        handleLoginOpen={handleLoginOpen}
+        handleSignUpOpen={handleSignUpOpen}
+      />
       <Switch>
         <Route path="/products">
           <ProductPage />
@@ -48,7 +61,14 @@ function App() {
         </Route>
       </Switch>
       <Footer />
-      <AuthenticationModel />
+      <AuthenticationModel
+        signUpOpen={signUpOpen}
+        handleSignUpOpen={handleSignUpOpen}
+        handleSignUpClose={handleSignUpClose}
+        loginOpen={loginOpen}
+        handleLoginOpen={handleLoginOpen}
+        handleLoginClose={handleLoginClose}
+      />
     </Router>
   );
 }
