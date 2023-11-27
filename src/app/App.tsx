@@ -14,18 +14,64 @@ import { Navbar } from "./components/header";
 import { Footer } from "./components/footer";
 import { ProductPage } from "./screens/ProductPage";
 import AuthenticationModel from "./components/auth";
+import { Member } from "../types/user";
+import { serverApi } from "../lib/config";
+import {
+  sweetFailureProvider,
+  sweetTopSmallSuccessAlert,
+} from "../lib/sweetAlert";
+import { Definer } from "../lib/Definer";
+import assert from "assert";
+import MemberApiService from "./apiServices/memberApiService";
+import "../app/apiServices/verify";
 
 function App() {
   /** INITIALIZATIONS */
+  const [verifiedMemberData, setVerifiedMemberData] = useState<Member | null>(
+    null
+  );
   const [path, setPath] = useState();
   const [signUpOpen, setSignUpOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  // bu 1-ishga tushadigan component did mount
+  useEffect(() => {
+    console.log("=== useEffect: App ===");
+    const memberDataJson: any = localStorage.getItem("member_data")
+      ? localStorage.getItem("member_data")
+      : null;
+    const member_data = memberDataJson ? JSON.parse(memberDataJson) : null;
+    if (member_data) {
+      member_data.mb_image = member_data.mb_image
+        ? `${serverApi}/${member_data.mb_image}`
+        : "/icons/default_user.svg";
+      setVerifiedMemberData(member_data);
+    }
+  }, [signUpOpen, loginOpen]);
 
   /** HANDLERS */
   const handleSignUpOpen = () => setSignUpOpen(true);
   const handleSignUpClose = () => setSignUpOpen(false);
   const handleLoginOpen = () => setLoginOpen(true);
   const handleLoginClose = () => setLoginOpen(false);
+  const handleLogOutClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleCloseLogOut = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(null);
+  };
+  const handleLogOutRequest = async () => {
+    try {
+      const memberApiService = new MemberApiService();
+      await memberApiService.logOutRequest();
+      await sweetTopSmallSuccessAlert("See You Soon! 👋 ", 700, true);
+    } catch (err) {
+      console.log(err);
+      sweetFailureProvider(Definer.general_err1);
+    }
+  };
 
   return (
     <Router>
@@ -33,6 +79,12 @@ function App() {
         setPath={setPath}
         handleLoginOpen={handleLoginOpen}
         handleSignUpOpen={handleSignUpOpen}
+        handleCloseLogOut={handleCloseLogOut}
+        handleLogOutClick={handleLogOutClick}
+        handleLogOutRequest={handleLogOutRequest}
+        anchorEl={anchorEl}
+        open={open}
+        verifiedMemberData={verifiedMemberData}
       />
       <Switch>
         <Route path="/products">

@@ -51,29 +51,41 @@
 
 .navbar a {
   text-decoration: none;
+  font-family: "Nunito";
+  font-size: 19px;
+  font-weight: 800;
+  line-height: normal;
+  color: #423127;
+  cursor: pointer;
+  transition: color 0.2s;
 }
 
 .navbar .hover-line a {
-  color: #423127;
-  cursor: pointer;
-  transition: all 0.2s;
-
-  font-family: "Nunito";
-  font-size: 19px;
-  font-style: normal;
-  font-weight: 800;
-  line-height: normal;
+  position: relative;
 }
 
 .navbar .hover-line a:hover {
   color: orange;
-  transition: all 0.2s;
 }
 
-.navbar .hover-line .underline {
-  color: orange;
-  transition-delay: 0.2s;
+.navbar .hover-line a:hover::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
   border-bottom: solid 2px orange;
+  transform: scaleX(0);
+  transition: transform 0.2s;
+}
+
+.navbar .hover-line a.underline {
+  color: orange;
+  border-bottom: solid 2px orange;
+}
+
+.navbar .hover-line a.underline::after {
+  transform: scaleX(1);
 }
 
 .navbar .shop_now a {

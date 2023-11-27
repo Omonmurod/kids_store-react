@@ -9,7 +9,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import assert from "assert";
 import { Definer } from "../../../lib/Definer";
 import MemberApiService from "../../apiServices/memberApiService";
-import { sweetErrorHandling } from "../../../lib/sweetAlert";
+import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -57,7 +57,8 @@ export default function AuthenticationModal(props: any) {
 
   const handleSignupRequest = async () => {
     try {
-      const is_fulfilled = mb_nick !== "" && mb_password !== "" && mb_phone !== 0;
+      const is_fulfilled =
+        mb_nick !== "" && mb_password !== "" && mb_phone !== 0;
       assert.ok(is_fulfilled, Definer.input_err1);
 
       const signup_data = {
@@ -68,6 +69,7 @@ export default function AuthenticationModal(props: any) {
 
       const memberApiService = new MemberApiService();
       await memberApiService.signupRequest(signup_data);
+      await sweetTopSmallSuccessAlert("Congratulations! 🎉🎉🎉 ", 700, true);
 
       props.handleSignUpClose();
       window.location.reload();
@@ -89,6 +91,7 @@ export default function AuthenticationModal(props: any) {
 
       const memberApiService = new MemberApiService();
       await memberApiService.loginRequest(login_data);
+      await sweetTopSmallSuccessAlert("Welcome! 😊 ", 700);
 
       props.handleLoginClose();
       window.location.reload();
@@ -115,7 +118,7 @@ export default function AuthenticationModal(props: any) {
         }}
       >
         <Fade in={props.signUpOpen}>
-        <Stack
+          <Stack
             className={classes.paper}
             direction={"row"}
             sx={{
@@ -144,7 +147,7 @@ export default function AuthenticationModal(props: any) {
             >
               <h2>SignUp Form</h2>
               <TextField
-                //onChange={handleUsername}
+                onChange={handleUsername}
                 sx={{ marginTop: "7px", borderColor: "white" }}
                 id="outlined-basic"
                 label="Username"
@@ -156,7 +159,7 @@ export default function AuthenticationModal(props: any) {
                 }}
               />
               <TextField
-                //onChange={handlePhone}
+                onChange={handlePhone}
                 sx={{ my: "17px" }}
                 id="outlined-basic"
                 label="Phone number"
@@ -168,7 +171,7 @@ export default function AuthenticationModal(props: any) {
                 }}
               />
               <TextField
-                //onChange={handlePassword}
+                onChange={handlePassword}
                 id="outlined-basic"
                 label="Password"
                 variant="outlined"
@@ -179,7 +182,7 @@ export default function AuthenticationModal(props: any) {
                 }}
               />
               <Fab
-                //onClick={handleSignupRequest}
+                onClick={handleSignupRequest}
                 sx={{ marginTop: "30px", width: "150px", marginBottom: "20px" }}
                 variant="extended"
                 color="primary"
@@ -206,7 +209,7 @@ export default function AuthenticationModal(props: any) {
         }}
       >
         <Fade in={props.loginOpen}>
-        <Stack
+          <Stack
             className={classes.paper}
             direction={"row"}
             sx={{ width: "800px", borderColor: "white", borderRadius: "20px" }}

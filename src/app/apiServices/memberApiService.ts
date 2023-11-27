@@ -4,6 +4,7 @@ import { serverApi } from "../../lib/config";
 import { Definer } from "../../lib/Definer";
 import { Member, MemberUpdateData } from "../../types/user";
 import { MemberLiken } from "../../types/others";
+import { sweetTopSmallSuccessAlert } from "../../lib/sweetAlert";
 
 class MemberApiService {
   private readonly path: string;
@@ -50,7 +51,6 @@ class MemberApiService {
       return member;
     } catch (err: any) {
       if (err.response?.status === 400) {
-        // Handle the specific error for duplicate mb_nick
         console.log(`ERR::: signupRequest: ${err.response?.data?.message}`);
         throw new Error(err.response?.data?.message);
       } else {

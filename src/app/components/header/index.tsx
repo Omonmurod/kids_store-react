@@ -6,9 +6,14 @@ import {
   Container,
   IconButton,
   Stack,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+  Popover,
 } from "@mui/material";
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { Logout } from "@mui/icons-material";
 
 export function Navbar(props: any) {
   return (
@@ -76,46 +81,48 @@ export function Navbar(props: any) {
               alignItems={"center"}
               className="navbar_links"
             >
-              <Box className="hover-line">
+              <Box className="hover-line" onClick={props.setPath}>
                 <NavLink to="/" activeClassName="underline">
                   Home
                 </NavLink>
               </Box>
-              <Box className="hover-line">
+              <Box className="hover-line" onClick={props.setPath}>
                 <NavLink to="/products" activeClassName="underline">
                   Shop
                 </NavLink>
               </Box>
-              <Box className="hover-line">
+              <Box className="hover-line" onClick={props.setPath}>
                 <NavLink to="/brand" activeClassName="underline">
                   Brands
                 </NavLink>
               </Box>
-              <Box className="hover-line">
+              <Box className="hover-line" onClick={props.setPath}>
                 <NavLink to="/orders" activeClassName="underline">
                   Orders
                 </NavLink>
               </Box>
-              <Box className="hover-line">
+              <Box className="hover-line" onClick={props.setPath}>
                 <NavLink to="/community" activeClassName="underline">
                   Community
                 </NavLink>
               </Box>
-                <Box className="hover-line">
+              {props.verifiedMemberData ? (
+                <Box className="hover-line" onClick={props.setPath}>
                   <NavLink to="/member-page" activeClassName="underline">
                     My page
                   </NavLink>
                 </Box>
-              <Box className="hover-line">
+              ) : null}
+              <Box className="hover-line" onClick={props.setPath}>
                 <NavLink to="/about" activeClassName="underline">
                   About Us
                 </NavLink>
               </Box>
             </Stack>
             <Stack
-              style={{ width: "18.5%", marginLeft: "5%" }}
+              style={{ width: "23.5%", marginLeft: "5%" }}
               flexDirection={"row"}
-              justifyContent={"space-between"}
+              justifyContent={"space-evenly"}
               alignItems={"center"}
             >
               <Box className="hover-line" flexDirection={"row"}>
@@ -134,39 +141,119 @@ export function Navbar(props: any) {
                   </Badge>
                 </IconButton>
               </Box>
-                <Button
-                  variant="contained"
-                  style={{
-                    borderRadius: "30px",
-                    color: "#ffffff",
-                    background: "#ffa600",
-                    fontFamily: "Nunito",
-                    height: "40px",
-                    width: "70px",
-                    fontWeight: "900",
-                    fontSize: "12px",
-                  }}
-                  onClick={props.handleLoginOpen}
+              <Box className="hover-line" flexDirection={"row"}>
+                <IconButton
+                  aria-label="cart"
+                  id="basic-button"
+                  aria-controls={undefined}
+                  aria-haspopup="true"
+                  aria-expanded={undefined}
                 >
-                  LogIn
-                </Button>
-                
-                <Button
-                  variant="contained"
+                  <Badge badgeContent={5} color="secondary">
+                    <img
+                      src="/auth/wish-list.png"
+                      style={{ width: "30px", marginLeft: "0px" }}
+                    />
+                  </Badge>
+                </IconButton>
+              </Box>
+
+              {!props.verifiedMemberData ? (
+                <Box>
+                  <Button
+                    variant="contained"
+                    style={{
+                      borderRadius: "30px",
+                      color: "#ffffff",
+                      background: "#ffa600",
+                      fontFamily: "Nunito",
+                      height: "40px",
+                      width: "70px",
+                      fontWeight: "900",
+                      fontSize: "12px",
+                    }}
+                    onClick={props.handleLoginOpen}
+                  >
+                    LogIn
+                  </Button>
+                  <Button
+                    variant="contained"
+                    style={{
+                      borderRadius: "30px",
+                      color: "#ffffff",
+                      background: "#ffa600",
+                      fontFamily: "Nunito",
+                      height: "40px",
+                      width: "110px",
+                      fontWeight: "900",
+                      fontSize: "12px",
+                      marginLeft: "9px",
+                    }}
+                    onClick={props.handleSignUpOpen}
+                  >
+                    SIGN UP
+                  </Button>
+                </Box>
+              ) : (
+                <img
                   style={{
-                    borderRadius: "30px",
-                    color: "#ffffff",
-                    background: "#ffa600",
-                    fontFamily: "Nunito",
-                    height: "40px",
-                    width: "110px",
-                    fontWeight: "900",
-                    fontSize: "12px",
+                    width: "78px",
+                    height: "78px",
+                    borderRadius: "44px"
                   }}
-                  onClick={props.handleSignUpOpen}
+                  src={props.verifiedMemberData.mb_image}
+                  onClick={props.handleLogOutClick}
+                />
+              )}
+
+              <Menu
+                anchorEl={props.anchorEl}
+                open={props.open}
+                onClose={props.handleCloseLogOut}
+                onClick={props.handleCloseLogOut}
+              >
+                <Popover
+                  transformOrigin={{ horizontal: "right", vertical: "top" }}
+                  anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+                  anchorEl={props.anchorEl}
+                  open={props.open}
+                  onClose={props.handleCloseLogOut}
+                  onClick={props.handleCloseLogOut}
                 >
-                  SIGN UP
-                </Button>
+                  <Box
+                    sx={{
+                      overflow: "visible",
+                      filter: "drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.32))",
+                      mt: 1.5,
+                      "& .MuiAvatar-root": {
+                        width: 32,
+                        height: 32,
+                        ml: -0.5,
+                        mr: 1,
+                      },
+                      "&:before": {
+                        content: '""',
+                        display: "block",
+                        position: "absolute",
+                        top: 0,
+                        right: 14,
+                        width: 10,
+                        height: 10,
+                        bgcolor: "background.paper",
+                        transform: "translateY(-50%) rotate(45deg)",
+                        zIndex: 0,
+                      },
+                    }}
+                  >
+                    <MenuItem onClick={props.handleLogOutRequest}>
+                      <ListItemIcon>
+                        <Logout fontSize="medium" style={{ color: "orange" }} />
+                      </ListItemIcon>
+                      Logout
+                    </MenuItem>
+                  </Box>
+                </Popover>
+              </Menu>
             </Stack>
           </Stack>
         </Container>
