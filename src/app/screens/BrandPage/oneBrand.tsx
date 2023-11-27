@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FormControl from "@material-ui/core/FormControl";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormGroup from "@material-ui/core/FormGroup";
@@ -18,19 +18,137 @@ import Marginer from "../../components/marginer";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosNewIcon from "@mui/icons-material/ArrowForwardIos";
 import { Swiper, SwiperSlide } from "swiper/react";
-import LinearProgress from "@material-ui/core/LinearProgress";
-import theme2 from "../../MaterialTheme/theme2";
-import { ThemeProvider } from "@material-ui/core/styles";
+// import LinearProgress from "@material-ui/core/LinearProgress";
+// import theme2 from "../../MaterialTheme/theme2";
+// import { ThemeProvider } from "@material-ui/core/styles";
+import { useParams } from "react-router-dom";
+import BrandApiService from "../../apiServices/brandApiService";
+import { ProductSearchObj, SearchObj } from "../../../types/others";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../../lib/sweetAlert";
+// REDUX
+import { useDispatch, useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import {
+  retrieveChosenBrand,
+  retrieveRandomBrands,
+  retrieveTargetProducts,
+} from "../../screens/BrandPage/selector";
+import { Brand } from "../../../types/user";
+import { Dispatch } from "@reduxjs/toolkit";
+import {
+  setChosenBrand,
+  setRandomBrands,
+  setTargetProducts,
+} from "../../screens/BrandPage/slice";
+import { Product } from "../../../types/product";
+import ProductApiService from "../../apiServices/productApiService";
+import { serverApi } from "../../../lib/config";
+import { useHistory } from "react-router-dom";
+import assert from "assert";
+import { Definer } from "../../../lib/Definer";
+import MemberApiService from "../../apiServices/memberApiService";
+
+const progress = (18 / 38) * 100;
+const progress5 = (8 / 20) * 100;
+const progress4 = (12 / 20) * 100;
+const progress3 = (0 / 20) * 100;
+const progress2 = (0 / 20) * 100;
+const progress1 = (0 / 20) * 100;
+
+/** REDUX SLICE */
+const actionDispatch = (dispach: Dispatch) => ({
+  setRandomBrands: (data: Brand[]) => dispach(setRandomBrands(data)),
+  setChosenBrand: (data: Brand) => dispach(setChosenBrand(data)),
+  setTargetProducts: (data: Product[]) => dispach(setTargetProducts(data)),
+});
+
+/** REDUX SELECTOR */
+const randomBrandsRetriever = createSelector(
+  retrieveRandomBrands,
+  (randomBrands) => ({ randomBrands })
+);
+const chosenBrandRetriever = createSelector(
+  retrieveChosenBrand,
+  (chosenBrand) => ({ chosenBrand })
+);
+const targetProductsRetriever = createSelector(
+  retrieveTargetProducts,
+  (targetProducts) => ({ targetProducts })
+);
 
 export function OneBrand() {
-  const events_list = Array.from(Array(6).keys());
-  const brand_list = Array.from(Array(10).keys());
-  const progress = (18 / 38) * 100;
-  const progress5 = (8 / 20) * 100;
-  const progress4 = (12 / 20) * 100;
-  const progress3 = (0 / 20) * 100;
-  const progress2 = (0 / 20) * 100;
-  const progress1 = (0 / 20) * 100;
+  /** INITIALIZATIONS */
+  let { brand_id } = useParams<{ brand_id: string }>();
+  const { randomBrands } = useSelector(randomBrandsRetriever);
+  const { chosenBrand } = useSelector(chosenBrandRetriever);
+  const { targetProducts } = useSelector(targetProductsRetriever);
+  const { setTargetProducts, setChosenBrand, setRandomBrands } = actionDispatch(
+    useDispatch()
+  );
+  const [chosenBrandId, setchosenBrandId] = useState<string>(brand_id);
+  const [targetProductSearchObj, setTargetProductSearchObj] =
+    useState<ProductSearchObj>({
+      page: 1,
+      limit: 6,
+      order: "createdAt",
+      brand_mb_id: brand_id,
+      product_collection: "clothing",
+    });
+  const history = useHistory();
+  const refs: any = useRef([]);
+  const [productRebuild, setProductRebuild] = useState<Date>(new Date());
+
+  useEffect(() => {
+    const brandService = new BrandApiService();
+    brandService
+      .getBrands({ page: 1, limit: 10, order: "random" })
+      .then((data) => setRandomBrands(data))
+      .catch((err) => console.log(err));
+
+    const productService = new ProductApiService();
+    productService
+      .getTargetProducts(targetProductSearchObj)
+      .then((data) => setTargetProducts(data))
+      .catch((err) => console.log(err));
+  }, [targetProductSearchObj, productRebuild]);
+
+  /** HANDLERS */
+  const chosenBrandHandler = (id: string) => {
+    setchosenBrandId(id);
+    targetProductSearchObj.brand_mb_id = id;
+    setTargetProductSearchObj({ ...targetProductSearchObj });
+    history.push(`/brand/${id}`);
+  };
+  const searchCollectionHandler = (collection: string) => {
+    targetProductSearchObj.page = 1;
+    targetProductSearchObj.product_collection = collection;
+    setTargetProductSearchObj({ ...targetProductSearchObj });
+  };
+  const searchOrderHandler = (order: string) => {
+    targetProductSearchObj.page = 1;
+    targetProductSearchObj.order = order;
+    setTargetProductSearchObj({ ...targetProductSearchObj });
+  };
+  const targetLikeProduct = async (e: any) => {
+    try {
+      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      const memberService = new MemberApiService(),
+        like_result: any = await memberService.memberLikeTarget({
+          like_ref_id: e.target.id,
+          group_type: "product",
+        });
+      assert.ok(like_result, Definer.general_err1);
+
+      await sweetTopSmallSuccessAlert("Success", 700, false);
+      setProductRebuild(new Date());
+    } catch (error: any) {
+      console.log("targetLikeProduct, ERROR:", error);
+      sweetErrorHandling(error).then();
+    }
+  };
 
   return (
     <div className="one_brand">
@@ -42,7 +160,12 @@ export function OneBrand() {
             flexDirection={"row"}
             justifyContent="flex-start"
           >
-            <span className="category_title" style={{ marginRight: "1000px", fontSize: "28px"}}>See also</span>
+            <span
+              className="category_title"
+              style={{ marginRight: "1000px", fontSize: "28px" }}
+            >
+              See also
+            </span>
           </Box>
           <Stack
             style={{ width: "100%", display: "flex" }}
@@ -61,26 +184,25 @@ export function OneBrand() {
               spaceBetween={30}
               navigation={{
                 nextEl: ".restaurant-next",
-                prevEl: ".restaurant-prev",
+                prevEl: ".resturant-prev",
               }}
             >
-              {brand_list.map((ele, index) => {
+              {randomBrands.map((ele: Brand) => {
+                const image_path = `${serverApi}/${ele.mb_image}`;
                 return (
                   <SwiperSlide
+                    onClick={() => chosenBrandHandler(ele._id)}
                     style={{ cursor: "pointer " }}
-                    key={index}
+                    key={ele._id}
                     className={"restaurant_avatars"}
                   >
-                    <img src={"/icons/swiper2.jpeg"} />
-                    <span>Brand name</span>
+                    <img src={image_path} />
+                    <span>{ele.mb_nick}</span>
                   </SwiperSlide>
                 );
               })}
             </Swiper>
-            <Box
-              className={"next_btn restaurant-next"}
-              style={{ color: "white" }}
-            >
+            <Box className={"next_btn restaurant-next"} style={{ color: "white" }}>
               <ArrowForwardIosNewIcon
                 style={{ color: "orange", fontSize: "40px" }}
               />
@@ -107,7 +229,7 @@ export function OneBrand() {
                     <FormControlLabel
                       value="new"
                       control={
-                        <Radio color="primary" style={{ width: "33px" }} />
+                        <Radio color="primary" style={{ width: "33px" }} onClick={() => searchOrderHandler("createdAt")} />
                       }
                       label={
                         <span
@@ -125,7 +247,7 @@ export function OneBrand() {
                     <FormControlLabel
                       value="price"
                       control={
-                        <Radio color="primary" style={{ width: "33px" }} />
+                        <Radio color="primary" style={{ width: "33px" }} onClick={() => searchOrderHandler("product_price")}/>
                       }
                       label={
                         <span
@@ -143,7 +265,7 @@ export function OneBrand() {
                     <FormControlLabel
                       value="view"
                       control={
-                        <Radio color="primary" style={{ width: "33px" }} />
+                        <Radio color="primary" style={{ width: "33px" }} onClick={() => searchOrderHandler("product_views")}/>
                       }
                       label={
                         <span
@@ -161,7 +283,7 @@ export function OneBrand() {
                     <FormControlLabel
                       value="like"
                       control={
-                        <Radio color="primary" style={{ width: "33px" }} />
+                        <Radio color="primary" style={{ width: "33px" }} onClick={() => searchOrderHandler("product_likes")}/>
                       }
                       label={
                         <span
@@ -179,14 +301,19 @@ export function OneBrand() {
                 </FormControl>
               </Stack>
               <Stack className="shop_products">
-                {events_list.map((value, number) => {
+                {targetProducts.map((product: Product) => {
+                  const image_path = `${serverApi}/${product.product_images[0]}`;
+                  // const size_volume =
+                  //   product.product_collection === "shoes"
+                  //     ? product.product_volume
+                  //     : product.product_size;
                   return (
                     <Stack className="shop_product-info">
                       <Stack className={"product-box"}>
                         <Box
                           className={"img"}
                           sx={{
-                            backgroundImage: `url("/icons/teddy-bear.jpeg")`,
+                            backgroundImage: `url(${image_path})`,
                           }}
                         >
                           <Box className={"dish_sale"}>
@@ -196,13 +323,22 @@ export function OneBrand() {
                             className={"like_view_btn"}
                             style={{ left: "36px" }}
                           >
-                            <Badge badgeContent={8} color="primary">
+                            <Badge
+                              badgeContent={product.product_likes}
+                              color="secondary"
+                            >
                               <Checkbox
                                 icon={<Favorite style={{ color: "white" }} />}
+                                id={product._id}
                                 checkedIcon={
                                   <Favorite style={{ color: "red" }} />
                                 }
-                                checked={true}
+                                checked={
+                                  product?.me_liked &&
+                                  product?.me_liked[0]?.my_favorite
+                                    ? true
+                                    : false
+                                }
                               />
                             </Badge>
                           </Button>
@@ -210,19 +346,31 @@ export function OneBrand() {
                             className={"like_view_btn"}
                             style={{ right: "36px" }}
                           >
-                            <Badge badgeContent={16} color="primary">
+                            <Badge
+                              badgeContent={product.product_views}
+                              color="secondary"
+                            >
                               <Checkbox
                                 icon={<Visibility style={{ color: "white" }} />}
+                                id={product._id}
                                 checkedIcon={
                                   <Visibility style={{ color: "red" }} />
                                 }
-                                checked={false}
+                                onClick={targetLikeProduct}
+                                checked={
+                                  product?.me_liked &&
+                                  product?.me_liked[0]?.my_favorite
+                                    ? true
+                                    : false
+                                }
                               />
                             </Badge>
                           </Button>
                         </Box>
                       </Stack>
-                      <Stack className={"product_name"}>Taddybear Toy</Stack>
+                      <Stack className={"product_name"}>
+                        {product.product_name}
+                      </Stack>
                       <Stack className={"rating_box"}>
                         <Rating
                           className="half-rating"
@@ -239,7 +387,7 @@ export function OneBrand() {
                             fontSize: "19px",
                           }}
                         >
-                          $70
+                          {product.product_price}
                         </span>
                         <span
                           style={{
@@ -290,18 +438,23 @@ export function OneBrand() {
                 </Box>
                 <Stack className={"bottom_box"}>
                   <Pagination
-                    count={3}
-                    page={1}
-                    renderItem={(item) => (
-                      <PaginationItem
-                        components={{
-                          previous: ArrowBackIcon,
-                          next: ArrowForwardIcon,
-                        }}
-                        {...item}
-                        className="pagination"
-                      />
-                    )}
+                    // count={
+                    //   targetSearchObject.page >= 3
+                    //     ? targetSearchObject.page + 1
+                    //     : 3
+                    // }
+                    // page={targetSearchObject.page}
+                    // renderItem={(item) => (
+                    //   <PaginationItem
+                    //     components={{
+                    //       previous: ArrowBackIcon,
+                    //       next: ArrowForwardIcon,
+                    //     }}
+                    //     {...item}
+                    //     className="pagination"
+                    //   />
+                    // )}
+                    //onChange={handlePaginationChange}
                   />
                 </Stack>
               </Stack>
@@ -337,7 +490,7 @@ export function OneBrand() {
                       <FormGroup aria-label="position">
                         <FormControlLabel
                           value="boy"
-                          control={<Checkbox style={{ color: "#423123" }} />}
+                          control={<Checkbox style={{ color: "#423123" }} onClick={() => searchCollectionHandler("boy")}/>}
                           label={
                             <span
                               style={{
@@ -353,7 +506,7 @@ export function OneBrand() {
                         />
                         <FormControlLabel
                           value="girl"
-                          control={<Checkbox style={{ color: "#423123" }} />}
+                          control={<Checkbox style={{ color: "#423123" }} onClick={() => searchCollectionHandler("girl")}/>}
                           label={
                             <span
                               style={{
@@ -369,7 +522,7 @@ export function OneBrand() {
                         />
                         <FormControlLabel
                           value="unisex"
-                          control={<Checkbox style={{ color: "#423123" }} />}
+                          control={<Checkbox style={{ color: "#423123" }} onClick={() => searchCollectionHandler("uni")}/>}
                           label={
                             <span
                               style={{
@@ -400,6 +553,7 @@ export function OneBrand() {
                         <img
                           src="/icons/category1.png"
                           style={{ width: "165px", borderRadius: "20px" }}
+                          onClick={() => searchCollectionHandler("toy")}
                         />
                       </div>
                       <div
@@ -428,6 +582,7 @@ export function OneBrand() {
                         <img
                           src="/icons/category2.png"
                           style={{ width: "165px", borderRadius: "20px" }}
+                          onClick={() => searchCollectionHandler("clothing")}
                         />
                       </div>
                       <div
@@ -458,6 +613,7 @@ export function OneBrand() {
                         <img
                           src="/icons/category3.png"
                           style={{ width: "165px", borderRadius: "20px" }}
+                          onClick={() => searchCollectionHandler("ride-ons")}
                         />
                       </div>
                       <div
@@ -486,6 +642,7 @@ export function OneBrand() {
                         <img
                           src="/icons/category4.png"
                           style={{ width: "165px", borderRadius: "20px" }}
+                          onClick={() => searchCollectionHandler("gift")}
                         />
                       </div>
                       <div
@@ -520,6 +677,7 @@ export function OneBrand() {
                             marginRight: "35px",
                             borderRadius: "20px",
                           }}
+                          onClick={() => searchCollectionHandler("baby care")}
                         />
                       </div>
                       <div
@@ -661,7 +819,7 @@ export function OneBrand() {
             </Stack>
           </Stack>
 
-        <Stack className="comment_section">
+          {/* <Stack className="comment_section">
           <Stack
             display={"flex"}
             flexDirection={"row"}
@@ -1154,7 +1312,7 @@ export function OneBrand() {
               </Stack>
             </Stack>
           </Stack>
-        </Stack>
+        </Stack> */}
         </Stack>
       </Container>
     </div>

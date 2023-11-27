@@ -155,6 +155,7 @@
 .homepage .top_brands_frame .top-brands .top-brands_box {
   position: relative;
   min-height: 420px;
+  cursor: pointer;
 }
 
 .homepage .top_brands_frame .top-brands .top-brands_box:hover .brand-info {
@@ -164,7 +165,6 @@
 .homepage .top_brands_frame .top-brands .top-brands_box .brand-img {
   width: 318px;
   height: auto;
-  cursor: pointer;
   transition: all 0.4s ease 0s;
 }
 

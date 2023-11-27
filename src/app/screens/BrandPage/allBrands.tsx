@@ -1,6 +1,6 @@
 import { Box, Button, Container } from "@mui/material";
 import { Stack } from "@mui/system";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Typography from "@mui/joy/Typography";
 import { CssVarsProvider } from "@mui/joy/styles";
 import { CardOverflow, IconButton } from "@mui/joy";
@@ -9,9 +9,100 @@ import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+// REDUX
+import { useDispatch, useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { retrieveTargetBrands } from "../../screens/BrandPage/selector";
+import { Brand } from "../../../types/user";
+import { Dispatch } from "@reduxjs/toolkit";
+import { setTargetBrands } from "../../screens/BrandPage/slice";
+import BrandApiService from "../../apiServices/brandApiService";
+import { SearchObj } from "../../../types/others";
+import { serverApi } from "../../../lib/config";
+import assert from "assert";
+import { Definer } from "../../../lib/Definer";
+import MemberApiService from "../../apiServices/memberApiService";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../../lib/sweetAlert";
+import { useHistory } from "react-router-dom";
+
+const brands_list = Array.from(Array(8).keys());
+
+/** REDUX SLICE */
+const actionDispatch = (dispach: Dispatch) => ({
+  setTargetBrands: (data: Brand[]) => dispach(setTargetBrands(data)),
+});
+
+/** REDUX SELECTOR */
+const targetBrandsRetriever = createSelector(
+  retrieveTargetBrands,
+  (targetBrands) => ({
+    targetBrands,
+  })
+);
 
 export function AllBrands() {
-  const brands_list = Array.from(Array(8).keys());
+  /** INITIALIZATIONS */
+  const { setTargetBrands } = actionDispatch(useDispatch());
+  const { targetBrands } = useSelector(targetBrandsRetriever);
+  const [targetSearchObject, setTargetSearchObject] = useState<SearchObj>({
+    page: 1,
+    limit: 8,
+    order: "mb_point",
+  });
+  const refs: any = useRef([]);
+  const history = useHistory();
+
+  useEffect(() => {
+    const brandService = new BrandApiService();
+    brandService
+      .getBrands(targetSearchObject)
+      .then((data) => setTargetBrands(data))
+      .catch((err) => console.log(err));
+  }, [targetSearchObject]);
+
+  /** HANDLERS */
+  const chosenBrandHandler = (id: string) => {
+    history.push(`/brand/${id}`);
+  };
+  const searchHandler = (category: string) => {
+    targetSearchObject.page = 1;
+    targetSearchObject.order = category;
+    setTargetSearchObject({ ...targetSearchObject });
+  };
+  const handlePaginationChange = (event: any, value: number) => {
+    targetSearchObject.page = value;
+    setTargetSearchObject({ ...targetSearchObject });
+  };
+
+  const targetLikeHandler = async (e: any, id: string) => {
+    try {
+      //const memberData = localStorage.getItem("member_data");
+
+      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      const memberService = new MemberApiService(),
+        like_result: any = await memberService.memberLikeTarget({
+          like_ref_id: id,
+          group_type: "member",
+        });
+      assert.ok(like_result, Definer.general_err1);
+
+      if (like_result.like_status > 0) {
+        e.target.style.fill = "red";
+        refs.current[like_result.like_ref_id].innerHTML++;
+      } else {
+        e.target.style.fill = "white";
+        refs.current[like_result.like_ref_id].innerHTML--;
+      }
+
+      await sweetTopSmallSuccessAlert("Success", 700, false);
+    } catch (error: any) {
+      console.log("targetLikeHandler, ERROR:", error);
+      sweetErrorHandling(error).then();
+    }
+  };
 
   return (
     <div className="all_brands_frame">
@@ -34,10 +125,10 @@ export function AllBrands() {
             </form>
           </Stack>
           <Stack className="category_box">
-            <a>Newly added</a>
-            <a>Trending</a>
-            <a>Most Liked</a>
-            <a>Most Viewed</a>
+            <a onClick={() => searchHandler("createdAt")}>Newly added</a>
+            <a onClick={() => searchHandler("mb_point")}>Trending</a>
+            <a onClick={() => searchHandler("mb_likes")}>Most Liked</a>
+            <a onClick={() => searchHandler("mb_views")}>Most Viewed</a>
           </Stack>
         </Stack>
         <Stack className="brands">
@@ -50,16 +141,20 @@ export function AllBrands() {
             flexDirection={"row"}
             justifyContent={"space-between"}
           >
-            {brands_list.map((value, number) => {
+            {targetBrands.map((ele: Brand) => {
+              const image_path = `${serverApi}/${ele.mb_image}`;
               return (
-                <Stack className="top-brands_box">
+                <Stack
+                  className="top-brands_box"
+                  onClick={() => chosenBrandHandler(ele._id)}
+                >
                   <Stack className="brand-img">
-                    <img src="/icons/swiper2.jpeg" className="img" />
+                    <img src={image_path} className="img" />
                   </Stack>
                   <Stack className="brand-info">
                     <CssVarsProvider>
                       <Stack className="info-top">
-                        <Box className="info-top_nick">AGABANG</Box>
+                        <Box className="info-top_nick">{ele.mb_nick}</Box>
                         <Box className="info-top_address">
                           <img
                             src="/icons/location.svg"
@@ -72,7 +167,7 @@ export function AllBrands() {
                             src="/icons/call.svg"
                             style={{ marginRight: "8px" }}
                           />
-                          053 1234 5678
+                          {ele.mb_phone}
                         </Box>
                       </Stack>
                       <CardOverflow
@@ -94,8 +189,20 @@ export function AllBrands() {
                             transform: "translateY(70%)",
                             color: "rgba(0, 0, 0, .4)",
                           }}
+
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}
                         >
-                          <Favorite style={{ fill: "red" }} />
+                          <Favorite
+                            onClick={(e) => targetLikeHandler(e, ele._id)}
+                            style={{
+                              fill:
+                                ele?.me_liked && ele?.me_liked[0]?.my_favorite
+                                  ? "red"
+                                  : "white",
+                            }}
+                          />
                         </IconButton>
                         <Typography
                           //level="body3"
@@ -114,7 +221,7 @@ export function AllBrands() {
                               marginRight: "5px",
                             }}
                           />
-                          100
+                          {ele.mb_views}
                         </Typography>
                         <Box sx={{ width: 2, bgcolor: "divider" }} />
                         <Typography
@@ -126,6 +233,7 @@ export function AllBrands() {
                             display: "flex",
                             fontSize: "15px",
                           }}
+
                         >
                           <Favorite
                             sx={{
@@ -134,7 +242,12 @@ export function AllBrands() {
                               marginRight: "5px",
                             }}
                           />
-                          5
+                          <div
+                            ref={(element) => (refs.current[ele._id] = element)}
+                          >
+                            {""}
+                            {ele.mb_likes}
+                          </div>
                         </Typography>
                       </CardOverflow>
                     </CssVarsProvider>
@@ -145,8 +258,10 @@ export function AllBrands() {
           </Stack>
           <Stack>
             <Pagination
-              count={3}
-              page={1}
+              count={
+                targetSearchObject.page >= 3 ? targetSearchObject.page + 1 : 3
+              }
+              page={targetSearchObject.page}
               renderItem={(item) => (
                 <PaginationItem
                   components={{
@@ -157,6 +272,7 @@ export function AllBrands() {
                   className="pagination"
                 />
               )}
+              onChange={handlePaginationChange}
             />
           </Stack>
         </Stack>

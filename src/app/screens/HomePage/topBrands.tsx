@@ -1,6 +1,6 @@
 import { Box, Button, Container } from "@mui/material";
 import { Stack } from "@mui/system";
-import React from "react";
+import React, { useRef } from "react";
 import Typography from "@mui/joy/Typography";
 import { CssVarsProvider } from "@mui/joy/styles";
 import { CardOverflow, IconButton } from "@mui/joy";
@@ -12,6 +12,12 @@ import { createSelector } from "reselect";
 import { retrieveTopBrands } from "../../screens/HomePage/selector";
 import { Brand } from "../../../types/user";
 import { serverApi } from "../../../lib/config";
+import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
+import assert from "assert";
+import { Definer } from "../../../lib/Definer";
+import MemberApiService from "../../apiServices/memberApiService";
+import { MemberLiken } from "../../../types/others";
+import { useHistory } from "react-router-dom";
 
 /** REDUX SELECTOR */
 const topBrandsRetriever = createSelector(retrieveTopBrands, (topBrands) => ({
@@ -19,7 +25,43 @@ const topBrandsRetriever = createSelector(retrieveTopBrands, (topBrands) => ({
 }));
 
 export function TopBrands() {
+  /** INITIALIZATIONS */
+  const history = useHistory();
   const { topBrands } = useSelector(topBrandsRetriever);
+  console.log("topBrands:::", topBrands);
+  const refs: any = useRef([]);
+
+  /** HANDLERS */
+  const chooseBrandHandler = (id: string) => {
+    history.push(`/brand/${id}`);
+  };
+
+  const goBrandsHandler = () => history.push("/brand");
+
+  const targetLikeTop = async (e: any, id: string) => {
+    try {
+      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      const memberService = new MemberApiService(),
+        like_result: any = await memberService.memberLikeTarget({
+          like_ref_id: id,
+          group_type: "member",
+        });
+      assert.ok(like_result, Definer.general_err1);
+
+      if (like_result.like_status > 0) {
+        e.target.style.fill = "red";
+        refs.current[like_result.like_ref_id].innerHTML++;
+      } else {
+        e.target.style.fill = "white";
+        refs.current[like_result.like_ref_id].innerHTML--;
+      }
+
+      await sweetTopSmallSuccessAlert("Success", 700, false);
+    } catch (err: any) {
+      console.log("targetLikeTop, ERROR:", err);
+      sweetErrorHandling(err).then();
+    }
+  };
 
   return (
     <div className="top_brands_frame">
@@ -58,7 +100,11 @@ export function TopBrands() {
           {topBrands.map((ele: Brand) => {
             const image_path = `${serverApi}/${ele.mb_image}`;
             return (
-              <Stack className="top-brands_box" key={ele._id}>
+              <Stack
+                className="top-brands_box"
+                key={ele._id}
+                onClick={() => chooseBrandHandler(ele._id)}
+              >
                 <Stack className="brand-img">
                   <img src={image_path} className="img" />
                 </Stack>
@@ -107,7 +153,8 @@ export function TopBrands() {
                         }}
                       >
                         <Favorite
-                          //onClick={(e)=>targetLikeTop(e, ele._id)}
+                          /*@ts-ignore*/
+                          onClick={(e) => targetLikeTop(e, ele._id)}
                           style={{
                             fill:
                               ele?.me_liked && ele?.me_liked[0]?.my_favorite
@@ -153,7 +200,11 @@ export function TopBrands() {
                             marginRight: "5px",
                           }}
                         />
-                        {ele.mb_likes}
+                        <div
+                          ref={(element) => (refs.current[ele._id] = element)}
+                        >
+                          {ele.mb_likes}
+                        </div>
                       </Typography>
                     </CardOverflow>
                   </CssVarsProvider>
@@ -175,7 +226,7 @@ export function TopBrands() {
         >
           <Button
 
-          //onClick={goRestaurantsHandler}
+          onClick={goBrandsHandler}
           >
             <NavLink to="/brand" className="see-btn success">
               See All Brands

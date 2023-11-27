@@ -4,7 +4,6 @@ import { serverApi } from "../../lib/config";
 import { Definer } from "../../lib/Definer";
 import { Member, MemberUpdateData } from "../../types/user";
 import { MemberLiken } from "../../types/others";
-import { sweetTopSmallSuccessAlert } from "../../lib/sweetAlert";
 
 class MemberApiService {
   private readonly path: string;
@@ -81,12 +80,11 @@ class MemberApiService {
 
   public async memberLikeTarget(data: any) {
     try {
-      const url = "/member-liken";
-      const result = await axios.post(this.path + url, data, {
+      const result = await axios.post(this.path + "/member-liken", data, {
         withCredentials: true,
       });
       assert.ok(result?.data, Definer.general_err1);
-      assert.ok(result?.data?.state != "fail", result?.data?.message);
+      assert.ok(result?.data?.state !== "fail", result?.data?.message);
       console.log("state:", result.data.data);
       const like_result: MemberLiken = result.data.data;
       return like_result;

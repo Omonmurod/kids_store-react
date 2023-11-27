@@ -69,7 +69,7 @@ export default function AuthenticationModal(props: any) {
 
       const memberApiService = new MemberApiService();
       await memberApiService.signupRequest(signup_data);
-      await sweetTopSmallSuccessAlert("Congratulations! 🎉🎉🎉 ", 700, true);
+      await sweetTopSmallSuccessAlert("Congratulations! 🎉🎉🎉 ", 700, false);
 
       props.handleSignUpClose();
       window.location.reload();
@@ -91,7 +91,7 @@ export default function AuthenticationModal(props: any) {
 
       const memberApiService = new MemberApiService();
       await memberApiService.loginRequest(login_data);
-      await sweetTopSmallSuccessAlert("Welcome! 😊 ", 700);
+      await sweetTopSmallSuccessAlert("Welcome! 😊 ", 700, false);
 
       props.handleLoginClose();
       window.location.reload();
