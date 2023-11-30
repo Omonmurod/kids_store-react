@@ -30,7 +30,7 @@ export interface Discount {
   type: string;
   value: number;
   startDate: Date;
-  dueDate: Date;
+  endDate: Date;
 }
 
 export interface ProductRating {

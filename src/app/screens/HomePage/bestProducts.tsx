@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, } from "react";
 import { Container, Box, Stack, Button } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 //import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
@@ -32,26 +32,40 @@ const bestProductsRetriever = createSelector(
   })
 );
 
-//const events_list = Array.from(Array(10).keys());
-
 export function BestProducts() {
   /** INITIALIZATIONS */
   const history = useHistory();
   const { setBestProducts } = actionDispatch(useDispatch());
   const { bestProducts } = useSelector(bestProductsRetriever);
-
-  useEffect(() => {
-    const productService = new ProductApiService();
-    productService
-      .getTargetProducts({ product_collection: "clothing", page: 1, limit: 10 })
-      .then((data) => setBestProducts(data))
-      .catch((err) => console.log(err));
-  }, []);
+  const [productRebuild, setProductRebuild] = useState<Date>(new Date());
+  const [targetProduct, setTargetProduct] = useState<ProductSearch>({
+    page: 1,
+    limit: 15,
+    order: "product_reviews",
+    brand_mb_id: "all",
+    product_name: "all",
+    product_collection: "all",
+    product_size: "all",
+    product_color: "all",
+    product_type: "all",
+  });
+  const [] = useState<string[]>([]);
 
   /** HANDLERS */
   const chosenProductHandler = (id: string) => {
     history.push(`brand/products/${id}`);
   };
+
+  useEffect(() => {
+    const productApiService = new ProductApiService();
+    productApiService
+      .getTargetProducts(targetProduct)
+      .then((data) => {
+        setBestProducts(data);
+      })
+      .catch((err) => console.log(err));
+  }, [productRebuild]);
+
   return (
     <div className="p_products_frame">
       <Container sx={{ overflow: "hidden" }}>
@@ -82,18 +96,17 @@ export function BestProducts() {
                 const image_path = `${serverApi}/${product.product_images[0]}`;
                 return (
                   <SwiperSlide className={"product_info_frame"}>
-                    <Stack className={"product-box"}>
+                    <Stack
+                      className={"product-box"}
+                      key={product._id}
+                      onClick={() => chosenProductHandler(product._id)}
+                    >
                       <Box
                         className={"img"}
                         sx={{
                           backgroundImage: `url(${image_path})`,
-                          
                         }}
-                        onClick={() => chosenProductHandler(product._id)}
                       >
-                        <Box className={"dish_sale"}>
-                          <div className={"dish_sale-txt"}>Sale 20%</div>
-                        </Box>
                         <Button
                           className={"like_view_btn"}
                           style={{ left: "36px" }}
@@ -104,7 +117,7 @@ export function BestProducts() {
                               checkedIcon={
                                 <Favorite style={{ color: "red" }} />
                               }
-                              checked={true}
+                              //checked={checked}
                             />
                           </Badge>
                         </Button>
@@ -142,19 +155,18 @@ export function BestProducts() {
                           textDecoration: "line-through",
                           fontSize: "19px",
                         }}
-                      >
-                        {product.product_price}
+                      >{product.product_price}
                       </span>
-                      <span
-                        style={{
-                          fontFamily: "Nunito",
-                          fontWeight: "900",
-                          color: "orange",
-                          fontSize: "20px",
-                        }}
-                      >
-                        {product.discountedPrice}
-                      </span>
+                        <span
+                          style={{
+                            fontFamily: "Nunito",
+                            fontWeight: "900",
+                            color: "orange",
+                            fontSize: "20px",
+                          }}
+                        >
+                          {product.discountedPrice}
+                        </span>
                     </Stack>
                     <Stack marginLeft={"45px"} marginTop={"15px"}>
                       <Button
