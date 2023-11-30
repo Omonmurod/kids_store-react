@@ -34,12 +34,14 @@
 
 .product_page .all_products .left_shop {
   width: 825px;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  height: 1790px;
   margin-top: 40px;
+}
+
+.product_page .all_products .left_shop .left_radio {
+  width: 825px;
+  display: flex;
+  justify-content: center;
 }
 
 .product_page .all_products .left_shop .shop_products {

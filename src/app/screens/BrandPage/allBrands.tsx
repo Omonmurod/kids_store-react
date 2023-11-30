@@ -28,7 +28,7 @@ import {
 } from "../../../lib/sweetAlert";
 import { useHistory } from "react-router-dom";
 
-const brands_list = Array.from(Array(8).keys());
+//const brands_list = Array.from(Array(8).keys());
 
 /** REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({

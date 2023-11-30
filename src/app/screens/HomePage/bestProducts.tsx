@@ -50,7 +50,7 @@ export function BestProducts() {
 
   /** HANDLERS */
   const chosenProductHandler = (id: string) => {
-    history.push(`products/${id}`);
+    history.push(`brand/products/${id}`);
   };
   return (
     <div className="p_products_frame">

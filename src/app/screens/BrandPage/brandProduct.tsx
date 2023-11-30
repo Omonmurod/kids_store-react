@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Stack, Box } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
@@ -14,7 +14,6 @@ import { FreeMode, Navigation, Thumbs } from "swiper";
 import {
   Favorite,
   FavoriteBorder,
-  StayCurrentLandscape,
 } from "@mui/icons-material";
 import { Visibility } from "@mui/icons-material";
 import Badge from "@mui/material/Badge";
@@ -27,17 +26,108 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosNewIcon from "@mui/icons-material/ArrowForwardIos";
+import { useParams } from "react-router-dom";
+import { Product } from "../../../types/product";
+import { Brand } from "../../../types/user";
+import ProductApiService from "../../apiServices/productApiService";
+// REDUX
+import { useDispatch, useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import {
+  retrieveChosenProduct,
+  retrieveChosenBrand,
+} from "../../screens/BrandPage/selector";
+import { Dispatch } from "@reduxjs/toolkit";
+import {
+  setChosenProduct,
+  setChosenBrand,
+} from "../../screens/BrandPage/slice";
+import BrandApiService from "../../apiServices/brandApiService";
+import { serverApi } from "../../../lib/config";
+import assert from "assert";
+import { Definer } from "../../../lib/Definer";
+import MemberApiService from "../../apiServices/memberApiService";
+import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
+
+
+  /** REDUX SLICE */
+  const actionDispatch = (dispach: Dispatch) => ({
+    setChosenProduct: (data: Product) => dispach(setChosenProduct(data)),
+    setChosenBrand: (data: Brand) => dispach(setChosenBrand(data)),
+  });
+  
+  /** REDUX SELECTOR */
+  const chosenProductRetriever = createSelector(
+    retrieveChosenProduct,
+    (chosenProduct) => ({
+      chosenProduct,
+    })
+  );
+  const chosenBrandRetriever = createSelector(
+    retrieveChosenBrand,
+    (chosenBrand) => ({
+      chosenBrand,
+    })
+  );
 
 const chosen_list = Array.from(Array(4).keys());
+//const label = { inputProps: { "aria-label": "Checkbox demo" } };
+const events_list = Array.from(Array(10).keys());
+const progress5 = (8 / 20) * 100;
+const progress4 = (12 / 20) * 100;
+const progress3 = (0 / 20) * 100;
+const progress2 = (0 / 20) * 100;
+const progress1 = (0 / 20) * 100;
 
 export function BrandProduct() {
+  /** INITIALIZATIONS */
+  let { product_id } = useParams<{ product_id: string }>();
+  const { setChosenProduct, setChosenBrand } = actionDispatch(
+    useDispatch()
+  );
+  const { chosenProduct } = useSelector(chosenProductRetriever);
+  const { chosenBrand } = useSelector(chosenBrandRetriever);
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-  const events_list = Array.from(Array(10).keys());
-  const progress5 = (8 / 20) * 100;
-  const progress4 = (12 / 20) * 100;
-  const progress3 = (0 / 20) * 100;
-  const progress2 = (0 / 20) * 100;
-  const progress1 = (0 / 20) * 100;
+  const [productRebuild, setProductRebuild] = useState<Date>(new Date());
+
+  const productRelatedProcess = async () => {
+    try {
+      const productService = new ProductApiService();
+      const product: Product = await productService.getChosenProduct(product_id);
+      setChosenProduct(product);
+
+      const brandService = new BrandApiService();
+      const brand = await brandService.getChosenBrand(
+        product.brand_mb_id
+      );
+      setChosenBrand(brand);
+    } catch (err) {
+      console.log(`productRelatedProcess, ERROR:`, err);
+    }
+  };
+
+  useEffect(() => {
+    productRelatedProcess().then();
+  }, [productRebuild]);
+
+  /** HANDLERS */
+  const targetLikeProduct = async (e: any) => {
+    try {
+      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      const memberService = new MemberApiService(),
+        like_result: any = await memberService.memberLikeTarget({
+          like_ref_id: e.target.id,
+          group_type: "product",
+        });
+      assert.ok(like_result, Definer.general_err1);
+
+      await sweetTopSmallSuccessAlert("Success", 700, false);
+      setProductRebuild(new Date());
+    } catch (error: any) {
+      console.log("targetLikeProduct, ERROR:", error);
+      sweetErrorHandling(error).then();
+    }
+  };
 
   return (
     <div className="brand_product">
@@ -56,10 +146,10 @@ export function BrandProduct() {
               navigation={true}
               modules={[FreeMode, Navigation, Thumbs]}
             >
-              {chosen_list.map((ele) => {
-                const image_path = `/icons/teddy-bear.jpeg`;
+              {chosenProduct?.product_images.map((ele: string) => {
+              const image_path = `${serverApi}/${ele}`;
                 return (
-                  <SwiperSlide>
+                  <SwiperSlide key={ele}>
                     <img className="img" src={image_path} />
                   </SwiperSlide>
                 );
@@ -73,8 +163,8 @@ export function BrandProduct() {
               }}
               className="mySwiper"
             >
-              {chosen_list.map((ele) => {
-                const image_path = `/icons/teddy-bear.jpeg`;
+              {chosenProduct?.product_images.map((ele: string) => {
+              const image_path = `${serverApi}/${ele}`;
                 return (
                   <SwiperSlide>
                     <img src={image_path} className="img-bot" />
@@ -658,7 +748,7 @@ export function BrandProduct() {
             <span className={"title"}>You also may like these</span>
           </Box>
           <Stack className="swiper">
-            <Box className={"prev_btn restaurant-prev"}>
+            <Box className={"prev_btn Brand-prev"}>
               <ArrowBackIosNewIcon
                 style={{ color: "#1876d2", fontSize: "40px" }}
               />
@@ -669,8 +759,8 @@ export function BrandProduct() {
               centeredSlides={false}
               spaceBetween={30}
               navigation={{
-                nextEl: ".restaurant-next",
-                prevEl: ".restaurant-prev",
+                nextEl: ".Brand-next",
+                prevEl: ".Brand-prev",
               }}
             >
               {events_list.map((value, number) => {
@@ -770,7 +860,7 @@ export function BrandProduct() {
               })}
             </Swiper>
             <Box
-              className={"next_btn restaurant-next"}
+              className={"next_btn Brand-next"}
               style={{ color: "white" }}
             >
               <ArrowForwardIosNewIcon

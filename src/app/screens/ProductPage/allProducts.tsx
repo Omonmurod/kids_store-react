@@ -27,7 +27,7 @@ export function AllProducts() {
         <Stack flexDirection={"column"} alignItems={"center"}>
           <Stack className="shop">
             <Stack className="left_shop">
-              <Stack flexDirection={"row"}>
+              <Stack flexDirection={"row"} className="left_radio">
                 <FormControl>
                   <RadioGroup
                     row

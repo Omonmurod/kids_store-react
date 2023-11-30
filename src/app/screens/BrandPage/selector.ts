@@ -18,7 +18,7 @@ export const retrieveTargetProducts = createSelector(
   selectBrandPage,
   (BrandPage) => BrandPage.targetProducts
 );
-export const retrieveChosenDish = createSelector(
+export const retrieveChosenProduct = createSelector(
   selectBrandPage,
   (BrandPage) => BrandPage.chosenProduct
 );

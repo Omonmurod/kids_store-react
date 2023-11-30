@@ -11,7 +11,12 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Rating from "@mui/material/Rating";
 import Checkbox from "@mui/material/Checkbox";
-import { Favorite, Visibility } from "@mui/icons-material";
+import {
+  Favorite,
+  FavoriteBorder,
+  Label,
+  Visibility,
+} from "@mui/icons-material";
 import Badge from "@mui/material/Badge";
 import SearchIcon from "@mui/icons-material/Search";
 import Marginer from "../../components/marginer";
@@ -28,6 +33,8 @@ import {
   sweetErrorHandling,
   sweetTopSmallSuccessAlert,
 } from "../../../lib/sweetAlert";
+import { styled } from "@mui/system";
+
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
@@ -57,6 +64,13 @@ const progress4 = (12 / 20) * 100;
 const progress3 = (0 / 20) * 100;
 const progress2 = (0 / 20) * 100;
 const progress1 = (0 / 20) * 100;
+const StyledCheckbox = styled(Checkbox)({
+  "&.Mui-checked": {
+    "& .MuiSvgIcon-root": {
+      color: "red",
+    },
+  },
+});
 
 /** REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
@@ -79,9 +93,10 @@ const targetProductsRetriever = createSelector(
   (targetProducts) => ({ targetProducts })
 );
 
-export function OneBrand() {
+export function OneBrand(props: any) {
   /** INITIALIZATIONS */
   let { brand_id } = useParams<{ brand_id: string }>();
+  const label = { inputProps: { "aria-label": "Checkbox demo" } };
   const { randomBrands } = useSelector(randomBrandsRetriever);
   const { chosenBrand } = useSelector(chosenBrandRetriever);
   const { targetProducts } = useSelector(targetProductsRetriever);
@@ -202,7 +217,10 @@ export function OneBrand() {
                 );
               })}
             </Swiper>
-            <Box className={"next_btn restaurant-next"} style={{ color: "white" }}>
+            <Box
+              className={"next_btn restaurant-next"}
+              style={{ color: "white" }}
+            >
               <ArrowForwardIosNewIcon
                 style={{ color: "orange", fontSize: "40px" }}
               />
@@ -229,7 +247,11 @@ export function OneBrand() {
                     <FormControlLabel
                       value="new"
                       control={
-                        <Radio color="primary" style={{ width: "33px" }} onClick={() => searchOrderHandler("createdAt")} />
+                        <Radio
+                          color="primary"
+                          style={{ width: "33px" }}
+                          onClick={() => searchOrderHandler("createdAt")}
+                        />
                       }
                       label={
                         <span
@@ -247,7 +269,11 @@ export function OneBrand() {
                     <FormControlLabel
                       value="price"
                       control={
-                        <Radio color="primary" style={{ width: "33px" }} onClick={() => searchOrderHandler("product_price")}/>
+                        <Radio
+                          color="primary"
+                          style={{ width: "33px" }}
+                          onClick={() => searchOrderHandler("product_price")}
+                        />
                       }
                       label={
                         <span
@@ -265,7 +291,11 @@ export function OneBrand() {
                     <FormControlLabel
                       value="view"
                       control={
-                        <Radio color="primary" style={{ width: "33px" }} onClick={() => searchOrderHandler("product_views")}/>
+                        <Radio
+                          color="primary"
+                          style={{ width: "33px" }}
+                          onClick={() => searchOrderHandler("product_views")}
+                        />
                       }
                       label={
                         <span
@@ -283,7 +313,11 @@ export function OneBrand() {
                     <FormControlLabel
                       value="like"
                       control={
-                        <Radio color="primary" style={{ width: "33px" }} onClick={() => searchOrderHandler("product_likes")}/>
+                        <Radio
+                          color="primary"
+                          style={{ width: "33px" }}
+                          onClick={() => searchOrderHandler("product_likes")}
+                        />
                       }
                       label={
                         <span
@@ -324,25 +358,45 @@ export function OneBrand() {
                             style={{ left: "36px" }}
                           >
                             <Badge
+                              onClick={(e) => {
+                                e.stopPropagation();
+                              }}
                               badgeContent={product.product_likes}
                               color="secondary"
                             >
-                              <Checkbox
+                              {/* <Checkbox
                                 icon={<Favorite style={{ color: "white" }} />}
                                 id={product._id}
                                 checkedIcon={
                                   <Favorite style={{ color: "red" }} />
                                 }
+                                onClick={targetLikeProduct}
                                 checked={
                                   product?.me_liked &&
                                   product?.me_liked[0]?.my_favorite
                                     ? true
                                     : false
+                                } 
+                              />*/}
+                              <StyledCheckbox
+                                icon={<Favorite style={{ color: "white" }} />}
+                                id={product._id}
+                                checkedIcon={
+                                  <Favorite style={{ color: "red" }} />
+                                }
+                                onClick={targetLikeProduct}
+                                checked={
+                                  product?.me_liked &&
+                                  product?.me_liked[0]?.my_favorite
                                 }
                               />
                             </Badge>
                           </Button>
                           <Button
+                            onClick={(e) => {
+                              props.onAdd(product);
+                              e.stopPropagation();
+                            }}
                             className={"like_view_btn"}
                             style={{ right: "36px" }}
                           >
@@ -355,13 +409,6 @@ export function OneBrand() {
                                 id={product._id}
                                 checkedIcon={
                                   <Visibility style={{ color: "red" }} />
-                                }
-                                onClick={targetLikeProduct}
-                                checked={
-                                  product?.me_liked &&
-                                  product?.me_liked[0]?.my_favorite
-                                    ? true
-                                    : false
                                 }
                               />
                             </Badge>
@@ -438,23 +485,23 @@ export function OneBrand() {
                 </Box>
                 <Stack className={"bottom_box"}>
                   <Pagination
-                    // count={
-                    //   targetSearchObject.page >= 3
-                    //     ? targetSearchObject.page + 1
-                    //     : 3
-                    // }
-                    // page={targetSearchObject.page}
-                    // renderItem={(item) => (
-                    //   <PaginationItem
-                    //     components={{
-                    //       previous: ArrowBackIcon,
-                    //       next: ArrowForwardIcon,
-                    //     }}
-                    //     {...item}
-                    //     className="pagination"
-                    //   />
-                    // )}
-                    //onChange={handlePaginationChange}
+                  // count={
+                  //   targetSearchObject.page >= 3
+                  //     ? targetSearchObject.page + 1
+                  //     : 3
+                  // }
+                  // page={targetSearchObject.page}
+                  // renderItem={(item) => (
+                  //   <PaginationItem
+                  //     components={{
+                  //       previous: ArrowBackIcon,
+                  //       next: ArrowForwardIcon,
+                  //     }}
+                  //     {...item}
+                  //     className="pagination"
+                  //   />
+                  // )}
+                  //onChange={handlePaginationChange}
                   />
                 </Stack>
               </Stack>
@@ -490,7 +537,7 @@ export function OneBrand() {
                       <FormGroup aria-label="position">
                         <FormControlLabel
                           value="boy"
-                          control={<Checkbox style={{ color: "#423123" }} onClick={() => searchCollectionHandler("boy")}/>}
+                          control={<Checkbox style={{ color: "#423123" }} />}
                           label={
                             <span
                               style={{
@@ -499,6 +546,7 @@ export function OneBrand() {
                                 fontSize: "19px",
                                 paddingLeft: "5px",
                               }}
+                              onClick={() => searchCollectionHandler("boy")}
                             >
                               Boy
                             </span>
@@ -506,7 +554,12 @@ export function OneBrand() {
                         />
                         <FormControlLabel
                           value="girl"
-                          control={<Checkbox style={{ color: "#423123" }} onClick={() => searchCollectionHandler("girl")}/>}
+                          control={
+                            <Checkbox
+                              style={{ color: "#423123" }}
+                              onClick={() => searchCollectionHandler("girl")}
+                            />
+                          }
                           label={
                             <span
                               style={{
@@ -522,7 +575,12 @@ export function OneBrand() {
                         />
                         <FormControlLabel
                           value="unisex"
-                          control={<Checkbox style={{ color: "#423123" }} onClick={() => searchCollectionHandler("uni")}/>}
+                          control={
+                            <Checkbox
+                              style={{ color: "#423123" }}
+                              onClick={() => searchCollectionHandler("uni")}
+                            />
+                          }
                           label={
                             <span
                               style={{
