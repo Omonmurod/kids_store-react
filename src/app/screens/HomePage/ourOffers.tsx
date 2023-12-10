@@ -13,13 +13,18 @@ export function OurOffers() {
             <img src="/icons/offer-bunny.png" />
           </Box>
           <Stack style={{ marginRight: "50px" }}>
-            <Stack className="info-box1">
+            <Stack
+              className="info-box1"
+              //onClick={() => searchCollectionHandler("clothing")}
+            >
               <Box className="info-img">
                 <img src="/icons/offer1.svg" />
               </Box>
               <Stack className="info">
                 <div className="bottom-info1">New Born & Baby Care Shop</div>
-                <div className="bottom-info">Cras efficitur, lacus non luctus facilisis</div>
+                <div className="bottom-info">
+                  Cras efficitur, lacus non luctus facilisis
+                </div>
               </Stack>
             </Stack>
             <Stack className="info-box2">
@@ -27,8 +32,12 @@ export function OurOffers() {
                 <img src="/icons/offer2.svg" />
               </Box>
               <Stack className="info">
-                <div className="bottom-info2">Toddlers Clothing & Accessories</div>
-                <div className="bottom-info">Etiam vulputate efficitur nibh sed euismod</div>
+                <div className="bottom-info2">
+                  Toddlers Clothing & Accessories
+                </div>
+                <div className="bottom-info">
+                  Etiam vulputate efficitur nibh sed euismod
+                </div>
               </Stack>
             </Stack>
             <Stack className="info-box3">
@@ -37,7 +46,9 @@ export function OurOffers() {
               </Box>
               <Stack className="info">
                 <div className="bottom-info3">Toys and Games</div>
-                <div className="bottom-info">Etiam vulputate efficitur nibh sed euismod</div>
+                <div className="bottom-info">
+                  Etiam vulputate efficitur nibh sed euismod
+                </div>
               </Stack>
             </Stack>
             <Stack className="info-box4">
@@ -46,7 +57,9 @@ export function OurOffers() {
               </Box>
               <Stack className="info">
                 <div className="bottom-info4">Strollers & Ride-Ons</div>
-                <div className="bottom-info">Cras efficitur, lacus non luctus facilisis</div>
+                <div className="bottom-info">
+                  Cras efficitur, lacus non luctus facilisis
+                </div>
               </Stack>
             </Stack>
           </Stack>

@@ -46,11 +46,11 @@ export function HomePage() {
     <div className="homepage">
       <Entrance />
       <Statistics />
+      <Events />
       <TopBrands />
       <BestProducts />
       <Advertisements />
       <OurOffers />
-      <Events />
       <Articles />
     </div>
   );

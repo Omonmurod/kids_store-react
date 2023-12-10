@@ -1,6 +1,6 @@
 .homepage .entrance {
   width: 100%;
-  height: 690px;
+  height: 620px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -68,7 +68,7 @@
   font-family: "Nunito";
   font-style: normal;
   font-weight: 900;
-  font-size: 46px;
+  font-size: 44px;
   line-height: normal;
   text-align: center;
   color: #423127;
@@ -77,13 +77,12 @@
 /** Statistics FRAME */
 .homepage .statistics {
   width: 100%;
-  height: 82px;
+  height: 130px;
 }
 
 .homepage .statistics .statistics_frame {
   width: 100%;
   height: 57px;
-  margin-top: 35px;
 }
 
 .homepage .statistics .statistics_frame .frame {
@@ -91,6 +90,7 @@
   flex-direction: row;
   grid-template-columns: repeat(4, 1fr);
   gap: 22px;
+  padding-top: 35px;
 }
 
 .homepage .statistics .statistics_frame .frame .frame_info {
@@ -138,12 +138,13 @@
 /** TopBrands FRAME */
 .homepage .top_brands_frame {
   width: 100%;
-  height: 643px;
-  margin-top: 80px;
+  height: 666px;
+  padding-top: 33px;
   background: url("/public/icons/bg_shapes2.png"), url("/public/icons/bg.png");
   background-position: bottom;
   background-size: 100% 640px, 100% 550px;
   background-repeat: no-repeat;
+  background-color: white;
 }
 
 .homepage .top_brands_frame .top-brands {
@@ -709,12 +710,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 44px;
   height: 80px;
 }
 
 .homepage .events_main .event_swiper {
-  margin-top: 35px;
+  margin-top: 15px;
   width: 100%;
   height: 210px;
 }

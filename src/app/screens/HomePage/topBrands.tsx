@@ -64,7 +64,7 @@ export function TopBrands() {
   };
 
   return (
-    <div className="top_brands_frame">
+    <div className="top_brands_frame" >
       <Container
         style={{
           display: "flex",

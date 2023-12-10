@@ -1,11 +1,12 @@
-import React, { useEffect, } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Box, Stack, Button } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 //import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
 import Rating from "@mui/material/Rating";
 import Checkbox from "@mui/material/Checkbox";
-import { Favorite, Visibility } from "@mui/icons-material";
+import { Favorite, FavoriteBorder, Visibility } from "@mui/icons-material";
 import Badge from "@mui/material/Badge";
+import assert from "assert";
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
@@ -16,6 +17,11 @@ import { retrieveBestProducts } from "./selector";
 import { createSelector } from "reselect";
 import { serverApi } from "../../../lib/config";
 import { useHistory } from "react-router-dom";
+import { ProductSearch } from "../../../types/others";
+import { verifiedMemberData } from "../../apiServices/verify";
+import { Definer } from "../../../lib/Definer";
+import MemberApiService from "../../apiServices/memberApiService";
+import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
 
 //SwiperCore.use([Autoplay, Navigation, Pagination]);
 
@@ -38,33 +44,45 @@ export function BestProducts() {
   const { setBestProducts } = actionDispatch(useDispatch());
   const { bestProducts } = useSelector(bestProductsRetriever);
   const [productRebuild, setProductRebuild] = useState<Date>(new Date());
-  const [targetProduct, setTargetProduct] = useState<ProductSearch>({
-    page: 1,
-    limit: 15,
-    order: "product_reviews",
-    brand_mb_id: "all",
-    product_name: "all",
-    product_collection: "all",
-    product_size: "all",
-    product_color: "all",
-    product_type: "all",
-  });
-  const [] = useState<string[]>([]);
+
+  useEffect(() => {
+    const productService = new ProductApiService();
+    productService
+      .getTargetProducts({
+        page: 1,
+        limit: 15,
+        order: "product_likes",
+        product_name: "all",
+        product_collection: "all",
+        product_size: "all",
+        product_color: "all",
+      })
+      .then((data) => setBestProducts(data))
+      .catch((err) => console.log(err));
+  }, [productRebuild]);
 
   /** HANDLERS */
   const chosenProductHandler = (id: string) => {
     history.push(`brand/products/${id}`);
   };
 
-  useEffect(() => {
-    const productApiService = new ProductApiService();
-    productApiService
-      .getTargetProducts(targetProduct)
-      .then((data) => {
-        setBestProducts(data);
-      })
-      .catch((err) => console.log(err));
-  }, [productRebuild]);
+  const targetLikeProduct = async (e: any) => {
+    try {
+      assert.ok(verifiedMemberData, Definer.auth_err1);
+      const memberService = new MemberApiService(),
+        like_result: any = await memberService.memberLikeTarget({
+          like_ref_id: e.target.id,
+          group_type: "product",
+        });
+      assert.ok(like_result, Definer.general_err1);
+
+      await sweetTopSmallSuccessAlert("Success", 700, false);
+      setProductRebuild(new Date());
+    } catch (error: any) {
+      console.log("targetLikeProduct, ERROR:", error);
+      sweetErrorHandling(error).then();
+    }
+  };
 
   return (
     <div className="p_products_frame">
@@ -110,14 +128,41 @@ export function BestProducts() {
                         <Button
                           className={"like_view_btn"}
                           style={{ left: "36px" }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}
                         >
-                          <Badge badgeContent={8} color="secondary">
+                          <Badge
+                            badgeContent={product.product_likes}
+                            onClick={(e: React.MouseEvent) => {
+                              e.stopPropagation();
+                              console.log("Badge clicked!");
+                              console.log(
+                                "product_likes:",
+                                product.product_likes
+                              );
+                              console.log(
+                                "my_favorite value:",
+                                product?.me_liked?.[0]?.my_favorite
+                              );
+                            }}
+                            color="secondary"
+                          >
                             <Checkbox
-                              icon={<Favorite style={{ color: "white" }} />}
+                              icon={
+                                <FavoriteBorder style={{ color: "white" }} />
+                              }
+                              id={product._id}
                               checkedIcon={
                                 <Favorite style={{ color: "red" }} />
                               }
-                              //checked={checked}
+                              onClick={targetLikeProduct}
+                              checked={
+                                product?.me_liked &&
+                                product?.me_liked[0]?.my_favorite
+                                  ? true
+                                  : false
+                              }
                             />
                           </Badge>
                         </Button>
@@ -155,18 +200,19 @@ export function BestProducts() {
                           textDecoration: "line-through",
                           fontSize: "19px",
                         }}
-                      >{product.product_price}
+                      >
+                        {product.product_price}
                       </span>
-                        <span
-                          style={{
-                            fontFamily: "Nunito",
-                            fontWeight: "900",
-                            color: "orange",
-                            fontSize: "20px",
-                          }}
-                        >
-                          {product.discountedPrice}
-                        </span>
+                      <span
+                        style={{
+                          fontFamily: "Nunito",
+                          fontWeight: "900",
+                          color: "orange",
+                          fontSize: "20px",
+                        }}
+                      >
+                        {product.discountedPrice}
+                      </span>
                     </Stack>
                     <Stack marginLeft={"45px"} marginTop={"15px"}>
                       <Button

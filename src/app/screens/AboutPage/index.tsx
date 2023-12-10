@@ -99,7 +99,7 @@ export function AboutPage() {
   };
 
   return (
-    <div className={"help_page"}>
+    <div className={"help_page"} style={{ backgroundColor: "white"}}>
       <Container maxWidth={"lg"} sx={{ mt: "50px", mb: "50px" }}>
         <TabContext value={value}>
           <Box className={"help_menu"}>
@@ -288,7 +288,7 @@ export function AboutPage() {
                       justifyContent={""}
                     >
                       <Box className="img-icon">
-                        <a href="http://localhost:3000/products">
+                        <a href="http://:3000/products">
                           <img
                             className="icon"
                             src="/icons/about3.png"
@@ -302,7 +302,7 @@ export function AboutPage() {
                         </a>
                       </Box>
                       <Box className="img-icon">
-                        <a href="http://localhost:3000/products">
+                        <a href="http://:3000/products">
                           <img
                             className="icon"
                             src="/icons/about5.png"

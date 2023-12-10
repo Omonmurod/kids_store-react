@@ -2759,6 +2759,7 @@
     "@types/react" "*"
     csstype "^3.0.2"
 
+
 "@types/testing-library__jest-dom@^5.9.1":
   version "5.14.9"
   resolved "https://registry.yarnpkg.com/@types/testing-library__jest-dom/-/testing-library__jest-dom-5.14.9.tgz#0fb1e6a0278d87b6737db55af5967570b67cb466"
@@ -9819,6 +9820,11 @@ sweetalert2@^11.7.20:
   version "11.7.27"
   resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.7.27.tgz#de19294e1b5ae7991de27bb4ae34aff3570aaa0e"
   integrity sha512-QbRXGQn1sb7HEhzA/K2xtWIwQHh/qkSbb1w6jYcTql2xy17876lTREEt1D4X6Q0x2wHtfUjKJ+Cb8IVkRoq7DQ==
+
+swiper@*:
+  version "11.0.5"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-11.0.5.tgz#6ed1ad06e6906ba42fd4b93d4988f0626a49046e"
+  integrity sha512-rhCwupqSyRnWrtNzWzemnBLMoyYuoDgGgspAm/8iBD3jCvAWycPLH4Z3TB0O5520DHLzMx94yUMH/B9Efpa48w==
 
 swiper@^8.4.3:
   version "8.4.7"

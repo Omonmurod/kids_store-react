@@ -1,4 +1,4 @@
-import { MeLiked, MeViewed } from "./user";
+import { MeLiked } from "./product";
 import { Member } from "./user";
 
 // interface bu custom typescripti biz yozib olgan
@@ -23,7 +23,7 @@ export interface BoArticle {
   updatedAt: Date;
   member_data: Member;
   me_liked: MeLiked[];
-  me_viewed: MeViewed[];
+  //me_viewed: MeViewed[];
 }
 
 export interface SearchArticlesObj {

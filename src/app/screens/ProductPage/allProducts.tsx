@@ -329,36 +329,9 @@ export function AllProducts() {
                     <Box className="category_info1">
                       <div>
                         <img
-                          src="/icons/category1.png"
-                          style={{ width: "165px", borderRadius: "20px" }}
-                        />
-                      </div>
-                      <div
-                        style={{
-                          width: "165px",
-                          marginTop: "8px",
-                        }}
-                      >
-                        <span
-                          style={{
-                            fontFamily: "Nunito",
-                            fontSize: "16px",
-                            fontWeight: "850",
-                            lineHeight: "20px",
-                          }}
-                        >
-                          Toys, Books & Games
-                        </span>
-                      </div>
-                    </Box>
-                    <Box
-                      className="category_info1"
-                      style={{ marginLeft: "19px" }}
-                    >
-                      <div>
-                        <img
                           src="/icons/category2.png"
                           style={{ width: "165px", borderRadius: "20px" }}
+                          //onClick={() => searchCollectionHandler("clothing")}
                         />
                       </div>
                       <div
@@ -379,6 +352,35 @@ export function AllProducts() {
                         </span>
                       </div>
                     </Box>
+                    <Box
+                      className="category_info1"
+                      style={{ marginLeft: "5px" }}
+                    >
+                      <div>
+                        <img
+                          src="/icons/category6.jpeg"
+                          style={{ width: "165px", borderRadius: "20px" }}
+                          //onClick={() => searchCollectionHandler("shoes")}
+                        />
+                      </div>
+                      <div
+                        style={{
+                          width: "165px",
+                          marginTop: "8px",
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontFamily: "Nunito",
+                            fontSize: "16px",
+                            fontWeight: "850",
+                            lineHeight: "20px",
+                          }}
+                        >
+                          Baby Shoes
+                        </span>
+                      </div>
+                    </Box>
                   </Stack>
                   <Stack
                     className="category_info"
@@ -389,6 +391,7 @@ export function AllProducts() {
                         <img
                           src="/icons/category3.png"
                           style={{ width: "165px", borderRadius: "20px" }}
+                          //onClick={() => searchCollectionHandler("ride-ons")}
                         />
                       </div>
                       <div
@@ -411,12 +414,13 @@ export function AllProducts() {
                     </Box>
                     <Box
                       className="category_info1"
-                      style={{ marginLeft: "19px" }}
+                      style={{ marginLeft: "5px" }}
                     >
                       <div>
                         <img
-                          src="/icons/category4.png"
+                          src="/icons/category1.png"
                           style={{ width: "165px", borderRadius: "20px" }}
+                          //onClick={() => searchCollectionHandler("toy")}
                         />
                       </div>
                       <div
@@ -433,7 +437,7 @@ export function AllProducts() {
                             lineHeight: "20px",
                           }}
                         >
-                          Party & Gifts Shop
+                          Toys, Books & Games
                         </span>
                       </div>
                     </Box>
@@ -448,9 +452,9 @@ export function AllProducts() {
                           src="/icons/category5.png"
                           style={{
                             width: "165px",
-                            marginRight: "35px",
                             borderRadius: "20px",
                           }}
+                          //onClick={() => searchCollectionHandler("baby care")}
                         />
                       </div>
                       <div
@@ -473,6 +477,35 @@ export function AllProducts() {
                         </span>
                       </div>
                     </Box>
+                    <Box
+                      className="category_info1"
+                      style={{ marginLeft: "5px" }}
+                    >
+                      <div>
+                        <img
+                          src="/icons/category4.png"
+                          style={{ width: "165px", borderRadius: "20px" }}
+                          //onClick={() => searchCollectionHandler("gift")}
+                        />
+                      </div>
+                      <div
+                        style={{
+                          width: "165px",
+                          marginTop: "8px",
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontFamily: "Nunito",
+                            fontSize: "16px",
+                            fontWeight: "850",
+                            lineHeight: "20px",
+                          }}
+                        >
+                          Party & Gifts Shop
+                        </span>
+                      </div>
+                    </Box>
                   </Stack>
                 </Stack>
               </Stack>
@@ -486,7 +519,7 @@ export function AllProducts() {
                     color: "#423127",
                     fontFamily: "Nunito",
                     fontWeight: "900",
-                    fontSize: "28px",  
+                    fontSize: "28px",
                   }}
                 >
                   Special Offer

@@ -6,16 +6,16 @@ import { OneBrand } from "./oneBrand";
 import { AllBrands } from "./allBrands";
 import "../../../css/brand.css";
 
-export function BrandPage() {
+export function BrandPage(props: any) {
   let brand = useRouteMatch();
   return (
     <div className="brand_page">
       <Switch>
         <Route path={`${brand.path}/products/:product_id`}>
-          <BrandProduct />
+          <BrandProduct onAdd={props.onAdd}/>
         </Route>
         <Route path={`${brand.path}/:brand_id`}>
-          <OneBrand />
+          <OneBrand onAdd={props.onAdd}/>
         </Route>
         <Route path={`${brand.path}`}>
           <AllBrands />

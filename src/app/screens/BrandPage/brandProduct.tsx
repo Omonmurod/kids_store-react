@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Container, Stack, Box } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
@@ -11,10 +11,7 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import Checkbox from "@mui/material/Checkbox";
 import { FreeMode, Navigation, Thumbs } from "swiper";
-import {
-  Favorite,
-  FavoriteBorder,
-} from "@mui/icons-material";
+import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import { Visibility } from "@mui/icons-material";
 import Badge from "@mui/material/Badge";
 import LinearProgress from "@material-ui/core/LinearProgress";
@@ -26,89 +23,171 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosNewIcon from "@mui/icons-material/ArrowForwardIos";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Product } from "../../../types/product";
 import { Brand } from "../../../types/user";
 import ProductApiService from "../../apiServices/productApiService";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import DeleteIcon from "@mui/icons-material/Delete";
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import {
   retrieveChosenProduct,
   retrieveChosenBrand,
+  retrieveTargetComments,
+  retrieveTargetProducts,
 } from "../../screens/BrandPage/selector";
 import { Dispatch } from "@reduxjs/toolkit";
 import {
   setChosenProduct,
   setChosenBrand,
+  setTargetComments,
+  setTargetProducts,
 } from "../../screens/BrandPage/slice";
 import BrandApiService from "../../apiServices/brandApiService";
 import { serverApi } from "../../../lib/config";
 import assert from "assert";
 import { Definer } from "../../../lib/Definer";
 import MemberApiService from "../../apiServices/memberApiService";
-import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../../lib/sweetAlert";
+import { Comments } from "../../../types/follow";
+import { CommentsSearchObj, ProductSearchObj } from "../../../types/others";
+import CommentApiService from "../../apiServices/commentApiService";
+import { verifiedMemberData } from "../../apiServices/verify";
+import moment from "moment";
 
+/** REDUX SLICE */
+const actionDispatch = (dispach: Dispatch) => ({
+  setChosenProduct: (data: Product) => dispach(setChosenProduct(data)),
+  setChosenBrand: (data: Brand) => dispach(setChosenBrand(data)),
+  setTargetComments: (data: Comments[]) => dispach(setTargetComments(data)),
+  setTargetProducts: (data: Product[]) => dispach(setTargetProducts(data)),
+});
 
-  /** REDUX SLICE */
-  const actionDispatch = (dispach: Dispatch) => ({
-    setChosenProduct: (data: Product) => dispach(setChosenProduct(data)),
-    setChosenBrand: (data: Brand) => dispach(setChosenBrand(data)),
-  });
-  
-  /** REDUX SELECTOR */
-  const chosenProductRetriever = createSelector(
-    retrieveChosenProduct,
-    (chosenProduct) => ({
-      chosenProduct,
-    })
-  );
-  const chosenBrandRetriever = createSelector(
-    retrieveChosenBrand,
-    (chosenBrand) => ({
-      chosenBrand,
-    })
-  );
+/** REDUX SELECTOR */
+const chosenProductRetriever = createSelector(
+  retrieveChosenProduct,
+  (chosenProduct) => ({
+    chosenProduct,
+  })
+);
+const chosenBrandRetriever = createSelector(
+  retrieveChosenBrand,
+  (chosenBrand) => ({
+    chosenBrand,
+  })
+);
+const targetCommentsRetriever = createSelector(
+  retrieveTargetComments,
+  (targetComments) => ({
+    targetComments,
+  })
+);
+const targetProductsRetriever = createSelector(
+  retrieveTargetProducts,
+  (targetProducts) => ({
+    targetProducts,
+  })
+);
 
-const chosen_list = Array.from(Array(4).keys());
-//const label = { inputProps: { "aria-label": "Checkbox demo" } };
-const events_list = Array.from(Array(10).keys());
 const progress5 = (8 / 20) * 100;
 const progress4 = (12 / 20) * 100;
 const progress3 = (0 / 20) * 100;
 const progress2 = (0 / 20) * 100;
 const progress1 = (0 / 20) * 100;
 
-export function BrandProduct() {
+export function BrandProduct(props: any) {
+  const history = useHistory();
+  const chosenProductInfoRef = useRef<HTMLDivElement>(null);
+
   /** INITIALIZATIONS */
+  const label = { inputProps: { "aria-label": "Checkbox demo" } };
   let { product_id } = useParams<{ product_id: string }>();
-  const { setChosenProduct, setChosenBrand } = actionDispatch(
-    useDispatch()
-  );
+  const {
+    setChosenProduct,
+    setChosenBrand,
+    setTargetComments,
+    setTargetProducts,
+  } = actionDispatch(useDispatch());
   const { chosenProduct } = useSelector(chosenProductRetriever);
   const { chosenBrand } = useSelector(chosenBrandRetriever);
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
+  const { targetComments } = useSelector(targetCommentsRetriever);
+  const { targetProducts } = useSelector(targetProductsRetriever);
   const [productRebuild, setProductRebuild] = useState<Date>(new Date());
 
+  const [targetProductSearchObj, setTargetProductsSearchObj] =
+    useState<ProductSearchObj>({
+      page: 1,
+      limit: 10,
+      order: "product_likes",
+      brand_mb_id: "all",
+      product_name: "all",
+      product_collection: "all",
+      product_size: "all",
+      product_color: "all",
+      product_type: "all",
+    });
+  const [targetCommentsSearchObj, setTargetCommentSearchObj] =
+    useState<CommentsSearchObj>({
+      page: 1,
+      limit: 3,
+      comment_ref_product_id: product_id,
+    });
+
+  const chosenCommentHandler = (id: string) => {
+    targetCommentsSearchObj.comment_ref_product_id = id;
+    setTargetCommentSearchObj({ ...targetCommentsSearchObj });
+    setProductRebuild(new Date());
+  };
+  const chosenProductHandler = (id: string) => {
+    history.push(`/brand/products/${id}`);
+    if (chosenProductInfoRef.current) {
+      chosenProductInfoRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+    setProductRebuild(new Date());
+  };
   const productRelatedProcess = async () => {
     try {
       const productService = new ProductApiService();
-      const product: Product = await productService.getChosenProduct(product_id);
+      const product: Product = await productService.getChosenProduct(
+        product_id
+      );
       setChosenProduct(product);
 
       const brandService = new BrandApiService();
-      const brand = await brandService.getChosenBrand(
-        product.brand_mb_id
-      );
+      const brand = await brandService.getChosenBrand(product.brand_mb_id);
       setChosenBrand(brand);
-    } catch (err) {
+    } catch (err: any) {
       console.log(`productRelatedProcess, ERROR:`, err);
     }
   };
 
   useEffect(() => {
     productRelatedProcess().then();
+    const commentApiService = new CommentApiService();
+    commentApiService
+      .getTargetComments(targetCommentsSearchObj)
+      .then((data) => setTargetComments(data))
+      .catch((err) => console.log(err));
+
+    const productService = new ProductApiService();
+    productService
+      .getTargetProducts(targetProductSearchObj)
+      .then((data) => setTargetProducts(data))
+      .catch((err) => console.log(err));
   }, [productRebuild]);
+
+  //** for Creating values *//
+  const [rating, setRating] = useState<number | null>(0);
+  const [comment, setComment] = useState<string>("");
+
+  const handleCommentChange = (e: any) => {
+    setComment(e.target.value);
+  };
 
   /** HANDLERS */
   const targetLikeProduct = async (e: any) => {
@@ -126,6 +205,69 @@ export function BrandProduct() {
     } catch (error: any) {
       console.log("targetLikeProduct, ERROR:", error);
       sweetErrorHandling(error).then();
+    }
+  };
+
+  const targetLikeComment = async (e: any) => {
+    try {
+      assert.ok(verifiedMemberData, Definer.auth_err1);
+      const memberService = new MemberApiService();
+      const like_result = await memberService.memberLikeTarget({
+        like_ref_id: e.target.id,
+        group_type: "comment",
+      });
+      assert.ok(like_result, Definer.auth_err1);
+      await sweetTopSmallSuccessAlert("success", 700, false);
+      setProductRebuild(new Date());
+    } catch (err: any) {
+      console.log("targetLikeComment,ERROR:", err);
+      sweetErrorHandling(err).then();
+    }
+  };
+
+  const handleCommentRequest = async () => {
+    try {
+      assert.ok(verifiedMemberData, Definer.auth_err1);
+      const is_fulfilled = comment !== "" && rating !== 0;
+      assert.ok(is_fulfilled, Definer.input_err1);
+      const comment_data = {
+        comment_content: comment,
+        product_rating: rating,
+        comment_ref_product_id: chosenProduct?._id,
+        comment_ref_brand_id: chosenProduct?.brand_mb_id,
+      };
+      const commentApiService = new CommentApiService();
+      await commentApiService.createComment(comment_data);
+      await sweetTopSmallSuccessAlert("success", 700, false);
+      setProductRebuild(new Date());
+    } catch (err) {
+      console.log(err);
+      sweetErrorHandling(err).then();
+    }
+  };
+
+  const passwordKeyDownHandler = (e: any) => {
+    if (e.key === "Enter") {
+      handleCommentRequest();
+    }
+  };
+
+  const CommentDelteHAndler = async (art_id: string) => {
+    try {
+      assert.ok(verifiedMemberData, Definer.auth_err1);
+      let confirmation = window.confirm("Are you sure to delete your article?");
+      if (confirmation) {
+        const commentApiService = new CommentApiService();
+        const comment_result = await commentApiService.CommentArticleDelte(
+          art_id
+        );
+        assert.ok(comment_result, Definer.auth_err1);
+        await sweetTopSmallSuccessAlert("success", 700, false);
+        setProductRebuild(new Date());
+      }
+    } catch (err) {
+      console.log(err);
+      sweetErrorHandling(err).then();
     }
   };
 
@@ -147,7 +289,7 @@ export function BrandProduct() {
               modules={[FreeMode, Navigation, Thumbs]}
             >
               {chosenProduct?.product_images.map((ele: string) => {
-              const image_path = `${serverApi}/${ele}`;
+                const image_path = `${serverApi}/${ele}`;
                 return (
                   <SwiperSlide key={ele}>
                     <img className="img" src={image_path} />
@@ -155,33 +297,36 @@ export function BrandProduct() {
                 );
               })}
             </Swiper>
-            <Swiper
+            {/* <Swiper
+              onSwiper={() => setThumbsSwiper}
               slidesPerView={4}
               spaceBetween={20}
-              pagination={{
-                clickable: true,
-              }}
+              modules={[FreeMode, Navigation, Thumbs]}
               className="mySwiper"
             >
               {chosenProduct?.product_images.map((ele: string) => {
-              const image_path = `${serverApi}/${ele}`;
+                const image_path = `${serverApi}/${ele}`;
                 return (
                   <SwiperSlide>
                     <img src={image_path} className="img-bot" />
                   </SwiperSlide>
                 );
               })}
-            </Swiper>
+            </Swiper> */}
           </Stack>
           <Stack className={"chosen_dish_info_container"}>
             <Box className={"chosen_dish_info_box"}>
-              <strong className={"dish_txt"}>Sweet Sandvich</strong>
-              <span className={"resto_name"}>Texas De Brasil</span>
+              <strong className={"dish_txt"}>
+                {chosenProduct?.product_name}
+              </strong>
+              <span className={"resto_name"}>{chosenBrand?.mb_nick}</span>
               <Box className={"rating_box"}>
                 <Rating
-                  name="half-rating"
-                  defaultValue={3.5}
+                  key={chosenProduct?._id}
+                  name="read-only"
+                  value={chosenProduct?.product_rating}
                   precision={0.5}
+                  readOnly
                   style={{ color: "#1876d2" }}
                 />
                 <div className="evaluation_box">
@@ -195,12 +340,18 @@ export function BrandProduct() {
                     }}
                   >
                     <Checkbox
-                      {...label}
-                      icon={<FavoriteBorder />}
+                      icon={<FavoriteBorder style={{ color: "#182b4e" }} />}
+                      id={chosenProduct?._id}
                       checkedIcon={<Favorite style={{ color: "red" }} />}
-                      checked={true}
+                      onClick={targetLikeProduct}
+                      checked={
+                        chosenProduct?.me_liked &&
+                        chosenProduct?.me_liked[0]?.my_favorite
+                          ? true
+                          : false
+                      }
                     />
-                    <span>98</span>
+                    <span>{chosenProduct?.product_likes}</span>
                   </div>
                   <div
                     style={{
@@ -211,16 +362,14 @@ export function BrandProduct() {
                     }}
                   >
                     <RemoveRedEyeIcon sx={{ mr: "10px" }} />
-                    <span>200</span>
+                    <span>{chosenProduct?.product_views}</span>
                   </div>
                 </div>
               </Box>
               <p className={"dish_desc_info"}>
-                Lorem Ipsum has been the industry's standard dummy text ever
-                since the 1500s, when an unknown printer took a galley of type
-                and scrambled it to make a type specimen book. It has survived
-                not only five centuries, but also the leap into electronic
-                typesetting, remaining essentially unchanged.{" "}
+                {chosenProduct?.product_description
+                  ? chosenProduct?.product_description
+                  : "No description!"}
               </p>
               <Marginer
                 direction="horizontal"
@@ -229,8 +378,8 @@ export function BrandProduct() {
                 bg="#000000"
               />
               <div className={"dish_price_box"}>
-                <span>Narx:</span>
-                <span>$11</span>
+                <span>Price:</span>
+                <span>${chosenProduct?.product_price}</span>
               </div>
               <div className={"button_box"}>
                 <Button
@@ -281,13 +430,28 @@ export function BrandProduct() {
                       marginBottom: "4px",
                     }}
                   >
-                    4.60
+                    {chosenProduct?.product_rating}{" "}
+                    <span
+                      style={{
+                        fontFamily: "Nunito",
+                        fontSize: "20px",
+                        color: "#724D37",
+                        fontWeight: "700",
+                        lineHeight: "24px",
+                        marginTop: "15px",
+                        marginBottom: "4px",
+                      }}
+                    >
+                      out of 5
+                    </span>
                   </div>
                   <div>
                     <Rating
-                      name="half-rating"
-                      defaultValue={3.5}
+                      key={chosenProduct?._id}
+                      name="read-only"
+                      value={chosenProduct?.product_rating}
                       precision={0.5}
+                      readOnly
                       style={{ color: "#1876d2" }}
                     />
                   </div>
@@ -564,12 +728,15 @@ export function BrandProduct() {
                   <div style={{ marginTop: "15px" }}>
                     <Rating
                       name="half-rating"
-                      defaultValue={0}
+                      defaultValue={2}
                       precision={0.5}
                       style={{
                         color: "#1876d2",
                         fontSize: "22px",
                         marginLeft: "20px",
+                      }}
+                      onChange={(event, rating) => {
+                        setRating(rating);
                       }}
                     />
                   </div>
@@ -604,6 +771,8 @@ export function BrandProduct() {
                         marginLeft: "0px",
                         marginTop: "10px",
                       }}
+                      onChange={handleCommentChange}
+                      onKeyPress={passwordKeyDownHandler}
                     />
                   </div>
                   <Box display={"flex"} justifyContent={"flex-start"}>
@@ -617,6 +786,7 @@ export function BrandProduct() {
                         fontSize: "15px",
                       }}
                       variant={"contained"}
+                      onClick={handleCommentRequest}
                     >
                       Submit
                     </Button>
@@ -625,99 +795,116 @@ export function BrandProduct() {
               </Stack>
             </Stack>
             <Stack className="reviews">
-              <Stack className="review_box">
-                <Box>
-                  <img
-                    src="/icons/default_user.svg"
-                    style={{
-                      width: "90px",
-                      height: "90px",
-                      marginLeft: "30px",
-                    }}
-                  />
-                </Box>
-                <Stack style={{ marginLeft: "30px", marginTop: "55px" }}>
-                  <strong className={"review_txt"}>John Doe</strong>
-                  <span className={"review_date"}>October 10, 2023</span>
-                  <Rating
-                    name="half-rating"
-                    defaultValue={3.5}
-                    precision={0.5}
-                    style={{
-                      color: "#1876d2",
-                      fontSize: "14px",
-                      marginTop: "10px",
-                    }}
-                  />
-                  <p className={"review_info"}>
-                    It is a long established fact that a reader will be
-                    distracted by the readable content of a page when looking at
-                    its layout. The point of using Lorem Ipsum.
-                  </p>
-                </Stack>
-              </Stack>
-              <Stack className="review_box">
-                <Box>
-                  <img
-                    src="/icons/default_user.svg"
-                    style={{
-                      width: "90px",
-                      height: "90px",
-                      marginLeft: "30px",
-                    }}
-                  />
-                </Box>
-                <Stack style={{ marginLeft: "30px", marginTop: "55px" }}>
-                  <strong className={"review_txt"}>John Doe</strong>
-                  <span className={"review_date"}>October 10, 2023</span>
-                  <Rating
-                    name="half-rating"
-                    defaultValue={3.5}
-                    precision={0.5}
-                    style={{
-                      color: "#1876d2",
-                      fontSize: "14px",
-                      marginTop: "10px",
-                    }}
-                  />
-                  <p className={"review_info"}>
-                    It is a long established fact that a reader will be
-                    distracted by the readable content of a page when looking at
-                    its layout. The point of using Lorem Ipsum.
-                  </p>
-                </Stack>
-              </Stack>
-              <Stack className="review_box">
-                <Box>
-                  <img
-                    src="/icons/default_user.svg"
-                    style={{
-                      width: "90px",
-                      height: "90px",
-                      marginLeft: "30px",
-                    }}
-                  />
-                </Box>
-                <Stack style={{ marginLeft: "30px", marginTop: "55px" }}>
-                  <strong className={"review_txt"}>John Doe</strong>
-                  <span className={"review_date"}>October 10, 2023</span>
-                  <Rating
-                    name="half-rating"
-                    defaultValue={3.5}
-                    precision={0.5}
-                    style={{
-                      color: "#1876d2",
-                      fontSize: "14px",
-                      marginTop: "10px",
-                    }}
-                  />
-                  <p className={"review_info"}>
-                    It is a long established fact that a reader will be
-                    distracted by the readable content of a page when looking at
-                    its layout. The point of using Lorem Ipsum.
-                  </p>
-                </Stack>
-              </Stack>
+              {targetComments?.map((comment: Comments) => {
+                const image_member = comment?.member_data?.mb_image
+                  ? `${serverApi}/${comment?.member_data?.mb_image}`
+                  : "/icons/default_user.svg";
+
+                return (
+                  <Stack className="review_box">
+                    <Box>
+                      <img
+                        src={image_member}
+                        style={{
+                          width: "90px",
+                          height: "90px",
+                          marginLeft: "30px",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    </Box>
+                    <Stack
+                      style={{
+                        marginLeft: "30px",
+                        marginTop: "55px",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <Stack style={{ flexDirection: "row" }}>
+                        <Box style={{ width: "150px" }}>
+                          <div className={"review_txt"}>
+                            {comment?.member_data?.mb_nick}
+                          </div>
+                          <div className={"review_date"}>
+                            {moment(comment?.createdAt).format(
+                              "YYYY.MM.DD     HH:mm"
+                            )}
+                          </div>
+                          <Rating
+                            name="half-rating"
+                            value={comment?.product_rating}
+                            precision={0.5}
+                            style={{
+                              color: "#1876d2",
+                              fontSize: "24px",
+                              marginTop: "10px",
+                            }}
+                          />
+                        </Box>
+                        <Stack
+                          style={{
+                            width: "100px",
+                            height: "50px",
+                            marginTop: "66px",
+                            flexDirection: "row",
+                            justifyContent: "flex-end",
+                            alignItems: "center",
+                            marginLeft: "122px",
+                          }}
+                        >
+                          <Box style={{}}>
+                            {(verifiedMemberData?._id ===
+                              comment.member_data._id ||
+                              verifiedMemberData?.mb_type === "ADMIN") && (
+                              <DeleteIcon
+                                style={{
+                                  color: "black",
+                                  marginLeft: "2px",
+                                  marginTop: "-2px",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() =>
+                                  CommentDelteHAndler(comment?._id)
+                                }
+                              />
+                            )}
+                          </Box>
+                          <Box style={{ marginLeft: "20px" }}>
+                            <span
+                              style={{
+                                fontSize: "16.25px",
+                              }}
+                            >
+                              {comment?.comment_likes}
+                            </span>
+                            <Checkbox
+                              sx={{ mt: "-11px" }}
+                              icon={<ThumbUpOffAltIcon />}
+                              checkedIcon={
+                                <ThumbUpOffAltIcon style={{ color: "red" }} />
+                              }
+                              id={comment._id}
+                              onClick={targetLikeComment}
+                              //*@ts-ignore*/
+                              checked={
+                                comment?.me_liked &&
+                                comment?.me_liked[0]?.my_favorite
+                                  ? true
+                                  : false
+                              }
+                            />
+                          </Box>
+                        </Stack>
+                      </Stack>
+                      <Box>
+                        <p className={"review_info"}>
+                          - {comment?.comment_content}
+                        </p>
+                      </Box>
+                    </Stack>
+                  </Stack>
+                );
+              })}
               <Box marginBottom={"12px"} width={"600px"}>
                 <Marginer direction="horizontal" height="1" bg="#ffa500" />
               </Box>
@@ -763,14 +950,23 @@ export function BrandProduct() {
                 prevEl: ".Brand-prev",
               }}
             >
-              {events_list.map((value, number) => {
+              {targetProducts.map((product: Product, index: number) => {
+                const image_path = `${serverApi}/${product.product_images[0]}`;
+                //let discountedPrice = Math.floor(product.discountedPrice);
                 return (
-                  <SwiperSlide className={"product_info_frame"}>
-                    <Stack className={"product-box"}>
+                  <SwiperSlide className={"product_info_frame"} key={product._id}>
+                    <Stack
+                      className={"product-box"}
+                      key={product._id}
+                      onClick={() => {
+                        chosenProductHandler(product._id);
+                        chosenCommentHandler(product._id);
+                      }}
+                    >
                       <Box
                         className={"img"}
                         sx={{
-                          backgroundImage: `url("/icons/teddy-bear.jpeg")`,
+                          backgroundImage: `url(${image_path})`,
                         }}
                       >
                         <Box className={"dish_sale"}>
@@ -779,14 +975,33 @@ export function BrandProduct() {
                         <Button
                           className={"like_view_btn"}
                           style={{ left: "36px" }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}
                         >
-                          <Badge badgeContent={8} color="primary">
+                          <Badge
+                            badgeContent={product.product_likes}
+                            color="secondary"
+                          >
                             <Checkbox
-                              icon={<Favorite style={{ color: "white" }} />}
+                              icon={
+                                <FavoriteBorder
+                                  style={{
+                                    color: "white",
+                                  }}
+                                />
+                              }
+                              id={product._id}
                               checkedIcon={
                                 <Favorite style={{ color: "red" }} />
                               }
-                              checked={true}
+                              onClick={targetLikeProduct}
+                              checked={
+                                product?.me_liked &&
+                                product?.me_liked[0]?.my_favorite
+                                  ? true
+                                  : false
+                              }
                             />
                           </Badge>
                         </Button>
@@ -794,23 +1009,28 @@ export function BrandProduct() {
                           className={"like_view_btn"}
                           style={{ right: "36px" }}
                         >
-                          <Badge badgeContent={16} color="primary">
+                          <Badge badgeContent={product.product_views} color="secondary">
                             <Checkbox
                               icon={<Visibility style={{ color: "white" }} />}
                               checkedIcon={
                                 <Visibility style={{ color: "red" }} />
                               }
-                              checked={false}
+                              checked={
+                                product?.me_viewed &&
+                                product?.me_viewed[0]?.my_view
+                                  ? true
+                                  : false
+                              }
                             />
                           </Badge>
                         </Button>
                       </Box>
                     </Stack>
-                    <Stack className={"product_name"}>Taddybear Toy</Stack>
+                    <Stack className={"product_name"}>{product.product_name}</Stack>
                     <Stack className={"rating_box"}>
                       <Rating
                         className="half-rating"
-                        defaultValue={3.5}
+                        value = {product?.product_rating}
                         precision={0.5}
                       />
                     </Stack>
@@ -823,7 +1043,7 @@ export function BrandProduct() {
                           fontSize: "19px",
                         }}
                       >
-                        $70
+                        {product.product_price}
                       </span>
                       <span
                         style={{
@@ -859,10 +1079,7 @@ export function BrandProduct() {
                 );
               })}
             </Swiper>
-            <Box
-              className={"next_btn Brand-next"}
-              style={{ color: "white" }}
-            >
+            <Box className={"next_btn Brand-next"} style={{ color: "white" }}>
               <ArrowForwardIosNewIcon
                 style={{ color: "#1876d2", fontSize: "40px" }}
               />

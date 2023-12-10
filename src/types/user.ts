@@ -1,16 +1,5 @@
 import { MeFollowed } from "./follow";
-
-export interface MeLiked {
-  mb_id: string;
-  like_ref_id: string;
-  my_favorite: boolean;
-}
-
-export interface MeViewed {
-  mb_id: string;
-  view_ref_id: string;
-  my_view: boolean;
-}
+import { MeLiked } from "./product";
 
 export interface Brand {
   _id: string;
@@ -32,7 +21,7 @@ export interface Brand {
   mb_subscriber_cnt: number;
   createdAt: Date;
   me_liked: MeLiked[];
-  me_viewed: MeViewed[];
+  //me_viewed: MeViewed[];
 }
 
 export interface Member {
@@ -53,7 +42,7 @@ export interface Member {
   mb_subscriber_cnt: number;
   createdAt: Date;
   me_liked: MeLiked[];
-  me_viewed: MeViewed[];
+  //me_viewed: MeViewed[];
   me_followed: MeFollowed[];
 }
 

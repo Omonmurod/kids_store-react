@@ -1,4 +1,3 @@
-//import ProductApiService from "../app/apiServices/productApiService";
 export interface SearchObj {
   page: number;
   limit: number;

@@ -22,3 +22,7 @@ export const retrieveChosenProduct = createSelector(
   selectBrandPage,
   (BrandPage) => BrandPage.chosenProduct
 );
+export const retrieveTargetComments = createSelector(
+  selectBrandPage,
+  (BrandPage) => BrandPage.targetComments
+);

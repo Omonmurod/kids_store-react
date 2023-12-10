@@ -66,6 +66,7 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.3.3",
+    "@types/swiper": "^6.0.0",
     "vite": "^4.0.4"
   }
 }

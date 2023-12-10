@@ -11,21 +11,15 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Rating from "@mui/material/Rating";
 import Checkbox from "@mui/material/Checkbox";
-import {
-  Favorite,
-  FavoriteBorder,
-  Label,
-  Visibility,
-} from "@mui/icons-material";
+import Favorite from "@mui/icons-material/Favorite";
+import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Badge from "@mui/material/Badge";
 import SearchIcon from "@mui/icons-material/Search";
 import Marginer from "../../components/marginer";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosNewIcon from "@mui/icons-material/ArrowForwardIos";
 import { Swiper, SwiperSlide } from "swiper/react";
-// import LinearProgress from "@material-ui/core/LinearProgress";
-// import theme2 from "../../MaterialTheme/theme2";
-// import { ThemeProvider } from "@material-ui/core/styles";
 import { useParams } from "react-router-dom";
 import BrandApiService from "../../apiServices/brandApiService";
 import { ProductSearchObj, SearchObj } from "../../../types/others";
@@ -33,7 +27,12 @@ import {
   sweetErrorHandling,
   sweetTopSmallSuccessAlert,
 } from "../../../lib/sweetAlert";
-import { styled } from "@mui/system";
+import Typography from "@mui/material/Typography";
+import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
+import MuiAccordionSummary, {
+  AccordionSummaryProps,
+} from "@mui/material/AccordionSummary";
+import MuiAccordionDetails from "@mui/material/AccordionDetails";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
@@ -44,7 +43,7 @@ import {
   retrieveTargetProducts,
 } from "../../screens/BrandPage/selector";
 import { Brand } from "../../../types/user";
-import { Dispatch } from "@reduxjs/toolkit";
+import { Dispatch, createAction } from "@reduxjs/toolkit";
 import {
   setChosenBrand,
   setRandomBrands,
@@ -57,20 +56,17 @@ import { useHistory } from "react-router-dom";
 import assert from "assert";
 import { Definer } from "../../../lib/Definer";
 import MemberApiService from "../../apiServices/memberApiService";
+import { verifiedMemberData } from "../../apiServices/verify";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import Accordion from "@material-ui/core/Accordion";
 
-const progress = (18 / 38) * 100;
-const progress5 = (8 / 20) * 100;
-const progress4 = (12 / 20) * 100;
-const progress3 = (0 / 20) * 100;
-const progress2 = (0 / 20) * 100;
-const progress1 = (0 / 20) * 100;
-const StyledCheckbox = styled(Checkbox)({
-  "&.Mui-checked": {
-    "& .MuiSvgIcon-root": {
-      color: "red",
-    },
-  },
-});
+// const progress = (18 / 38) * 100;
+// const progress5 = (8 / 20) * 100;
+// const progress4 = (12 / 20) * 100;
+// const progress3 = (0 / 20) * 100;
+// const progress2 = (0 / 20) * 100;
+// const progress1 = (0 / 20) * 100;
 
 /** REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
@@ -96,7 +92,6 @@ const targetProductsRetriever = createSelector(
 export function OneBrand(props: any) {
   /** INITIALIZATIONS */
   let { brand_id } = useParams<{ brand_id: string }>();
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
   const { randomBrands } = useSelector(randomBrandsRetriever);
   const { chosenBrand } = useSelector(chosenBrandRetriever);
   const { targetProducts } = useSelector(targetProductsRetriever);
@@ -110,11 +105,19 @@ export function OneBrand(props: any) {
       limit: 6,
       order: "createdAt",
       brand_mb_id: brand_id,
+      product_name: "all",
       product_collection: "clothing",
+      product_size: "all",
+      product_color: "all",
+      product_type: "all",
     });
   const history = useHistory();
   const refs: any = useRef([]);
   const [productRebuild, setProductRebuild] = useState<Date>(new Date());
+  const { product } = props;
+  useEffect(() => {
+    console.log("Product:", product);
+  }, [product]);
 
   useEffect(() => {
     const brandService = new BrandApiService();
@@ -123,12 +126,17 @@ export function OneBrand(props: any) {
       .then((data) => setRandomBrands(data))
       .catch((err) => console.log(err));
 
+    brandService
+      .getChosenBrand(chosenBrandId)
+      .then((data) => setChosenBrand(data))
+      .catch((err) => console.log(err));
+
     const productService = new ProductApiService();
     productService
       .getTargetProducts(targetProductSearchObj)
       .then((data) => setTargetProducts(data))
       .catch((err) => console.log(err));
-  }, [targetProductSearchObj, productRebuild]);
+  }, [chosenBrandId, targetProductSearchObj, productRebuild]);
 
   /** HANDLERS */
   const chosenBrandHandler = (id: string) => {
@@ -142,14 +150,28 @@ export function OneBrand(props: any) {
     targetProductSearchObj.product_collection = collection;
     setTargetProductSearchObj({ ...targetProductSearchObj });
   };
+
+  const searchTypeHandler = (type: string) => {
+    targetProductSearchObj.page = 1;
+    targetProductSearchObj.product_type = type;
+    setTargetProductSearchObj({ ...targetProductSearchObj });
+  };
   const searchOrderHandler = (order: string) => {
     targetProductSearchObj.page = 1;
     targetProductSearchObj.order = order;
     setTargetProductSearchObj({ ...targetProductSearchObj });
   };
+  const handlePaginationChange = (event: any, value: number) => {
+    targetProductSearchObj.page = value;
+    setTargetProductSearchObj({ ...targetProductSearchObj });
+  };
+  const chosenProductHandler = (id: string) => {
+    history.push(`/brand/products/${id}`);
+  };
+
   const targetLikeProduct = async (e: any) => {
     try {
-      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      assert.ok(verifiedMemberData, Definer.auth_err1);
       const memberService = new MemberApiService(),
         like_result: any = await memberService.memberLikeTarget({
           like_ref_id: e.target.id,
@@ -232,7 +254,7 @@ export function OneBrand(props: any) {
             flexDirection={"row"}
             justifyContent={"center"}
           >
-            <span className="category_title">Brand Name</span>
+            <span className="category_title">{chosenBrand?.mb_nick}</span>
           </Box>
           <Stack className="shop">
             <Stack className="left_shop">
@@ -337,13 +359,13 @@ export function OneBrand(props: any) {
               <Stack className="shop_products">
                 {targetProducts.map((product: Product) => {
                   const image_path = `${serverApi}/${product.product_images[0]}`;
-                  // const size_volume =
-                  //   product.product_collection === "shoes"
-                  //     ? product.product_volume
-                  //     : product.product_size;
                   return (
                     <Stack className="shop_product-info">
-                      <Stack className={"product-box"}>
+                      <Stack
+                        className={"product-box"}
+                        key={product._id}
+                        onClick={() => chosenProductHandler(product._id)}
+                      >
                         <Box
                           className={"img"}
                           sx={{
@@ -358,14 +380,25 @@ export function OneBrand(props: any) {
                             style={{ left: "36px" }}
                           >
                             <Badge
-                              onClick={(e) => {
-                                e.stopPropagation();
-                              }}
                               badgeContent={product.product_likes}
+                              onClick={(e: React.MouseEvent) => {
+                                e.stopPropagation();
+                                console.log("Badge clicked!");
+                                console.log(
+                                  "product_likes:",
+                                  product.product_likes
+                                );
+                                console.log(
+                                  "my_favorite value:",
+                                  product?.me_liked?.[0]?.my_favorite
+                                );
+                              }}
                               color="secondary"
                             >
-                              {/* <Checkbox
-                                icon={<Favorite style={{ color: "white" }} />}
+                              <Checkbox
+                                icon={
+                                  <FavoriteBorder style={{ color: "white" }} />
+                                }
                                 id={product._id}
                                 checkedIcon={
                                   <Favorite style={{ color: "red" }} />
@@ -376,22 +409,11 @@ export function OneBrand(props: any) {
                                   product?.me_liked[0]?.my_favorite
                                     ? true
                                     : false
-                                } 
-                              />*/}
-                              <StyledCheckbox
-                                icon={<Favorite style={{ color: "white" }} />}
-                                id={product._id}
-                                checkedIcon={
-                                  <Favorite style={{ color: "red" }} />
-                                }
-                                onClick={targetLikeProduct}
-                                checked={
-                                  product?.me_liked &&
-                                  product?.me_liked[0]?.my_favorite
                                 }
                               />
                             </Badge>
                           </Button>
+
                           <Button
                             onClick={(e) => {
                               props.onAdd(product);
@@ -405,10 +427,10 @@ export function OneBrand(props: any) {
                               color="secondary"
                             >
                               <Checkbox
-                                icon={<Visibility style={{ color: "white" }} />}
-                                id={product._id}
-                                checkedIcon={
-                                  <Visibility style={{ color: "red" }} />
+                                icon={
+                                  <RemoveRedEyeIcon
+                                    style={{ color: "white" }}
+                                  />
                                 }
                               />
                             </Badge>
@@ -427,24 +449,50 @@ export function OneBrand(props: any) {
                       </Stack>
                       <Stack className={"price"}>
                         <span
-                          style={{
-                            fontFamily: "Nunito",
-                            fontWeight: "900",
-                            textDecoration: "line-through",
-                            fontSize: "19px",
-                          }}
+                        //   style={{
+                        //     fontFamily: "Nunito",
+                        //     fontWeight: "900",
+                        //     textDecoration: "line-through",
+                        //     fontSize: "19px",
+                        //   }}
+                        // >
+                        //   {product.product_price}
+                        // </span>
+                        // <span
+                        //   style={{
+                        //     fontFamily: "Nunito",
+                        //     fontWeight: "900",
+                        //     color: "orange",
+                        //     fontSize: "20px",
+                        //   }}
+                        // >
+                        //   {product.discountedPrice ? (
+                        //     <p>
+                        //       <span className="original-price">
+                        //         {product.product_price}
+                        //       </span>{" "}
+                        //       -{" "}
+                        //       <span className="discounted-price">
+                        //         {product.discountedPrice}
+                        //       </span>
+                        //     </p>
+                        //   ) : (
+                        //     <p>{product.product_price}</p>
+                        //   )}
                         >
-                          {product.product_price}
-                        </span>
-                        <span
-                          style={{
-                            fontFamily: "Nunito",
-                            fontWeight: "900",
-                            color: "orange",
-                            fontSize: "20px",
-                          }}
-                        >
-                          $50
+                          {product.discountedPrice ? (
+                            <p>
+                              <span className="original-price strikethrough">
+                                {product.product_price}
+                              </span>{" "}
+                              -{" "}
+                              <span className="discounted-price">
+                                {product.discountedPrice}
+                              </span>
+                            </p>
+                          ) : (
+                            <p>{product.product_price}</p>
+                          )}
                         </span>
                       </Stack>
                       <Stack
@@ -485,23 +533,23 @@ export function OneBrand(props: any) {
                 </Box>
                 <Stack className={"bottom_box"}>
                   <Pagination
-                  // count={
-                  //   targetSearchObject.page >= 3
-                  //     ? targetSearchObject.page + 1
-                  //     : 3
-                  // }
-                  // page={targetSearchObject.page}
-                  // renderItem={(item) => (
-                  //   <PaginationItem
-                  //     components={{
-                  //       previous: ArrowBackIcon,
-                  //       next: ArrowForwardIcon,
-                  //     }}
-                  //     {...item}
-                  //     className="pagination"
-                  //   />
-                  // )}
-                  //onChange={handlePaginationChange}
+                    count={
+                      targetProductSearchObj.page >= 3
+                        ? targetProductSearchObj.page + 1
+                        : 3
+                    }
+                    page={targetProductSearchObj.page}
+                    renderItem={(item) => (
+                      <PaginationItem
+                        components={{
+                          previous: ArrowBackIcon,
+                          next: ArrowForwardIcon,
+                        }}
+                        {...item}
+                        className="pagination"
+                      />
+                    )}
+                    onChange={handlePaginationChange}
                   />
                 </Stack>
               </Stack>
@@ -525,6 +573,7 @@ export function OneBrand(props: any) {
                     ></Button>
                   </Box>
                 </Stack>
+
                 <Stack className="gender_category">
                   <Box
                     className="right_shop-title"
@@ -546,7 +595,6 @@ export function OneBrand(props: any) {
                                 fontSize: "19px",
                                 paddingLeft: "5px",
                               }}
-                              onClick={() => searchCollectionHandler("boy")}
                             >
                               Boy
                             </span>
@@ -554,12 +602,7 @@ export function OneBrand(props: any) {
                         />
                         <FormControlLabel
                           value="girl"
-                          control={
-                            <Checkbox
-                              style={{ color: "#423123" }}
-                              onClick={() => searchCollectionHandler("girl")}
-                            />
-                          }
+                          control={<Checkbox style={{ color: "#423123" }} />}
                           label={
                             <span
                               style={{
@@ -575,12 +618,7 @@ export function OneBrand(props: any) {
                         />
                         <FormControlLabel
                           value="unisex"
-                          control={
-                            <Checkbox
-                              style={{ color: "#423123" }}
-                              onClick={() => searchCollectionHandler("uni")}
-                            />
-                          }
+                          control={<Checkbox style={{ color: "#423123" }} />}
                           label={
                             <span
                               style={{
@@ -609,35 +647,6 @@ export function OneBrand(props: any) {
                     <Box className="category_info1">
                       <div>
                         <img
-                          src="/icons/category1.png"
-                          style={{ width: "165px", borderRadius: "20px" }}
-                          onClick={() => searchCollectionHandler("toy")}
-                        />
-                      </div>
-                      <div
-                        style={{
-                          width: "165px",
-                          marginTop: "8px",
-                        }}
-                      >
-                        <span
-                          style={{
-                            fontFamily: "Nunito",
-                            fontSize: "16px",
-                            fontWeight: "850",
-                            lineHeight: "20px",
-                          }}
-                        >
-                          Toys, Books & Games
-                        </span>
-                      </div>
-                    </Box>
-                    <Box
-                      className="category_info1"
-                      style={{ marginLeft: "19px" }}
-                    >
-                      <div>
-                        <img
                           src="/icons/category2.png"
                           style={{ width: "165px", borderRadius: "20px" }}
                           onClick={() => searchCollectionHandler("clothing")}
@@ -658,6 +667,35 @@ export function OneBrand(props: any) {
                           }}
                         >
                           Toddlers Clothing & Sets
+                        </span>
+                      </div>
+                    </Box>
+                    <Box
+                      className="category_info1"
+                      style={{ marginLeft: "5px" }}
+                    >
+                      <div>
+                        <img
+                          src="/icons/category6.jpeg"
+                          style={{ width: "165px", borderRadius: "20px" }}
+                          onClick={() => searchCollectionHandler("shoes")}
+                        />
+                      </div>
+                      <div
+                        style={{
+                          width: "165px",
+                          marginTop: "8px",
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontFamily: "Nunito",
+                            fontSize: "16px",
+                            fontWeight: "850",
+                            lineHeight: "20px",
+                          }}
+                        >
+                          Baby Shoes
                         </span>
                       </div>
                     </Box>
@@ -694,7 +732,72 @@ export function OneBrand(props: any) {
                     </Box>
                     <Box
                       className="category_info1"
-                      style={{ marginLeft: "19px" }}
+                      style={{ marginLeft: "5px" }}
+                    >
+                      <div>
+                        <img
+                          src="/icons/category1.png"
+                          style={{ width: "165px", borderRadius: "20px" }}
+                          onClick={() => searchCollectionHandler("toy")}
+                        />
+                      </div>
+                      <div
+                        style={{
+                          width: "165px",
+                          marginTop: "8px",
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontFamily: "Nunito",
+                            fontSize: "16px",
+                            fontWeight: "850",
+                            lineHeight: "20px",
+                          }}
+                        >
+                          Toys, Books & Games
+                        </span>
+                      </div>
+                    </Box>
+                  </Stack>
+                  <Stack
+                    className="category_info"
+                    style={{ marginTop: "20px" }}
+                  >
+                    <Box className="category_info1">
+                      <div>
+                        <img
+                          src="/icons/category5.png"
+                          style={{
+                            width: "165px",
+                            borderRadius: "20px",
+                          }}
+                          onClick={() => searchCollectionHandler("baby care")}
+                        />
+                      </div>
+                      <div
+                        style={{
+                          width: "160px",
+                          marginTop: "8px",
+                          marginLeft: "-38px",
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontFamily: "Nunito",
+                            fontSize: "16px",
+                            fontWeight: "850",
+                            lineHeight: "20px",
+                            marginRight: "-80px",
+                          }}
+                        >
+                          Baby Care Products
+                        </span>
+                      </div>
+                    </Box>
+                    <Box
+                      className="category_info1"
+                      style={{ marginLeft: "5px" }}
                     >
                       <div>
                         <img
@@ -722,655 +825,10 @@ export function OneBrand(props: any) {
                       </div>
                     </Box>
                   </Stack>
-                  <Stack
-                    className="category_info"
-                    style={{ marginTop: "20px" }}
-                  >
-                    <Box className="category_info1">
-                      <div>
-                        <img
-                          src="/icons/category5.png"
-                          style={{
-                            width: "165px",
-                            marginRight: "35px",
-                            borderRadius: "20px",
-                          }}
-                          onClick={() => searchCollectionHandler("baby care")}
-                        />
-                      </div>
-                      <div
-                        style={{
-                          width: "160px",
-                          marginTop: "8px",
-                          marginLeft: "-38px",
-                        }}
-                      >
-                        <span
-                          style={{
-                            fontFamily: "Nunito",
-                            fontSize: "16px",
-                            fontWeight: "850",
-                            lineHeight: "20px",
-                            marginRight: "-80px",
-                          }}
-                        >
-                          Baby Care Products
-                        </span>
-                      </div>
-                    </Box>
-                  </Stack>
                 </Stack>
-              </Stack>
-              {/* <Stack className="right_shop-bottom">
-                <Box
-                  style={{
-                    width: "282px",
-                    marginRight: "55px",
-                    marginTop: "15px",
-                    marginBottom: "15px",
-                    color: "#423127",
-                    fontFamily: "Nunito",
-                    fontWeight: "900",
-                    fontSize: "28px",
-                  }}
-                >
-                  Special Offer
-                </Box>
-                <Stack className={"product-box"}>
-                  <Box
-                    className={"img"}
-                    sx={{
-                      backgroundImage: `url("/icons/red-baby-stroller.jpeg")`,
-                    }}
-                  >
-                    <Box className={"dish_sale"}>
-                      <div className={"dish_sale-txt"}>-50%</div>
-                    </Box>
-                    <Button
-                      className={"like_view_btn"}
-                      style={{ left: "36px" }}
-                    >
-                      <Badge badgeContent={8} color="primary">
-                        <Checkbox
-                          icon={<Favorite style={{ color: "white" }} />}
-                          checkedIcon={<Favorite style={{ color: "red" }} />}
-                          checked={true}
-                        />
-                      </Badge>
-                    </Button>
-                    <Button
-                      className={"like_view_btn"}
-                      style={{ right: "36px" }}
-                    >
-                      <Badge badgeContent={16} color="primary">
-                        <Checkbox
-                          icon={<Visibility style={{ color: "white" }} />}
-                          checkedIcon={<Visibility style={{ color: "red" }} />}
-                          checked={false}
-                        />
-                      </Badge>
-                    </Button>
-                  </Box>
-                  <Stack className={"product_name"}>Stroller 2 in 1</Stack>
-                  <Stack className={"rating_box"}>
-                    <Rating
-                      className="half-rating"
-                      defaultValue={3.5}
-                      precision={0.5}
-                    />
-                  </Stack>
-                  <Stack className={"price"}>
-                    <span
-                      style={{
-                        fontFamily: "Nunito",
-                        fontWeight: "900",
-                        textDecoration: "line-through",
-                        fontSize: "19px",
-                      }}
-                    >
-                      $100
-                    </span>
-                    <span
-                      style={{
-                        fontFamily: "Nunito",
-                        fontWeight: "900",
-                        color: "#f50157",
-                        fontSize: "20px",
-                      }}
-                    >
-                      $50
-                    </span>
-                  </Stack>
-                  <Stack className="remain_date">
-                    <Stack className="available">
-                      <LinearProgress
-                        variant="determinate"
-                        value={progress}
-                        className="line"
-                        color="secondary"
-                      />
-                      <Box className="availability">
-                        <div>
-                          Available:{" "}
-                          <span style={{ fontWeight: "770" }}>18</span>
-                        </div>
-                        <div>
-                          Sold: <span style={{ fontWeight: "770" }}>20</span>
-                        </div>
-                      </Box>
-                    </Stack>
-                    <Stack className="date">
-                      <Stack className="hurry">
-                        <Box className="hurry-top">Hurry Up!</Box>
-                        <Box className="hurry-bottom">Offer end in :</Box>
-                      </Stack>
-                      <Stack className="timer">
-                        <span className="time">29 :</span>
-                        <span className="time">23 :</span>
-                        <span className="time">59 :</span>
-                        <span className="time">59</span>
-                      </Stack>
-                    </Stack>
-                  </Stack>
-                </Stack>
-              </Stack> */}
-            </Stack>
-          </Stack>
-
-          {/* <Stack className="comment_section">
-          <Stack
-            display={"flex"}
-            flexDirection={"row"}
-            justifyContent={"space-between"}
-            style={{ marginTop: "-60px", marginBottom: "30px", marginLeft: "20px" }}
-          >
-            <Stack className="comment">
-              <Stack className="rating">
-                <Box className="comment_title">Reviews for the Brand</Box>
-                <Stack>
-                  <div
-                    style={{
-                      fontFamily: "Nunito",
-                      fontSize: "16px",
-                      color: "#724D37",
-                      fontWeight: "700",
-                      lineHeight: "24px",
-                      marginTop: "15px",
-                      marginBottom: "4px",
-                    }}
-                  >
-                    Average Rating of the Brand is
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: "Nunito",
-                      fontSize: "36px",
-                      color: "#FF961A",
-                      fontWeight: "880",
-                      lineHeight: "normal",
-                      marginBottom: "4px",
-                    }}
-                  >
-                    4.60
-                  </div>
-                  <div>
-                    <Rating
-                      name="half-rating"
-                      defaultValue={3.5}
-                      precision={0.5}
-                      style={{ color: "#1876d2" }}
-                    />
-                  </div>
-                </Stack>
-                <Stack>
-                  <Stack flexDirection={"row"} style={{ marginTop: "15px" }}>
-                    <Box>
-                      <span
-                        style={{
-                          fontFamily: "Nunito",
-                          fontSize: "16px",
-                          color: "#724D37",
-                          fontWeight: "770",
-                          lineHeight: "24px",
-                          marginTop: "15px",
-                          marginBottom: "4px",
-                        }}
-                      >
-                        5 Star
-                      </span>
-                    </Box>
-                    <Box
-                      style={{
-                        alignItems: "center",
-                        marginTop: "10px",
-                        marginLeft: "20px",
-                        marginRight: "20px",
-                      }}
-                    >
-                      <ThemeProvider theme={theme2}>
-                        <LinearProgress
-                          variant="determinate"
-                          className="line"
-                          style={{ borderRadius: "3px" }}
-                          value={progress5}
-                          color="primary"
-                        />
-                      </ThemeProvider>
-                    </Box>
-                    <Box>
-                      <span
-                        style={{
-                          fontFamily: "Nunito",
-                          fontSize: "16px",
-                          color: "#724D37",
-                          fontWeight: "770",
-                          lineHeight: "24px",
-                          marginTop: "15px",
-                          marginBottom: "4px",
-                        }}
-                      >
-                        40%
-                      </span>
-                    </Box>
-                  </Stack>
-                  <Stack flexDirection={"row"} style={{ marginTop: "8px" }}>
-                    <Box>
-                      <span
-                        style={{
-                          fontFamily: "Nunito",
-                          fontSize: "16px",
-                          color: "#724D37",
-                          fontWeight: "770",
-                          lineHeight: "24px",
-                          marginTop: "15px",
-                          marginBottom: "4px",
-                        }}
-                      >
-                        4 Star
-                      </span>
-                    </Box>
-                    <Box
-                      style={{
-                        alignItems: "center",
-                        marginTop: "10px",
-                        marginLeft: "20px",
-                        marginRight: "20px",
-                      }}
-                    >
-                      <ThemeProvider theme={theme2}>
-                        <LinearProgress
-                          variant="determinate"
-                          className="line"
-                          style={{ borderRadius: "3px" }}
-                          value={progress4}
-                          color="primary"
-                        />
-                      </ThemeProvider>
-                    </Box>
-                    <Box>
-                      <span
-                        style={{
-                          fontFamily: "Nunito",
-                          fontSize: "16px",
-                          color: "#724D37",
-                          fontWeight: "770",
-                          lineHeight: "24px",
-                          marginTop: "15px",
-                          marginBottom: "4px",
-                        }}
-                      >
-                        60%
-                      </span>
-                    </Box>
-                  </Stack>
-                  <Stack flexDirection={"row"} style={{ marginTop: "8px" }}>
-                    <Box>
-                      <span
-                        style={{
-                          fontFamily: "Nunito",
-                          fontSize: "16px",
-                          color: "#724D37",
-                          fontWeight: "770",
-                          lineHeight: "24px",
-                          marginTop: "15px",
-                          marginBottom: "4px",
-                        }}
-                      >
-                        3 Star
-                      </span>
-                    </Box>
-                    <Box
-                      style={{
-                        alignItems: "center",
-                        marginTop: "10px",
-                        marginLeft: "20px",
-                        marginRight: "20px",
-                      }}
-                    >
-                      <ThemeProvider theme={theme2}>
-                        <LinearProgress
-                          variant="determinate"
-                          className="line"
-                          style={{ borderRadius: "3px" }}
-                          value={progress3}
-                          color="primary"
-                        />
-                      </ThemeProvider>
-                    </Box>
-                    <Box>
-                      <span
-                        style={{
-                          fontFamily: "Nunito",
-                          fontSize: "16px",
-                          color: "#724D37",
-                          fontWeight: "770",
-                          lineHeight: "24px",
-                          marginTop: "15px",
-                          marginBottom: "4px",
-                        }}
-                      >
-                        0%
-                      </span>
-                    </Box>
-                  </Stack>
-                  <Stack flexDirection={"row"} style={{ marginTop: "8px" }}>
-                    <Box>
-                      <span
-                        style={{
-                          fontFamily: "Nunito",
-                          fontSize: "16px",
-                          color: "#724D37",
-                          fontWeight: "770",
-                          lineHeight: "24px",
-                          marginTop: "15px",
-                          marginBottom: "4px",
-                        }}
-                      >
-                        2 Star
-                      </span>
-                    </Box>
-                    <Box
-                      style={{
-                        alignItems: "center",
-                        marginTop: "10px",
-                        marginLeft: "20px",
-                        marginRight: "20px",
-                      }}
-                    >
-                      <ThemeProvider theme={theme2}>
-                        <LinearProgress
-                          variant="determinate"
-                          className="line"
-                          style={{ borderRadius: "3px" }}
-                          value={progress2}
-                          color="primary"
-                        />
-                      </ThemeProvider>
-                    </Box>
-                    <Box>
-                      <span
-                        style={{
-                          fontFamily: "Nunito",
-                          fontSize: "16px",
-                          color: "#724D37",
-                          fontWeight: "770",
-                          lineHeight: "24px",
-                          marginTop: "15px",
-                          marginBottom: "4px",
-                        }}
-                      >
-                        0%
-                      </span>
-                    </Box>
-                  </Stack>
-                  <Stack flexDirection={"row"} style={{ marginTop: "8px" }}>
-                    <Box>
-                      <span
-                        style={{
-                          fontFamily: "Nunito",
-                          fontSize: "16px",
-                          color: "#724D37",
-                          fontWeight: "770",
-                          lineHeight: "24px",
-                          marginTop: "15px",
-                          marginBottom: "4px",
-                        }}
-                      >
-                        1 Star
-                      </span>
-                    </Box>
-                    <Box
-                      style={{
-                        alignItems: "center",
-                        marginTop: "10px",
-                        marginLeft: "20px",
-                        marginRight: "20px",
-                      }}
-                    >
-                      <ThemeProvider theme={theme2}>
-                        <LinearProgress
-                          variant="determinate"
-                          className="line"
-                          style={{ borderRadius: "3px" }}
-                          value={progress1}
-                          color="primary"
-                        />
-                      </ThemeProvider>
-                    </Box>
-                    <Box>
-                      <span
-                        style={{
-                          fontFamily: "Nunito",
-                          fontSize: "16px",
-                          color: "#724D37",
-                          fontWeight: "770",
-                          lineHeight: "24px",
-                          marginTop: "15px",
-                          marginBottom: "4px",
-                        }}
-                      >
-                        0%
-                      </span>
-                    </Box>
-                  </Stack>
-                </Stack>
-              </Stack>
-              <Stack className="add_comment">
-                <Box className="comment_title">Add a Review</Box>
-                <Box display={"flex"} flexDirection={"row"}>
-                  <span
-                    style={{
-                      fontFamily: "Nunito",
-                      fontSize: "18px",
-                      color: "#724D37",
-                      fontWeight: "700",
-                      lineHeight: "24px",
-                      marginTop: "15px",
-                      marginBottom: "4px",
-                    }}
-                  >
-                    Your Rating
-                  </span>
-                  <div style={{ marginTop: "15px" }}>
-                    <Rating
-                      name="half-rating"
-                      defaultValue={0}
-                      precision={0.5}
-                      style={{
-                        color: "#1876d2",
-                        fontSize: "22px",
-                        marginLeft: "20px",
-                      }}
-                    />
-                  </div>
-                </Box>
-                <span
-                  style={{
-                    fontFamily: "Nunito",
-                    fontSize: "18px",
-                    color: "#724D37",
-                    fontWeight: "700",
-                    lineHeight: "24px",
-                    marginTop: "15px",
-                    marginBottom: "4px",
-                  }}
-                >
-                  Add your review
-                </span>
-                <form
-                  action={"#"}
-                  method={"POST"}
-                  className={"admin_letter_frame"}
-                >
-                  <div className={"admin_input_box"}>
-                    <textarea
-                      name={"mb_msg"}
-                      placeholder={"Your Review"}
-                      style={{
-                        fontFamily: "Nunito",
-                        width: "500px",
-                        height: "165px",
-                        borderRadius: "12px",
-                        marginLeft: "0px",
-                        marginTop: "10px",
-                      }}
-                    />
-                  </div>
-                  <Box display={"flex"} justifyContent={"flex-start"}>
-                    <Button
-                      style={{
-                        backgroundColor: "#ffa602",
-                        borderRadius: "20px",
-                        width: "200px",
-                        fontFamily: "Nunito",
-                        fontWeight: "770",
-                        fontSize: "15px",
-                      }}
-                      variant={"contained"}
-                    >
-                      Submit
-                    </Button>
-                  </Box>
-                </form>
-              </Stack>
-            </Stack>
-            <Stack className="reviews">
-              <Stack className="review_box">
-                <Box>
-                  <img
-                    src="/icons/default_user.svg"
-                    style={{
-                      width: "90px",
-                      height: "90px",
-                      marginLeft: "30px",
-                    }}
-                  />
-                </Box>
-                <Stack style={{ marginLeft: "30px", marginTop: "55px" }}>
-                  <strong className={"review_txt"}>John Doe</strong>
-                  <span className={"review_date"}>October 10, 2023</span>
-                  <Rating
-                    name="half-rating"
-                    defaultValue={3.5}
-                    precision={0.5}
-                    style={{
-                      color: "#1876d2",
-                      fontSize: "14px",
-                      marginTop: "10px",
-                    }}
-                  />
-                  <p className={"review_info"}>
-                    It is a long established fact that a reader will be
-                    distracted by the readable content of a page when looking at
-                    its layout. The point of using Lorem Ipsum.
-                  </p>
-                </Stack>
-              </Stack>
-              <Stack className="review_box">
-                <Box>
-                  <img
-                    src="/icons/default_user.svg"
-                    style={{
-                      width: "90px",
-                      height: "90px",
-                      marginLeft: "30px",
-                    }}
-                  />
-                </Box>
-                <Stack style={{ marginLeft: "30px", marginTop: "55px" }}>
-                  <strong className={"review_txt"}>John Doe</strong>
-                  <span className={"review_date"}>October 10, 2023</span>
-                  <Rating
-                    name="half-rating"
-                    defaultValue={3.5}
-                    precision={0.5}
-                    style={{
-                      color: "#1876d2",
-                      fontSize: "14px",
-                      marginTop: "10px",
-                    }}
-                  />
-                  <p className={"review_info"}>
-                    It is a long established fact that a reader will be
-                    distracted by the readable content of a page when looking at
-                    its layout. The point of using Lorem Ipsum.
-                  </p>
-                </Stack>
-              </Stack>
-              <Stack className="review_box">
-                <Box>
-                  <img
-                    src="/icons/default_user.svg"
-                    style={{
-                      width: "90px",
-                      height: "90px",
-                      marginLeft: "30px",
-                    }}
-                  />
-                </Box>
-                <Stack style={{ marginLeft: "30px", marginTop: "55px" }}>
-                  <strong className={"review_txt"}>John Doe</strong>
-                  <span className={"review_date"}>October 10, 2023</span>
-                  <Rating
-                    name="half-rating"
-                    defaultValue={3.5}
-                    precision={0.5}
-                    style={{
-                      color: "#1876d2",
-                      fontSize: "14px",
-                      marginTop: "10px",
-                    }}
-                  />
-                  <p className={"review_info"}>
-                    It is a long established fact that a reader will be
-                    distracted by the readable content of a page when looking at
-                    its layout. The point of using Lorem Ipsum.
-                  </p>
-                </Stack>
-              </Stack>
-              <Box marginBottom={"12px"} width={"600px"}>
-                <Marginer direction="horizontal" height="1" bg="#ffa500" />
-              </Box>
-              <Stack>
-                <Pagination
-                  count={3}
-                  page={1}
-                  renderItem={(item) => (
-                    <PaginationItem
-                      components={{
-                        previous: ArrowBackIcon,
-                        next: ArrowForwardIcon,
-                      }}
-                      {...item}
-                      style={{ marginTop: "10px" }}
-                      className="pagination"
-                    />
-                  )}
-                />
               </Stack>
             </Stack>
           </Stack>
-        </Stack> */}
         </Stack>
       </Container>
     </div>

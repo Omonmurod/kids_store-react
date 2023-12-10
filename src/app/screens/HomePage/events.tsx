@@ -7,6 +7,13 @@ SwiperCore.use([Autoplay, Navigation, Pagination]);
 export function Events() {
   const events_list = [
     {
+      desc: "Birthdays are for loved ones, friends, and family members!",
+      author: "Moments",
+      date: "Jan 30, 2024",
+      location: "Kyongju",
+      img: "/icons/about9.png",
+    },
+    {
       desc: "100 Kids Birthday Party Ideas – The Best Resources for Activities",
       author: "ZARA Kids",
       date: "Dec 30, 2023",
@@ -34,6 +41,13 @@ export function Events() {
       location: "Jeju",
       img: "/icons/swiper4.jpeg",
     },
+    {
+      desc: "If you're a first-time parent, put your fears aside and get the basics!",
+      author: "New Born",
+      date: "Jan 15, 2024",
+      location: "Daejon",
+      img: "/icons/about8.png",
+    }
   ];
 
   return (

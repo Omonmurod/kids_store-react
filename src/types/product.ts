@@ -1,9 +1,22 @@
-import { MeLiked, MeViewed } from "./user";
+export interface MeLiked {
+  mb_id: string;
+  like_ref_id: string;
+  my_favorite: boolean;
+}
+
+// export interface MeViewed {
+//   mb_id: string;
+//   view_ref_id: string;
+//   my_view: boolean;
+// }
 
 export interface Product {
+  me_viewed: any;
   _id: string;
+  me_liked: MeLiked[];
   product_name: string;
   product_collection: string;
+  product_type: string;
   product_status: string;
   product_price: number;
   discount: Discount[];
@@ -21,8 +34,6 @@ export interface Product {
   updatedAt: Date;
   discountedPrice: number;
   sortDiscountValue: number;
-  me_liked: MeLiked[];
-  me_viewed: MeViewed[];
   product_ratings: ProductRating[];
 }
 

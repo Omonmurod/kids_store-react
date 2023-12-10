@@ -3,7 +3,7 @@ import React from "react";
 
 export function Statistics() {
   return (
-    <div className="statistics">
+    <div className="statistics" style={{ backgroundColor: "white"}}>
       <Container className="statistics_frame">
         <Stack className="frame">
           <Stack className="frame_info">

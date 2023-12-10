@@ -25,7 +25,7 @@ export function CommunityPage() {
   };
 
   return (
-    <div className={"community_page"}>
+    <div className={"community_page"} style={{ backgroundColor: "white" }}>
       <Container sx={{ mt: "50px", mb: "50px" }}>
         <Stack className={"community_all_frame"} inputMode={"text"}>
           <TabContext value={value}>
@@ -75,23 +75,21 @@ export function CommunityPage() {
             </Stack>
 
             <Stack alignItems={"center"}>
-              <ThemeProvider theme={theme2}>
-                <Pagination
-                  count={3}
-                  page={1}
-                  renderItem={(item) => (
-                    <PaginationItem
-                      components={{
-                        previous: ArrowBackIcon,
-                        next: ArrowForwardIcon,
-                      }}
-                      {...item}
-                      className="pagination"
-                    />
-                  )}
-                  onChange={handlePaginationChange}
-                />
-              </ThemeProvider>
+              <Pagination
+                count={3}
+                page={1}
+                renderItem={(item) => (
+                  <PaginationItem
+                    components={{
+                      previous: ArrowBackIcon,
+                      next: ArrowForwardIcon,
+                    }}
+                    {...item}
+                    className="pagination"
+                  />
+                )}
+                onChange={handlePaginationChange}
+              />
             </Stack>
           </TabContext>
         </Stack>

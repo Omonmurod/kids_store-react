@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 
 export function Entrance() {
   return (
-    <div className="entrance">
+    <div className="entrance" style={{ backgroundColor: "white"}}>
       <Container className="main">
         <Stack className="main-box">
           <div className="box1">
