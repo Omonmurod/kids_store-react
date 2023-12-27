@@ -3,6 +3,7 @@
   height: auto;
   display: flex;
   margin-top: 140px;
+  background-color: white;
 }
 
 .my_page .css-heg063-MuiTabs-flexContainer {
@@ -71,7 +72,9 @@
 
 .my_page .post_content .article_box {
   width: 404px;
-  height: 593px;
+  height: 598px;
+
+  box-shadow: 0px 0px 15px 0px rgba(50, 50, 50, 0.2);
   border-radius: 10px;
   cursor: pointer;
 }
@@ -128,42 +131,58 @@
 }
 
 .my_page .post_content .article_box .article_info .title {
-  width: 360px;
-  height: 80px;
+  width: 340px;
+  height: 50px;
+  margin-left: 10px;
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
-
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-top: 30px;
+  margin-bottom: 10px;
   font-family: "Nunito";
   font-weight: 800;
   font-size: 26px;
+  line-height: 24px;
 }
 
 .my_page .post_content .article_box .article_info .date_like_view {
-  width: 360px;
+  width: 340px;
   height: 40px;
+  margin-left: 10px;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   font-family: "Nunito";
   font-weight: 600;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .my_page .post_content .article_box .article_info .some-info {
-  width: 360px;
+  width: 340px;
+  margin-left: 10px;
+  margin-top: 9px;
   height: 118px;
   color: #724d37;
   font-family: Nunito;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  line-height: 28px;
+  line-height: 24px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.full-text {
+  max-height: none;
+  overflow: visible;
+  text-overflow: clip;
 }
 
 .my_page .post_content .article_box .article_info .link {
-  width: 360px;
+  width: 340px;
+  margin-left: 10px;
+  height: 50px;
 }
 
 .my_page .post_content .article_box .article_info .link .readmore {
@@ -188,98 +207,101 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: linear-gradient(
-    180deg,
-    rgba(38, 112, 129, 0.9) 0%,
-    rgba(21, 61, 70, 0.9) 100%
-  );
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15),
-    inset 3px 2px 9px rgba(255, 255, 255, 0.25);
+  background: white;
+  box-shadow: 0px 0px 15px 0px rgba(50, 50, 50, 0.2);
   border-radius: 17px;
 }
 
 .my_page .follow_box .username_text {
   margin-top: 10px;
+  margin-bottom: 10px;
   width: 100%;
-
-  font-family: "Montserrat";
+  margin-left: 20px;
+  font-family: "Nunito";
   font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
+  font-weight: 660;
+  font-size: 20px;
+  letter-spacing: 1px;
   line-height: 12px;
-  color: #ffffff;
+  color: #423127;
 }
 
 .my_page .follow_box .name_text {
+  margin-top: 10px;
   margin-top: 16px;
-  font-family: "Montserrat";
+  width: 100%;
+  margin-left: 20px;
+  font-family: "Nunito";
   font-style: normal;
-  font-weight: 400;
-  font-size: 26px;
-  line-height: 24px;
-  color: #ffffff;
+  font-weight: 770;
+  font-size: 32px;
+  letter-spacing: 1.2px;
+  line-height: 12px;
+  color: #423127;
 }
 
 .my_page .follow_box .follow_btn {
-  width: 175px;
-  height: 57px;
+  width: 215px;
+  height: 60px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  background: #30945e;
+  background: #43bc59;
   border: 1px solid #ffffff;
   box-shadow: 1px 4px 6px rgba(211, 211, 211, 0.25),
     inset 0px 4px 4px rgba(255, 255, 255, 0.25);
   border-radius: 43px;
-  font-family: "Montserrat";
+  font-family: "Nunito";
   font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 24px;
-  color: #ffffff;
+  font-weight: 770;
+  font-size: 18px;
+  letter-spacing: 1.5px;
+  color: white;
 }
 
 .my_page .follow_box .follow_cancel_btn {
-  width: 185px;
-  height: 57px;
+  width: 195px;
+  height: 60px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  background: #e81010b8;
+  background: #f70909b8;
   border: 1px solid #ffffff;
   box-shadow: 1px 4px 6px rgba(211, 211, 211, 0.25),
     inset 0px 4px 4px rgba(255, 255, 255, 0.25);
   border-radius: 43px;
-  font-family: "Montserrat";
+  font-family: "Nunito";
   font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 24px;
-  color: #ffffff;
+  font-weight: 770;
+  font-size: 18px;
+  letter-spacing: 1.5px;
+  color: white;
 }
 
 .my_page .follow_box .following_already {
   margin-left: 11px;
-  width: 160px;
-  height: 50px;
+  width: 205px;
+  height: 60px;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background: #68c5cb;
+  background: #e0e0e0;
   box-shadow: 1px 4px 6px rgba(211, 211, 211, 0.25),
     inset 0px 4px 4px rgba(255, 255, 255, 0.25);
-  border-radius: 26px;
-  font-family: "Montserrat";
+  border-radius: 43px;
+  font-family: "Nunito";
   font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 24px;
-  color: #ffffff;
+  font-weight: 770;
+  font-size: 18px;
+  letter-spacing: 1.5px;
+  color: white;
 }
 
 .my_page_frame .my_page_right {
   margin-left: 30px;
-  width: 30%;
+  margin-top: 30px;
+  margin-bottom: 90px;
+  width: 350px;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -295,9 +317,7 @@
   flex-direction: column;
   align-items: center;
   background: #ffffff;
-  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25),
-    inset 0px 4px 4px rgba(0, 0, 0, 0.25),
-    inset 0px 4px 16px rgba(242, 189, 87, 0.04);
+  box-shadow: 0px 0px 15px 0px rgba(50, 50, 50, 0.2);
   border-radius: 16px;
 }
 
@@ -313,13 +333,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 10px;
 }
 
 .my_page .order_info_box .order_user_img .order_user_avatar {
   width: 117px;
-  height: 112px;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  border-radius: 37px;
+  height: 125px;
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 50%;
 }
 
 .my_page .order_info_box .order_user_icon_box {
@@ -331,7 +352,7 @@
   right: 0;
   display: flex;
   background: rgb(209 209 209 / 33%);
-  border-radius: 37px;
+  border-radius: 50%;
 }
 
 .my_page .order_user_icon_box .order_user_prof_img {
@@ -339,54 +360,55 @@
 }
 
 .my_page .order_info_box .order_user_name {
-  margin-top: 10px;
-  font-family: "Commissioner";
+  margin-top: 20px;
+  font-family: "Nunito";
   font-style: normal;
-  font-weight: 500;
+  font-weight: 660;
   font-size: 28px;
   line-height: 36px;
-  color: #08090d;
+  color: #423127;
 }
 
 .my_page .order_info_box .order_user_prof {
-  font-family: "Commissioner";
+  font-family: "Nunito";
   font-style: normal;
-  font-weight: 500;
+  font-weight: 660;
   font-size: 20px;
   line-height: 36px;
   color: #a1a1a1;
 }
 
 .my_page .order_info_box .user_media_box {
-  margin-top: 10px;
-  width: 60%;
-
+  margin-top: 20px;
+  width: 75%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .my_page .order_info_box .user_desc {
-  margin-top: 30px;
-  width: 90%;
+  margin-top: 10px;
+  width: 100%;
   display: flex;
   justify-content: center;
-
-  font-family: "DM Sans";
+  font-family: "Nunito";
   font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
+  font-weight: 550;
+  font-size: 18px;
   line-height: 24px;
   color: #616164;
 }
 
+.my_page .order_info_box .user_media_box .media_box {
+  cursor: pointer;
+}
+
 .my_page .order_info_box .follows {
-  margin-top: 30px;
-  width: 90%;
+  margin-top: 0px;
+  width: 100%;
   display: flex;
   justify-content: center;
-
-  font-family: "DM Sans";
+  font-family: "Nunito";
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -407,6 +429,11 @@
   color: #ffffff;
 }
 
+.my_page .my_page_frame .custom-tab-list {
+  border-bottom: none !important;
+  outline: none; /* Remove outline if present */
+}
+
 .my_page .my_page_menu {
   margin-top: 40px;
   width: 100%;
@@ -418,43 +445,16 @@
 }
 
 .my_page_menu .menu_box {
-  margin-bottom: 10px;
-  padding: 0px 20px;
-  width: 98%;
-  height: 50px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border-radius: 10px;
-  background: #ffffff;
-  box-shadow: inset 1px 4px 4px rgb(172 87 87 / 25%),
-    inset 0px 4px 4px rgb(0 0 0 / 25%), inset 0px 4px 4px rgb(0 0 0 / 25%);
-}
-
-.my_page .active {
-  background: red;
-}
-
-.my_page .menu_box img {
-  width: 25px;
-}
-
-.my_page .menu_box span {
-  margin-left: 30px;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 25px;
-  line-height: 38px;
-  color: #000000;
+  font-family: "Nunito";
+  color: white;
+  font-size: 18px;
+  letter-spacing: 1.5px;
+  font-weight: 660;
 }
 
 .my_page .my_settings_page {
   width: 100%;
   height: auto;
-
   display: flex;
   flex-direction: column;
 }
@@ -463,7 +463,6 @@
   margin-top: 25px;
   width: 100%;
   height: auto;
-
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -480,6 +479,7 @@
 .my_page .my_settings_page .long_input {
   width: 100%;
   height: auto;
+
   display: flex;
   flex-direction: column;
 }
@@ -500,8 +500,8 @@
   width: 100%;
   height: 54px;
   border: none;
-  background: #f7f7f7;
-  box-shadow: 1px 1px 14px 1px rgba(0, 0, 0, 0.35);
+  background-color: white;
+  box-shadow: 1px 1px 14px 1px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
 
   font-family: "Nunito";
@@ -520,8 +520,8 @@
   height: 200px;
   border: none;
 
-  background: #f7f7f7;
-  box-shadow: 1px 1px 14px 1px rgba(0, 0, 0, 0.35);
+  background-color: white;
+  box-shadow: 1px 1px 14px 1px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
 
   font-family: "Nunito";
@@ -540,8 +540,8 @@
   height: auto;
   display: flex;
   border-radius: 5px;
-  background: #f7f7f7;
-  box-shadow: 1px 1px 14px 1px rgba(0, 0, 0, 0.35);
+  background: #ffffff;
+  box-shadow: 1px 1px 14px 1px rgba(0, 0, 0, 0.25);
 }
 
 .my_page .my_settings_page .media_change_box {

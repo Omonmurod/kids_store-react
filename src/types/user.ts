@@ -25,6 +25,13 @@ export interface Brand {
 }
 
 export interface Member {
+  memberFollowings: any;
+  targetProducts: any;
+  targetComments: any;
+  memberFollowers: any;
+  chosenSingleBoArticle: any;
+  chosenMemberBoArticles: any;
+  chosenMember: any;
   _id: string;
   mb_nick: string;
   mb_phone: string;

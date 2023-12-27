@@ -3,6 +3,7 @@ import { Container, Box, Stack } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
 SwiperCore.use([Autoplay, Navigation, Pagination]);
+import useDeviceDetect from "../../../lib/responsive/useDeviceDetect";
 
 export function Events() {
   const events_list = [
@@ -47,94 +48,96 @@ export function Events() {
       date: "Jan 15, 2024",
       location: "Daejon",
       img: "/icons/about8.png",
-    }
+    },
   ];
-
-  return (
-    <div className="events_frame">
-      <Container>
-        <Stack className={"events_main"}>
-          <Box className={"events_text"}>
-            <span className={"category_title"}>Ongoing Events</span>
-          </Box>
-          <Stack className="event_swiper">
-            <Swiper
-              className={"events_info"}
-              slidesPerView={2}
-              centeredSlides={false}
-              spaceBetween={30}
-              navigation={{
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-              }}
-              pagination={{
-                el: ".swiper-pagination",
-                clickable: true,
-              }}
-              autoplay={{
-                delay: 2000,
-                disableOnInteraction: true,
-              }}
-            >
-              {events_list.map((value, number) => {
-                return (
-                  <SwiperSlide>
-                    <Stack
-                      style={{
-                        width: "617px",
-                        height: "200px",
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        borderRadius: "20px",
-                        border: "2px dashed #4559f4",
-                        background: "#f6f7ff",
-                        cursor: "pointer"
-                      }}
-                    >
-                      <Stack className={"events-img"}>
-                        <img
-                          src={value.img}
-                          className="img-size"
-                          style={{ borderRadius: "12px" }}
-                        />
-                      </Stack>
-                      <Stack className={"events-txt"}>
-                        <Stack className={"events-date"}>
-                          <Box>
-                            <img
-                              src="/icons/speaker.svg"
-                              style={{ height: "14px", width: "14px" }}
-                            />{" "}
-                            {value.author}
-                          </Box>
-                          <Box>
-                            <img
-                              src="/icons/calendar.svg"
-                              style={{ height: "14px", width: "13px" }}
-                            />{" "}
-                            {value.date}{" "}
-                          </Box>
-                          <Box>
-                            <img
-                              src="/icons/location.svg"
-                              style={{ height: "14px", width: "14px" }}
-                            />{" "}
-                            {value.location}
-                          </Box>
+  const { isMobile } = useDeviceDetect();
+  if (isMobile()) {
+    return null;
+  } else {
+    return (
+      <div className="events_frame">
+        <Container>
+          <Stack className={"events_main"}>
+            <Box className={"events_text"}>
+              <span className={"category_title"}>Ongoing Events</span>
+            </Box>
+            <Stack className="event_swiper">
+              <Swiper
+                className={"events_info"}
+                slidesPerView={2}
+                centeredSlides={false}
+                spaceBetween={30}
+                navigation={{
+                  nextEl: ".swiper-button-next",
+                  prevEl: ".swiper-button-prev",
+                }}
+                pagination={{
+                  el: ".swiper-pagination",
+                  clickable: true,
+                }}
+                autoplay={{
+                  delay: 2000,
+                  disableOnInteraction: true,
+                }}
+              >
+                {events_list.map((value, number) => {
+                  return (
+                    <SwiperSlide>
+                      <Stack
+                        style={{
+                          width: "617px",
+                          height: "200px",
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                          borderRadius: "20px",
+                          border: "2px dashed #4559f4",
+                          background: "#f6f7ff",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <Stack className={"events-img"}>
+                          <img
+                            src={value.img}
+                            className="img-size"
+                            style={{ borderRadius: "12px" }}
+                          />
                         </Stack>
-                        <Box className="events-desc">
-                          {value.desc}
-                        </Box>
+                        <Stack className={"events-txt"}>
+                          <Stack className={"events-date"}>
+                            <Box>
+                              <img
+                                src="/icons/speaker.svg"
+                                style={{ height: "14px", width: "14px" }}
+                              />{" "}
+                              {value.author}
+                            </Box>
+                            <Box>
+                              <img
+                                src="/icons/calendar.svg"
+                                style={{ height: "14px", width: "13px" }}
+                              />{" "}
+                              {value.date}{" "}
+                            </Box>
+                            <Box>
+                              <img
+                                src="/icons/location.svg"
+                                style={{ height: "14px", width: "14px" }}
+                              />{" "}
+                              {value.location}
+                            </Box>
+                          </Stack>
+                          <Box className="events-desc">{value.desc}</Box>
+                        </Stack>
                       </Stack>
-                    </Stack>
-                  </SwiperSlide>
-                );
-              })}
-            </Swiper>
+                    </SwiperSlide>
+                  );
+                })}
+              </Swiper>
+            </Stack>
           </Stack>
-        </Stack>
-      </Container>
-    </div>
-  );
+        </Container>
+      </div>
+    );
+  }
 }

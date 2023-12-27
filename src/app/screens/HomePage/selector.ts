@@ -10,6 +10,10 @@ export const retrieveBestProducts = createSelector(
   selectHomePage,
   (HomePage) => HomePage.bestProducts
 );
+export const retrieveSaleProducts = createSelector(
+  selectHomePage,
+  (HomePage) => HomePage.saleProducts
+);
 export const retrieveBestBoArticles = createSelector(
   selectHomePage,
   (HomePage) => HomePage.bestBoArticles

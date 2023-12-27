@@ -4,7 +4,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 //import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
 import Rating from "@mui/material/Rating";
 import Checkbox from "@mui/material/Checkbox";
-import { Favorite, FavoriteBorder, Visibility } from "@mui/icons-material";
+import { Favorite, FavoriteBorder } from "@mui/icons-material";
+import ChatIcon from "@mui/icons-material/Chat";
 import Badge from "@mui/material/Badge";
 import assert from "assert";
 // REDUX
@@ -21,9 +22,11 @@ import { ProductSearch } from "../../../types/others";
 import { verifiedMemberData } from "../../apiServices/verify";
 import { Definer } from "../../../lib/Definer";
 import MemberApiService from "../../apiServices/memberApiService";
-import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
-
-//SwiperCore.use([Autoplay, Navigation, Pagination]);
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../../lib/sweetAlert";
+import useDeviceDetect from "../../../lib/responsive/useDeviceDetect";
 
 /** REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
@@ -38,7 +41,7 @@ const bestProductsRetriever = createSelector(
   })
 );
 
-export function BestProducts() {
+export function BestProducts(props: any) {
   /** INITIALIZATIONS */
   const history = useHistory();
   const { setBestProducts } = actionDispatch(useDispatch());
@@ -54,12 +57,51 @@ export function BestProducts() {
         order: "product_likes",
         product_name: "all",
         product_collection: "all",
+        brand_mb_id: "all",
         product_size: "all",
         product_color: "all",
+        product_volume: "all",
       })
       .then((data) => setBestProducts(data))
       .catch((err) => console.log(err));
   }, [productRebuild]);
+
+  const [timeRemainingArray, setTimeRemainingArray] = useState<string[]>([]);
+
+  const formatTimeRemaining = (endTime: string): string => {
+    const now = new Date();
+    const endDate = new Date(endTime);
+    const diff = endDate.getTime() - now.getTime();
+
+    if (diff <= 0) {
+      return "00:00:00";
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    return `${days > 0 ? `${days}d ` : ""}${hours
+      .toString()
+      .padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeRemainingArray(
+        bestProducts.map((product: Product) =>
+          formatTimeRemaining(product.discount.endDate)
+        )
+      );
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [bestProducts]);
 
   /** HANDLERS */
   const chosenProductHandler = (id: string) => {
@@ -84,162 +126,393 @@ export function BestProducts() {
     }
   };
 
-  return (
-    <div className="p_products_frame">
-      <Container sx={{ overflow: "hidden" }}>
-        <Stack className={"p_products_main"}>
-          <Box className={"p_products_text"}>
-            <span className={"title"}>Popular Sellers this Week</span>
-          </Box>
-          <Stack className="swiper">
-            <Swiper
-              className={"swiper_wrapper"}
-              slidesPerView={5}
-              centeredSlides={false}
-              spaceBetween={0}
-              navigation={{
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-              }}
-              pagination={{
-                el: ".swiper-pagination",
-                clickable: true,
-              }}
-              autoplay={{
-                delay: 1800,
-                disableOnInteraction: true,
-              }}
-            >
-              {bestProducts.map((product: Product) => {
-                const image_path = `${serverApi}/${product.product_images[0]}`;
-                return (
-                  <SwiperSlide className={"product_info_frame"}>
-                    <Stack
-                      className={"product-box"}
-                      key={product._id}
-                      onClick={() => chosenProductHandler(product._id)}
-                    >
-                      <Box
-                        className={"img"}
-                        sx={{
-                          backgroundImage: `url(${image_path})`,
+  const { isMobile } = useDeviceDetect();
+  if (isMobile()) {
+    return (
+      <div
+        className="p_products_frame"
+        style={{ height: "700px" }}
+      >
+        <Container sx={{ overflow: "hidden" }}>
+          <Stack className={"p_products_main"}>
+            <Box className={"p_products_text"}>
+              <span className={"title"} style={{ marginTop: "20px", fontSize: "36px"}}>Popular Sellers this Week</span>
+            </Box>
+            <Stack className="swiper">
+              <Swiper
+                className={"swiper_wrapper"}
+                slidesPerView={1}
+                centeredSlides={false}
+                spaceBetween={0}
+                navigation={{
+                  nextEl: ".swiper-button-next",
+                  prevEl: ".swiper-button-prev",
+                }}
+                pagination={{
+                  el: ".swiper-pagination",
+                  clickable: true,
+                }}
+                autoplay={{
+                  delay: 1800,
+                  disableOnInteraction: true,
+                }}
+              >
+                {bestProducts.map((product: Product, index: number) => {
+                  const image_path = `${serverApi}/${product.product_images[0]}`;
+                  let discountedPrice = Math.floor(product.discountedPrice);
+                  return (
+                    <SwiperSlide className={"product_info_frame"}>
+                      <Stack
+                        className="product-box"
+                        key={product._id}
+                        onClick={() => {
+                          window.location.href = "/mobile";
                         }}
                       >
+                        <Box
+                          className={"img"}
+                          sx={{
+                            backgroundImage: `url(${image_path})`,
+                            marginLeft: "170px",
+                          }}
+                        >
+                          {product.discountedPrice !== 0 && (
+                            <Box className={"dish_sale"}>
+                              <span className={"dish_sale-txt"}>
+                                {product.discount?.type === "amount" ? (
+                                  <Box className="discount_fon">
+                                    -{product.discount?.value}$
+                                  </Box>
+                                ) : (
+                                  <Box className="discount_fon">
+                                    -{product.discount?.value}%
+                                  </Box>
+                                )}
+                              </span>
+                              <span className="endDate">
+                                {product.discountedPrice ? (
+                                  <span className={"discount_timer"}>
+                                    {timeRemainingArray[index]}
+                                  </span>
+                                ) : null}
+                              </span>
+                            </Box>
+                          )}
+                        </Box>
+                      </Stack>
+                      <Stack
+                        className={"product_name"}
+                        style={{ marginLeft: "90px" }}
+                      >
+                        {product.product_name}
+                      </Stack>
+                      <Stack
+                        className={"rating_box"}
+                        style={{ marginLeft: "20px"}}
+                      >
+                        <Rating
+                          className="half-rating"
+                          defaultValue={0}
+                          precision={0.5}
+                          value={product.product_rating}
+                        />
+                      </Stack>
+                      <Stack className={"price"} style={{marginLeft: "170px"}}>
+                        <span
+                          style={{
+                            fontFamily: "Nunito",
+                            fontWeight: "900",
+                            color: "orange",
+                            fontSize: "20px",
+                            width: "100%",
+                            marginLeft: product.discountedPrice
+                              ? "0px"
+                              : "20px",
+                          }}
+                        >
+                          $
+                          {product.discountedPrice ? (
+                            <>
+                              <span
+                                style={{
+                                  color: "orange",
+                                  position: "relative",
+                                }}
+                              >
+                                {product.product_price}
+                                <span
+                                  style={{
+                                    position: "absolute",
+                                    bottom: "50%",
+                                    left: 0,
+                                    right: 0,
+                                    height: "3px",
+                                    backgroundColor: "orange",
+                                  }}
+                                ></span>
+                              </span>
+                              <span
+                                style={{
+                                  fontFamily: "Nunito",
+                                  fontWeight: "900",
+                                  color: "#423127",
+                                  fontSize: "20px",
+                                  marginLeft: "6px",
+                                }}
+                              >
+                                ${discountedPrice}
+                              </span>
+                            </>
+                          ) : (
+                            <>
+                              <span>{product.product_price}</span>
+                            </>
+                          )}
+                        </span>
+                      </Stack>
+                      <Stack marginLeft={"45px"} marginTop={"15px"} style={{ marginLeft: "130px"}}>
                         <Button
-                          className={"like_view_btn"}
-                          style={{ left: "36px" }}
+                          variant="contained"
+                          style={{
+                            borderRadius: "30px",
+                            color: "#ffffff",
+                            background: "#ffa600",
+                            fontFamily: "Nunito",
+                            height: "45px",
+                            width: "160px",
+                            fontWeight: "900",
+                            fontSize: "16px",
+                            marginBottom: "35px",
+                          }}
                           onClick={(e) => {
+                            props.onAdd(product);
                             e.stopPropagation();
                           }}
                         >
-                          <Badge
-                            badgeContent={product.product_likes}
-                            onClick={(e: React.MouseEvent) => {
-                              e.stopPropagation();
-                              console.log("Badge clicked!");
-                              console.log(
-                                "product_likes:",
-                                product.product_likes
-                              );
-                              console.log(
-                                "my_favorite value:",
-                                product?.me_liked?.[0]?.my_favorite
-                              );
-                            }}
-                            color="secondary"
-                          >
-                            <Checkbox
-                              icon={
-                                <FavoriteBorder style={{ color: "white" }} />
-                              }
-                              id={product._id}
-                              checkedIcon={
-                                <Favorite style={{ color: "red" }} />
-                              }
-                              onClick={targetLikeProduct}
-                              checked={
-                                product?.me_liked &&
-                                product?.me_liked[0]?.my_favorite
-                                  ? true
-                                  : false
-                              }
-                            />
-                          </Badge>
+                          ADD TO CART
                         </Button>
-                        <Button
-                          className={"like_view_btn"}
-                          style={{ right: "36px" }}
-                        >
-                          <Badge badgeContent={16} color="secondary">
-                            <Checkbox
-                              icon={<Visibility style={{ color: "white" }} />}
-                              checkedIcon={
-                                <Visibility style={{ color: "red" }} />
-                              }
-                              checked={false}
-                            />
-                          </Badge>
-                        </Button>
-                      </Box>
-                    </Stack>
-                    <Stack className={"product_name"}>
-                      {product.product_name}
-                    </Stack>
-                    <Stack className={"rating_box"}>
-                      <Rating
-                        className="half-rating"
-                        defaultValue={3.5}
-                        precision={0.5}
-                      />
-                    </Stack>
-                    <Stack className={"price"}>
-                      <span
-                        style={{
-                          fontFamily: "Nunito",
-                          fontWeight: "900",
-                          textDecoration: "line-through",
-                          fontSize: "19px",
-                        }}
-                      >
-                        {product.product_price}
-                      </span>
-                      <span
-                        style={{
-                          fontFamily: "Nunito",
-                          fontWeight: "900",
-                          color: "orange",
-                          fontSize: "20px",
-                        }}
-                      >
-                        {product.discountedPrice}
-                      </span>
-                    </Stack>
-                    <Stack marginLeft={"45px"} marginTop={"15px"}>
-                      <Button
-                        variant="contained"
-                        style={{
-                          borderRadius: "30px",
-                          color: "#ffffff",
-                          background: "#ffa600",
-                          fontFamily: "Nunito",
-                          height: "45px",
-                          width: "160px",
-                          fontWeight: "900",
-                          fontSize: "16px",
-                          marginBottom: "35px",
-                        }}
-                        //onClick={props.handleLoginOpen}
-                      >
-                        ADD TO CART
-                      </Button>
-                    </Stack>
-                  </SwiperSlide>
-                );
-              })}
-            </Swiper>
+                      </Stack>
+                    </SwiperSlide>
+                  );
+                })}
+              </Swiper>
+            </Stack>
           </Stack>
-        </Stack>
-      </Container>
-    </div>
-  );
+        </Container>
+      </div>
+    );
+  } else {
+    return (
+      <div className="p_products_frame">
+        <Container sx={{ overflow: "hidden" }}>
+          <Stack className={"p_products_main"}>
+            <Box className={"p_products_text"}>
+              <span className={"title"}>Popular Sellers this Week</span>
+            </Box>
+            <Stack className="swiper">
+              <Swiper
+                className={"swiper_wrapper"}
+                slidesPerView={5}
+                centeredSlides={false}
+                spaceBetween={0}
+                navigation={{
+                  nextEl: ".swiper-button-next",
+                  prevEl: ".swiper-button-prev",
+                }}
+                pagination={{
+                  el: ".swiper-pagination",
+                  clickable: true,
+                }}
+                autoplay={{
+                  delay: 1800,
+                  disableOnInteraction: true,
+                }}
+              >
+                {bestProducts.map((product: Product, index: number) => {
+                  const image_path = `${serverApi}/${product.product_images[0]}`;
+                  let discountedPrice = Math.floor(product.discountedPrice);
+                  return (
+                    <SwiperSlide className={"product_info_frame"}>
+                      <Stack
+                        className={"product-box"}
+                        key={product._id}
+                        onClick={() => chosenProductHandler(product._id)}
+                      >
+                        <Box
+                          className={"img"}
+                          sx={{
+                            backgroundImage: `url(${image_path})`,
+                          }}
+                        >
+                          {product.discountedPrice !== 0 && (
+                            <Box className={"dish_sale"}>
+                              <span className={"dish_sale-txt"}>
+                                {product.discount?.type === "amount" ? (
+                                  <Box className="discount_fon">
+                                    -{product.discount?.value}$
+                                  </Box>
+                                ) : (
+                                  <Box className="discount_fon">
+                                    -{product.discount?.value}%
+                                  </Box>
+                                )}
+                              </span>
+                              <span className="endDate">
+                                {product.discountedPrice ? (
+                                  <span className={"discount_timer"}>
+                                    {timeRemainingArray[index]}
+                                  </span>
+                                ) : null}
+                              </span>
+                            </Box>
+                          )}
+                          <Button
+                            className={"like_view_btn"}
+                            style={{ left: "36px" }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                            }}
+                          >
+                            <Badge
+                              badgeContent={product.product_likes}
+                              onClick={(e: React.MouseEvent) => {
+                                e.stopPropagation();
+                                console.log("Badge clicked!");
+                                console.log(
+                                  "product_likes:",
+                                  product.product_likes
+                                );
+                                console.log(
+                                  "my_favorite value:",
+                                  product?.me_liked?.[0]?.my_favorite
+                                );
+                              }}
+                              color="secondary"
+                            >
+                              <Checkbox
+                                icon={
+                                  <FavoriteBorder style={{ color: "white" }} />
+                                }
+                                id={product._id}
+                                checkedIcon={
+                                  <Favorite style={{ color: "red" }} />
+                                }
+                                onClick={targetLikeProduct}
+                                checked={
+                                  product?.me_liked &&
+                                  product?.me_liked[0]?.my_favorite
+                                    ? true
+                                    : false
+                                }
+                              />
+                            </Badge>
+                          </Button>
+                          <Button
+                            className={"like_view_btn"}
+                            style={{ right: "36px" }}
+                          >
+                            <Badge
+                              badgeContent={product.product_reviews}
+                              color="secondary"
+                            >
+                              <ChatIcon style={{ color: "white" }} />
+                            </Badge>
+                          </Button>
+                        </Box>
+                      </Stack>
+                      <Stack className={"product_name"}>
+                        {product.product_name}
+                      </Stack>
+                      <Stack className={"rating_box"}>
+                        <Rating
+                          className="half-rating"
+                          defaultValue={0}
+                          precision={0.5}
+                          value={product.product_rating}
+                        />
+                      </Stack>
+                      <Stack className={"price"}>
+                        <span
+                          style={{
+                            fontFamily: "Nunito",
+                            fontWeight: "900",
+                            color: "orange",
+                            fontSize: "20px",
+                            marginLeft: product.discountedPrice
+                              ? "0px"
+                              : "20px",
+                          }}
+                        >
+                          $
+                          {product.discountedPrice ? (
+                            <>
+                              <span
+                                style={{
+                                  color: "orange",
+                                  position: "relative",
+                                }}
+                              >
+                                {product.product_price}
+                                <span
+                                  style={{
+                                    position: "absolute",
+                                    bottom: "50%",
+                                    left: 0,
+                                    right: 0,
+                                    height: "3px",
+                                    backgroundColor: "orange",
+                                  }}
+                                ></span>
+                              </span>
+                              <span
+                                style={{
+                                  fontFamily: "Nunito",
+                                  fontWeight: "900",
+                                  color: "#423127",
+                                  fontSize: "20px",
+                                  marginLeft: "6px",
+                                }}
+                              >
+                                ${discountedPrice}
+                              </span>
+                            </>
+                          ) : (
+                            <>
+                              <span>{product.product_price}</span>
+                            </>
+                          )}
+                        </span>
+                      </Stack>
+                      <Stack marginLeft={"45px"} marginTop={"15px"}>
+                        <Button
+                          variant="contained"
+                          style={{
+                            borderRadius: "30px",
+                            color: "#ffffff",
+                            background: "#ffa600",
+                            fontFamily: "Nunito",
+                            height: "45px",
+                            width: "160px",
+                            fontWeight: "900",
+                            fontSize: "16px",
+                            marginBottom: "35px",
+                          }}
+                          onClick={(e) => {
+                            props.onAdd(product);
+                            e.stopPropagation();
+                          }}
+                        >
+                          ADD TO CART
+                        </Button>
+                      </Stack>
+                    </SwiperSlide>
+                  );
+                })}
+              </Swiper>
+            </Stack>
+          </Stack>
+        </Container>
+      </div>
+    );
+  }
 }

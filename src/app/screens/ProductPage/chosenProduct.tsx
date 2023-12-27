@@ -150,6 +150,11 @@ export function ChosenProduct() {
                     fontStyle: "Nunito",
                     backgroundColor: "orange",
                   }}
+                  
+                  onClick={(e) => {
+                    //props.onAdd(chosenProduct);
+                    e.stopPropagation();
+                  }}
                 >
                   Add to Cart
                 </Button>
@@ -760,7 +765,7 @@ export function ChosenProduct() {
                           fontSize: "16px",
                           marginBottom: "55px",
                         }}
-                        //onClick={props.handleLoginOpen}
+                        //onClick={() => {props.onAdd(chosenProduct)}}
                       >
                         ADD TO CART
                       </Button>

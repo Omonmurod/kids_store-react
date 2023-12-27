@@ -5,6 +5,7 @@ export interface SearchObj {
 }
 
 export interface ProductSearchObj {
+  product_volume?: string;
   page: number;
   limit: number;
   order?: string;
@@ -16,6 +17,7 @@ export interface ProductSearchObj {
   product_type?: string;
   min_price?: number;
   max_price?: number;
+  my_favorite?: boolean;
 }
 export interface ProductSearch {
   page: number;
@@ -26,6 +28,7 @@ export interface ProductSearch {
   product_collection?: string;
   product_size?: string;
   product_color?: string;
+  product_volume?: number;
   product_type?: string;
 }
 
@@ -33,6 +36,7 @@ export interface CommentsSearchObj {
   page: number;
   limit: number;
   comment_ref_product_id?: string;
+  order: string;
 }
 
 export interface MemberLiken {
@@ -59,7 +63,7 @@ export interface ChatGreetMsg {
   text: string;
 }
 
-export interface ChatInforMsg {
+export interface ChatInfoMsg {
   total: number;
 }
 

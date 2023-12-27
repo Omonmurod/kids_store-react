@@ -9,19 +9,24 @@ import "./css/index.css";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./app/MaterialTheme";
+import { SocketContext, socket } from "./app/context/socket";
+import ReactDOM from "react-dom";
 
-const container = document.getElementById("root")!;
-const root = createRoot(container);
+//const container = document.getElementById("root")!;
+//const root = createRoot(container);
 
-root.render(
+ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <SocketContext.Provider value={socket}>
         <App />
+        </SocketContext.Provider>
       </ThemeProvider>
     </Provider>
-  </React.StrictMode>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

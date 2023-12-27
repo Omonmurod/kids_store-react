@@ -5,14 +5,19 @@ import Checkbox from "@mui/material/Checkbox";
 import { Favorite, Visibility } from "@mui/icons-material";
 import Badge from "@mui/material/Badge";
 
-
 export function WishList(props: any) {
   const events_list = Array.from(Array(6).keys());
 
   return (
     <div className="wish_list">
       <Container>
-        <Stack className="left_shop">
+        <Stack
+          className="left_shop"
+          style={{
+            width: "780px",
+            marginRight: "100px",
+          }}
+        >
           <Stack className="shop_products">
             {events_list.map((value, number) => {
               return (
@@ -103,7 +108,10 @@ export function WishList(props: any) {
                         fontWeight: "900",
                         fontSize: "16px",
                       }}
-                      //onClick={props.handleLoginOpen}
+                      onClick={(e) => {
+                        //props.onAdd(product);
+                        e.stopPropagation();
+                      }}
                     >
                       ADD TO CART
                     </Button>
@@ -112,6 +120,32 @@ export function WishList(props: any) {
               );
             })}
           </Stack>
+        </Stack>
+        <Stack
+          sx={{ my: "40px" }}
+          direction={"row"}
+          alignItems={"center"}
+          justifyContent={"center"}
+        >
+          <Box className={"bottom_box"}>
+            {/* <Pagination
+              count={
+                followersSearchObj.page >= 3 ? followersSearchObj.page + 1 : 3
+              }
+              page={followersSearchObj.page}
+              renderItem={(item) => (
+                <PaginationItem
+                  components={{
+                    previous: ArrowBackIcon,
+                    next: ArrowForwardIcon,
+                  }}
+                  {...item}
+                  color={"primary"}
+                />
+              )}
+              onChange={handlePaginationChange}
+            /> */}
+          </Box>
         </Stack>
       </Container>
     </div>

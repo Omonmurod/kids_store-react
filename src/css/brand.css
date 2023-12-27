@@ -406,7 +406,7 @@
   .shop_product-info
   .product-box
   .dish_sale {
-  width: 100px;
+  width: 60px;
   height: 33px;
   flex-shrink: 0;
   border-radius: 10px;
@@ -414,6 +414,8 @@
   background: #fff;
   margin-top: 10px;
   margin-left: 10px;
+  display: flex;
+  flex-direction: row;
 }
 
 .brand_page
@@ -434,7 +436,32 @@
   color: #1976d2;
   text-align: center;
   font-family: "Nunito";
-  margin: 6px;
+  margin: 8px;
+  font-size: 17px;
+  margin-left: -10px;
+  font-style: normal;
+  font-weight: 850;
+}
+
+.brand_page
+  .one_brand
+  .left_shop
+  .shop_products
+  .shop_product-info
+  .product-box
+  .dish_sale
+  .endDate {
+  display: flex;
+  width: 140px;
+  height: 19px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  color: #1976d2;
+  text-align: center;
+  font-family: "Nunito";
+  margin: 8px;
+  margin-left: 5px;
   font-size: 17px;
   font-style: normal;
   font-weight: 850;
@@ -534,7 +561,7 @@
 }
 
 .brand_page .one_brand .left_shop .shop_products .shop_product-info .price {
-  width: 80px;
+  width: 140px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -564,8 +591,9 @@
 
 .brand_page .one_brand .right_shop {
   width: 400px;
-  height: 1040px;
+  height: 920px;
   display: flex;
+  margin-bottom: 100px;
 }
 
 .brand_page .one_brand .right_shop .right_shop-top {
@@ -956,10 +984,10 @@
   margin-top: 140px;
   display: flex;
   flex-direction: column;
-  background: url("/public/icons/bg_shapes1.png"), url("/public/icons/bg2.png");
-  background-position: top, top;
-  background-size: 100% 620px, 100% 610px;
-  background-repeat: no-repeat;
+  background: url("/public/icons/bg_shapes1.png") top/100% 620px no-repeat,
+    url("/public/icons/bg2.png") top/100% 610px no-repeat,
+    url("/public/icons/bg_shapes2.png") bottom/100% 640px no-repeat,
+    url("/public/icons/bg.png") bottom/100% 550px no-repeat;
 }
 
 .brand_page .brand_product .dish_container {
@@ -972,6 +1000,23 @@
 .brand_page .brand_product .chosen_dish_slider {
   width: 48%;
   height: 580px;
+}
+
+.brand_page .brand_product .endDate {
+  display: flex;
+  width: 140px;
+  height: 19px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  color: #1976d2;
+  text-align: center;
+  font-family: "Nunito";
+  margin: 8px;
+  margin-left: -10px;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 850;
 }
 
 .brand_page .brand_product .dish_swiper {
@@ -1007,7 +1052,7 @@
 } */
 
 .brand_page .brand_product .chosen_dish_info_container {
-  padding: 30px 40px;
+  padding: 25px 45px;
   width: 49%;
   height: 482px;
   display: flex;
@@ -1026,17 +1071,28 @@
 .brand_page .brand_product .chosen_dish_info_box .dish_txt {
   font-family: "Nunito";
   font-style: normal;
-  font-weight: 770;
+  font-weight: 880;
+  flex-direction: row;
+  display: flex;
   font-size: 30px;
-  line-height: 38px;
-  color: #423127;
+  line-height: 40px;
+  color: orange;
+}
+
+.brand_page .brand_product .chosen_dish_info_box .dish_sale {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 880;
+  flex-direction: row;
+  color: #1976d2;
+  width: 300px;
+  margin-left: 40px;
 }
 
 .brand_page .brand_product .chosen_dish_info_box .resto_name {
-  display: flex;
-  width: 300px;
+  width: 350px;
   height: 26px;
-  margin-top: 14px;
+  margin-top: 12px;
   flex-direction: column;
   flex-shrink: 0;
   color: #747474;
@@ -1053,7 +1109,7 @@
   flex-direction: row;
   height: auto;
   justify-content: space-between;
-  margin-top: 25px;
+  margin-top: 15px;
   width: 100%;
 }
 
@@ -1077,26 +1133,24 @@
 
 .brand_page .brand_product .chosen_dish_info_box .dish_desc_info {
   color: #423127;
-  margin-top: 35px;
+  margin-top: 14px;
   font-family: Nunito;
   font-size: 19px;
   font-style: normal;
   font-weight: 600;
-  height: 120px;
   line-height: 28px;
   letter-spacing: 1px;
 }
 .brand_page .brand_product .chosen_dish_info_box .dish_price_box {
   margin-bottom: 20px;
-  margin-top: 20px;
   width: 100%;
-  color: rgb(23, 43, 77);
+  color: #423127;
   font-family: Nunito;
   font-weight: 770;
-  font-size: 20px;
+  font-size: 22px;
   line-height: 1.5;
   letter-spacing: 0.00938em;
-  background-color: rgb(244, 246, 248);
+  background-color: rgb(246, 241, 223);
   align-items: center;
   display: flex;
   flex-direction: row;
@@ -1226,7 +1280,6 @@
   color: #423127;
   font-family: Nunito;
   font-size: 22px;
-  margin-top: 40px;
   font-style: normal;
   font-weight: 770;
   line-height: normal;
@@ -1244,9 +1297,10 @@
 
 .brand_page .comment_section .reviews .review_box .review_info {
   width: 375px;
-  height: 111px;
+  height: 71px;
   flex-shrink: 0;
   color: black;
+  margin-top: 1px;
   font-family: Nunito;
   font-size: 18px;
   font-style: normal;
@@ -1256,10 +1310,6 @@
 
 .brand_page .brand_product .best_pro {
   width: 100%;
-  background: url("/public/icons/bg_shapes2.png"), url("/public/icons/bg.png");
-  background-position: bottom;
-  background-size: 100% 640px, 100% 550px;
-  background-repeat: no-repeat;
 }
 
 .brand_page .brand_product .chosen_p_products_main {
@@ -1306,7 +1356,7 @@
 .brand_page .brand_product .chosen_p_products_main .swiper .next_btn {
   width: 3%;
   height: 147px;
-  margin-top: 200px;
+  margin-top: 203px;
   display: flex;
   cursor: pointer;
 }
@@ -1343,7 +1393,7 @@
   .product_info_frame
   .product-box
   .dish_sale {
-  width: 100px;
+  width: 50px;
   height: 33px;
   flex-shrink: 0;
   border-radius: 10px;
@@ -1351,6 +1401,8 @@
   background: #fff;
   margin-top: 10px;
   margin-left: 10px;
+  display: flex;
+  flex-direction: row;
 }
 
 .brand_page
@@ -1362,8 +1414,8 @@
   .dish_sale
   .dish_sale-txt {
   display: flex;
-  width: 80px;
-  height: 19px;
+  width: 60px;
+  height: 39px;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
@@ -1371,7 +1423,31 @@
   color: #1976d2;
   text-align: center;
   font-family: "Nunito";
-  margin: 6px;
+  margin-left: -5px;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 850;
+}
+
+.brand_page
+  .brand_product
+  .chosen_p_products_main
+  .swiper
+  .product_info_frame
+  .product-box
+  .dish_sale
+  .endDate {
+  display: flex;
+  width: 140px;
+  height: 19px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  color: #1976d2;
+  text-align: center;
+  font-family: "Nunito";
+  margin: 8px;
+  margin-left: 20px;
   font-size: 17px;
   font-style: normal;
   font-weight: 850;

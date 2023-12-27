@@ -110,3 +110,132 @@
   color: orange;
   transition: all 0.2s;
 }
+
+/* START BASKET */
+
+.basket_frame {
+  position: relative;
+  padding: 10px 4px 0px 4px;
+  width: 480px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  border-radius: 66px;
+}
+
+.basket_frame .all_check_box {
+  padding: 0px 6px;
+  width: 100%;
+  height: 35px;
+  font-family: nunito;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: orange;
+  font-size: 22px;
+  font-weight: 880;
+  padding-left: 15%;
+}
+
+.basket_frame .basket_info_box {
+  position: relative;
+  margin-top: 6px;
+  width: 100%;
+  height: auto;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.basket_info_box .product_img {
+  width: 60px;
+  height: 60px;
+  margin-left: 20px;
+  margin-bottom: 8px;
+  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 29px;
+}
+
+.basket_info_box .product_name {
+  margin-left: 15px;
+  width: 175px;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 660;
+  font-size: 17px;
+  line-height: 22px;
+  color: #423127;
+}
+
+.basket_info_box .product_price {
+  width: 80px;
+  padding-left: 10px;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 660;
+  font-size: 18px;
+  line-height: 22px;
+  color: #1876d2;
+}
+
+.basket_info_box
+  .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  padding: 6.5px 14px;
+}
+
+.basket_info_box .css-ece9u5 {
+  min-width: 72px;
+}
+
+.basket_frame .cancel_btn {
+  position: absolute;
+  top: 33%;
+  right: 2%;
+  cursor: pointer;
+}
+
+.basket_frame .to_order_box {
+  margin-top: 10px;
+  width: 100%;
+  height: 54px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.to_order_box .price_text {
+  margin-left: 27px;
+  width: 230px;
+  display: flex;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 770;
+  font-size: 20px;
+  line-height: 30px;
+  color: #423127;
+}
+
+.basket_frame .orders_wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+.basket_frame .orders_main_wrapper {
+  position: relative;
+  overflow: hidden;
+  margin-top: 10px;
+  width: 100%;
+  height: 260px;
+
+  display: flex;
+  flex-direction: column;
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { Box, Container, Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Tab from "@mui/material/Tab";
@@ -10,86 +10,88 @@ import Button from "@mui/material/Button";
 import { TabPanel, TabList, TabContext } from "@mui/lab";
 import "../../../css/about.css";
 import { ExpandMore } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import ScrollToTopFab from "../../scrollToTopFab";
 
 export function AboutPage() {
   /** INITIALIZATIONS */
+  const history = useHistory();
   const [value, setValue] = React.useState("1");
   const faq = [
     {
-      question: "To'lov qanday amalga oshiriladi?",
-      answer: "To'lovni Payme, Click ilovalari orqali amalga oshirish mumkin",
+      question: "How to do a payment?",
+      answer: "You can do a payment through your credit card or transfer the money to our account.",
     },
     {
-      question: "Buyurtmalar qancha vaqtda yetib keladi?",
+      question: "How long does it take to get the order?",
       answer:
-        "Byurtmalar harid qilgan narsangizga qarab har xil vaqtda yetkazilishi mumkin.",
+        "After your puchase, orders will deliver to you within three work days.",
     },
     {
       question:
-        "Saytdan foydalansam ma'lumotlarim xavfsizligiga kafolat bormi?",
+        "If I utilize your website, is security guaranteed?",
       answer:
-        "Albatta, biznign dasturchilarimiz sizning ma'lumotlaringiz xavfsizligini ta'minlaydilar.",
+        "Absolutely, our staff guarentee every info of our customers secured.",
     },
     {
-      question: "To'lov qanday amalga oshiriladi?",
-      answer: "To'lovni Payme, Click ilovalari orqali amalga oshirish mumkin",
+      question: "How to do a payment?",
+      answer: "You can do a payment through your credit card or transfer the money to our account.",
     },
     {
-      question: "Buyurtmalar qancha vaqtda yetib keladi?",
+      question: "How long does it take to get the order?",
       answer:
-        "Byurtmalar harid qilgan narsangizga qarab har xil vaqtda yetkazilishi mumkin.",
+        "After your puchase, orders will deliver to you within three work days.",
     },
     {
       question:
-        "Saytdan foydalansam ma'lumotlarim xavfsizligiga kafolat bormi?",
+        "If I utilize your website, is security guaranteed?",
       answer:
-        "Albatta, biznign dasturchilarimiz sizning ma'lumotlaringiz xavfsizligini ta'minlaydilar.",
+        "Absolutely, our staff guarentee every info of our customers secured.",
     },
     {
-      question: "To'lov qanday amalga oshiriladi?",
-      answer: "To'lovni Payme, Click ilovalari orqali amalga oshirish mumkin",
+      question: "How to do a payment?",
+      answer: "You can do a payment through your credit card or transfer the money to our account.",
     },
     {
-      question: "Buyurtmalar qancha vaqtda yetib keladi?",
+      question: "How long does it take to get the order?",
       answer:
-        "Byurtmalar harid qilgan narsangizga qarab har xil vaqtda yetkazilishi mumkin.",
+        "After your puchase, orders will deliver to you within three work days.",
     },
     {
       question:
-        "Saytdan foydalansam ma'lumotlarim xavfsizligiga kafolat bormi?",
+        "If I utilize your website, is security guaranteed?",
       answer:
-        "Albatta, biznign dasturchilarimiz sizning ma'lumotlaringiz xavfsizligini ta'minlaydilar.",
+        "Absolutely, our staff guarentee every info of our customers secured.",
     },
     {
-      question: "To'lov qanday amalga oshiriladi?",
-      answer: "To'lovni Payme, Click ilovalari orqali amalga oshirish mumkin",
+      question: "How to do a payment?",
+      answer: "You can do a payment through your credit card or transfer the money to our account.",
     },
     {
-      question: "Buyurtmalar qancha vaqtda yetib keladi?",
+      question: "How long does it take to get the order?",
       answer:
-        "Byurtmalar harid qilgan narsangizga qarab har xil vaqtda yetkazilishi mumkin.",
+        "After your puchase, orders will deliver to you within three work days.",
     },
     {
       question:
-        "Saytdan foydalansam ma'lumotlarim xavfsizligiga kafolat bormi?",
+        "If I utilize your website, is security guaranteed?",
       answer:
-        "Albatta, biznign dasturchilarimiz sizning ma'lumotlaringiz xavfsizligini ta'minlaydilar.",
+        "Absolutely, our staff guarentee every info of our customers secured.",
     },
     {
-      question: "To'lov qanday amalga oshiriladi?",
-      answer: "To'lovni Payme, Click ilovalari orqali amalga oshirish mumkin",
+      question: "How to do a payment?",
+      answer: "You can do a payment through your credit card or transfer the money to our account.",
     },
     {
-      question: "Buyurtmalar qancha vaqtda yetib keladi?",
+      question: "How long does it take to get the order?",
       answer:
-        "Byurtmalar harid qilgan narsangizga qarab har xil vaqtda yetkazilishi mumkin.",
+        "After your puchase, orders will deliver to you within three work days.",
     },
     {
       question:
-        "Saytdan foydalansam ma'lumotlarim xavfsizligiga kafolat bormi?",
+        "If I utilize your website, is security guaranteed?",
       answer:
-        "Albatta, biznign dasturchilarimiz sizning ma'lumotlaringiz xavfsizligini ta'minlaydilar.",
+        "Absolutely, our staff guarentee every info of our customers secured.",
     },
   ];
 
@@ -97,6 +99,14 @@ export function AboutPage() {
   const handleChange = (event: any, newValue: string) => {
     setValue(newValue);
   };
+
+  useLayoutEffect(() => {
+    const scrollIntoView = () => {
+      window.scrollTo({ top: 0, left: 0 });
+    };
+
+    scrollIntoView();
+  }, [history.location.pathname]);
 
   return (
     <div className={"help_page"} style={{ backgroundColor: "white"}}>
@@ -677,6 +687,7 @@ export function AboutPage() {
               </TabPanel>
             </Stack>
           </Stack>
+          < ScrollToTopFab />
         </TabContext>
       </Container>
     </div>

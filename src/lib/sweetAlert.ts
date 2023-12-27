@@ -39,7 +39,7 @@ export const sweetTopSuccessAlert = async (
 export const sweetTopSmallSuccessAlert = async (
   msg: string,
   duration: number = 2000,
-  enable_forward: boolean = false
+  enable_forward: boolean = false,
 ) => {
   const Toast = Swal.mixin({
     toast: true,

@@ -253,7 +253,7 @@
 .homepage .p_products_frame {
   width: 100%;
   height: 710px;
-  background: url("/public/icons/bg_shapes1.png"), url("/public/icons/bg2.png");
+  background: url("/public/icons/bg_shapes1.png"), #FEF8F0;
   background-position: bottom, top;
   background-size: 100% 720px, 100% 710px;
   background-repeat: no-repeat;
@@ -319,7 +319,7 @@
 }
 
 .homepage .p_products_main .swiper .product_info_frame .product-box .dish_sale {
-  width: 100px;
+  width: 50px;
   height: 33px;
   flex-shrink: 0;
   border-radius: 10px;
@@ -327,6 +327,8 @@
   background: #fff;
   margin-top: 10px;
   margin-left: 10px;
+  display: flex;
+  flex-direction: row;
 }
 
 .homepage
@@ -337,8 +339,8 @@
   .dish_sale
   .dish_sale-txt {
   display: flex;
-  width: 80px;
-  height: 19px;
+  width: 40px;
+  height: 39px;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
@@ -346,7 +348,30 @@
   color: #1976d2;
   text-align: center;
   font-family: "Nunito";
-  margin: 6px;
+  font-size: 17px;
+  margin-left: 5px;
+  font-style: normal;
+  font-weight: 850;
+}
+
+.homepage
+  .p_products_main
+  .swiper
+  .product_info_frame
+  .product-box
+  .dish_sale
+  .endDate {
+  display: flex;
+  width: 120px;
+  height: 19px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  color: #1976d2;
+  text-align: center;
+  font-family: "Nunito";
+  margin: 8px;
+  margin-left: 45px;
   font-size: 17px;
   font-style: normal;
   font-weight: 850;
@@ -446,6 +471,18 @@
   justify-content: center;
   margin-top: 15px;
   margin-left: 90px;
+}
+
+
+/** Sale Products FRAME */
+.homepage .p_products_sale {
+  width: 100%;
+  height: 710px;
+  background: url("/public/icons/bg_shapes1.png"), url("/public/icons/bg2.png");
+  background-position: bottom, bottom;
+  background-size: 100% 720px, 100% 710px;
+  background-repeat: no-repeat;
+  margin-top: -40px;
 }
 
 /** Adds FRAME */
@@ -826,7 +863,9 @@
 
 .homepage .articles_frame .articles .article_box {
   position: relative;
-  min-height: 420px;
+  min-height: 430px;
+  text-decoration: none;
+  cursor: pointer;
   width: 300px;
   border-radius: 10px;
   box-shadow: 0px 0px 15px 0px rgba(50, 50, 50, 0.2);
@@ -896,15 +935,15 @@
 }
 
 .homepage .articles_frame .articles .article_box .article_info .title {
-  width: 260px;
+  width: 265px;
   height: 60px;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
   margin-left: 17px;
-  margin-top: 10px;
-
+  margin-top: 17px;
+  line-height: 22px;
   font-family: "Nunito";
   font-weight: 800;
   font-size: 18px;
@@ -916,6 +955,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-top: 5px;
   margin-left: 5px;
   margin-bottom: 5px;
 
@@ -931,6 +971,7 @@
   font-weight: 500;
   color: black;
   margin-left: 30px;
+  text-decoration: underline;
 }
 
 .homepage .articles_frame .readmore:hover {

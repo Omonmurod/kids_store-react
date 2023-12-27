@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import "../css/App.css";
 import "../css/navbar.css";
 import "../css/footer.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "../css/chat.css";
+import { BrowserRouter as Router, Switch, Route, useHistory } from "react-router-dom";
 import { MemberPage } from "./screens/MemberPage";
 import { OrdersPage } from "./screens/OrdersPage";
 import { CommunityPage } from "./screens/CommunityPage";
@@ -19,11 +20,16 @@ import { serverApi } from "../lib/config";
 import {
   sweetFailureProvider,
   sweetTopSmallSuccessAlert,
+  sweetTopSuccessAlert,
 } from "../lib/sweetAlert";
 import { Definer } from "../lib/Definer";
 import assert from "assert";
 import MemberApiService from "./apiServices/memberApiService";
 import "../app/apiServices/verify";
+import { CartItem } from "../types/others";
+import { Product } from "../types/product";
+import { CommunityChats } from "./components/chatting/communityChats";
+import { MobileVersion } from "../app/screens/MobileVersion";
 
 function App() {
   /** INITIALIZATIONS */
@@ -34,9 +40,13 @@ function App() {
   const [signUpOpen, setSignUpOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [orderRebuild, setOrderRebuild] = useState<Date>(new Date());
   const open = Boolean(anchorEl);
+  const cartJson: any = localStorage.getItem("cart_data");
+  const current_cart: CartItem[] = JSON.parse(cartJson) ?? [];
+  const [cartItems, setCartItems] = useState<CartItem[]>(current_cart);
+  const [openAlert, setOpenAlert] = React.useState(false);
 
-  // bu 1-ishga tushadigan component did mount
   useEffect(() => {
     console.log("=== useEffect: App ===");
     const memberDataJson: any = localStorage.getItem("member_data")
@@ -56,6 +66,7 @@ function App() {
   const handleSignUpClose = () => setSignUpOpen(false);
   const handleLoginOpen = () => setLoginOpen(true);
   const handleLoginClose = () => setLoginOpen(false);
+  const history = useHistory<History>();
   const handleLogOutClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -66,11 +77,93 @@ function App() {
     try {
       const memberApiService = new MemberApiService();
       await memberApiService.logOutRequest();
-      await sweetTopSmallSuccessAlert("See You Soon! 👋 ", 700, true);
+      await sweetTopSmallSuccessAlert("See You Soon! 👋 ", 1000, true);
     } catch (err) {
       console.log(err);
       sweetFailureProvider(Definer.general_err1);
     }
+  };
+
+  const onAdd = (product: Product) => {
+    const exist: any = cartItems.find(
+      (item: CartItem) => item._id === product._id
+    );
+    if (exist) {
+      const cart_updated = cartItems.map((item: CartItem) =>
+        item._id === product._id
+          ? { ...exist, quantity: exist.quantity + 1 }
+          : item
+      );
+      setCartItems(cart_updated);
+      localStorage.setItem("cart_data", JSON.stringify(cart_updated));
+      sweetTopSmallSuccessAlert("Added 🎉", 1000, false);
+    } else {
+      if (product.discountedPrice !== 0) {
+        let discountedPrice = Math.floor(product.discountedPrice);
+        const new_item: CartItem = {
+          _id: product._id,
+          quantity: 1,
+          name: product.product_name,
+          price: discountedPrice,
+          image: product.product_images[0],
+        };
+        const cart_updated = [...cartItems, { ...new_item }];
+        setCartItems(cart_updated);
+        localStorage.setItem("cart_data", JSON.stringify(cart_updated));
+        sweetTopSmallSuccessAlert("Added 🎉", 1000, false);
+      } else {
+        const new_item: CartItem = {
+          _id: product._id,
+          quantity: 1,
+          name: product.product_name,
+          price: product.product_price,
+          image: product.product_images[0],
+        };
+        const cart_updated = [...cartItems, { ...new_item }];
+        setCartItems(cart_updated);
+        localStorage.setItem("cart_data", JSON.stringify(cart_updated));
+        sweetTopSmallSuccessAlert("Added 🎉", 1000, false);
+      }
+    }
+  };
+  const onRemove = (item: CartItem) => {
+    const item_data: any = cartItems.find(
+      (ele: CartItem) => ele._id === item._id
+    );
+    if (item_data.quantity === 1) {
+      const cart_updated = cartItems.filter(
+        (ele: CartItem) => ele._id !== item._id
+      );
+      setCartItems(cart_updated);
+      localStorage.setItem("cart_data", JSON.stringify(cart_updated));
+      sweetTopSmallSuccessAlert("Removed", 1000, false);
+    } else {
+      const cart_updated = cartItems.map((ele: CartItem) =>
+        ele._id === item._id
+          ? { ...item_data, quantity: item_data.quantity - 1 }
+          : ele
+      );
+      setCartItems(cart_updated);
+      localStorage.setItem("cart_data", JSON.stringify(cart_updated));
+      sweetTopSmallSuccessAlert("Removed", 1000, false);
+    }
+  };
+  const onDelete = (item: CartItem) => {
+    const cart_updated = cartItems.filter(
+      (ele: CartItem) => ele._id !== item._id
+    );
+    setCartItems(cart_updated);
+    localStorage.setItem("cart_data", JSON.stringify(cart_updated));
+    sweetTopSmallSuccessAlert("Removed", 1000, false);
+  };
+  const onDeleteAll = () => {
+    setCartItems([]);
+    localStorage.removeItem("cart_data");
+    sweetTopSmallSuccessAlert("Deleted", 1000, false);
+  };
+
+  const handleClickOpenAlert = () => {
+    history.push("/construction");
   };
 
   return (
@@ -85,22 +178,31 @@ function App() {
         anchorEl={anchorEl}
         open={open}
         verifiedMemberData={verifiedMemberData}
+        cartItems={cartItems}
+        onAdd={onAdd}
+        onRemove={onRemove}
+        onDelete={onDelete}
+        onDeleteAll={onDeleteAll}
+        setOrderRebuild={setOrderRebuild}
       />
       <Switch>
         <Route path="/products">
           <ProductPage />
         </Route>
         <Route path="/brand">
-          <BrandPage />
+          <BrandPage onAdd={onAdd}/>
         </Route>
         <Route path="/community">
           <CommunityPage />
         </Route>
         <Route path="/orders">
-          <OrdersPage />
+          <OrdersPage
+            orderRebuild={orderRebuild}
+            setOrderRebuild={setOrderRebuild}
+          />
         </Route>
         <Route path="/member-page">
-          <MemberPage />
+          <MemberPage onAdd={onAdd}/>
         </Route>
         <Route path="/about">
           <AboutPage />
@@ -108,10 +210,18 @@ function App() {
         <Route path="/login">
           <LoginPage />
         </Route>
+        <Route path="/mobile">
+          <MobileVersion
+            openAlert={openAlert}
+            handleClickOpenAlert={handleClickOpenAlert}
+            setPath={setPath}
+          />
+        </Route>
         <Route path={["/home", "/"]}>
-          <HomePage />
+          <HomePage onAdd={onAdd} />
         </Route>
       </Switch>
+      <CommunityChats />
       <Footer />
       <AuthenticationModel
         signUpOpen={signUpOpen}

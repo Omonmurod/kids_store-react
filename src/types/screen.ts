@@ -17,6 +17,7 @@ export interface AppRootState {
 
 /** HOMEPAGE STATE */
 export interface HomePageState {
+  saleProducts: any;
   topBrands: Brand[]; 
   bestProducts: Product[];
   bestBoArticles: BoArticle[];
@@ -60,4 +61,5 @@ export interface MemberPageState {
   memberFollowers: Follower[];
   memberFollowings: Following[];
   targetComments: Comments[];
+  targetProducts: Product[];
 }

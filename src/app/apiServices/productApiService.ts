@@ -36,7 +36,7 @@ class ProductApiService {
           withCredentials: true,
         });
       assert.ok(result, Definer.general_err1);
-
+      assert.ok(result?.data?.state != "fail", Definer.general_err1);
       console.log("state:::", result.data.state);
       const product: Product = result.data.data;
       return product;

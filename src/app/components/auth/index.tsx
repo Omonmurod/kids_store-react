@@ -9,7 +9,10 @@ import LoginIcon from "@mui/icons-material/Login";
 import assert from "assert";
 import { Definer } from "../../../lib/Definer";
 import MemberApiService from "../../apiServices/memberApiService";
-import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../../lib/sweetAlert";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -69,7 +72,7 @@ export default function AuthenticationModal(props: any) {
 
       const memberApiService = new MemberApiService();
       await memberApiService.signupRequest(signup_data);
-      await sweetTopSmallSuccessAlert("Congratulations! 🎉🎉🎉 ", 700, false);
+      await sweetTopSmallSuccessAlert("Congratulations! 🎉🎉🎉 ", 1000, true);
 
       props.handleSignUpClose();
       window.location.reload();
@@ -91,7 +94,7 @@ export default function AuthenticationModal(props: any) {
 
       const memberApiService = new MemberApiService();
       await memberApiService.loginRequest(login_data);
-      await sweetTopSmallSuccessAlert("Welcome! 😊 ", 700, false);
+      await sweetTopSmallSuccessAlert("Welcome! 😊 ", 1000, true);
 
       props.handleLoginClose();
       window.location.reload();
@@ -122,7 +125,7 @@ export default function AuthenticationModal(props: any) {
             className={classes.paper}
             direction={"row"}
             sx={{
-              width: "820px",
+              width: "860px",
               height: "500",
               borderColor: "white",
               borderRadius: "20px",
@@ -190,6 +193,25 @@ export default function AuthenticationModal(props: any) {
                 <LoginIcon sx={{ mr: 1 }} />
                 Signup
               </Fab>
+            </Stack>
+            <Stack
+              sx={{
+                display: "flex",
+                width: "29px",
+              }}
+            >
+              <img
+                src="/icons/close.png"
+                style={{
+                  color: "#423127",
+                  fontSize: "24px",
+                  fontWeight: "660",
+                  marginLeft: "15px",
+                  cursor: "pointer",
+                  width: "20px"
+                }}
+                onClick={props.handleSignUpClose}
+              />
             </Stack>
           </Stack>
         </Fade>
@@ -260,6 +282,23 @@ export default function AuthenticationModal(props: any) {
                 <LoginIcon sx={{ mr: 1 }} />
                 Login
               </Fab>
+            </Stack>
+            <Stack
+              sx={{
+                display: "flex",
+                width: "29px",
+              }}
+            >
+              <img
+                src="/icons/close.png"
+                style={{
+                  width: "20px",
+                  cursor: "pointer",
+                  marginTop: "5px",
+                  marginLeft: "5px"
+                }}
+                onClick={props.handleLoginClose}
+              />
             </Stack>
           </Stack>
         </Fade>

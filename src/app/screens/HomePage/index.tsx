@@ -17,6 +17,8 @@ import { setTopBrands } from "../../screens/HomePage/slice";
 import { retrieveTopBrands } from "../../screens/HomePage/selector";
 import { Brand } from "../../../types/user";
 import BrandApiService from "../../apiServices/brandApiService";
+import ScrollToTopFab from "../../scrollToTopFab";
+import { SaleProducts } from "./saleProducts";
 
 /** REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
@@ -28,7 +30,7 @@ const topBrandsRetriever = createSelector(retrieveTopBrands, (topBrands) => ({
   topBrands,
 }));
 
-export function HomePage() {
+export function HomePage(props: any) {
   /** INITIALIZATIONS */
   const { setTopBrands } = actionDispatch(useDispatch());
 
@@ -48,10 +50,12 @@ export function HomePage() {
       <Statistics />
       <Events />
       <TopBrands />
-      <BestProducts />
+      <BestProducts onAdd={props.onAdd} />
+      <SaleProducts onAdd={props.onAdd} />
       <Advertisements />
       <OurOffers />
       <Articles />
+      <ScrollToTopFab />
     </div>
   );
 }

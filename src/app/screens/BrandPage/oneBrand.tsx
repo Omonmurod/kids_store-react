@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import FormControl from "@material-ui/core/FormControl";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormGroup from "@material-ui/core/FormGroup";
@@ -22,6 +22,7 @@ import ArrowForwardIosNewIcon from "@mui/icons-material/ArrowForwardIos";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useParams } from "react-router-dom";
 import BrandApiService from "../../apiServices/brandApiService";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { ProductSearchObj, SearchObj } from "../../../types/others";
 import {
   sweetErrorHandling,
@@ -57,16 +58,8 @@ import assert from "assert";
 import { Definer } from "../../../lib/Definer";
 import MemberApiService from "../../apiServices/memberApiService";
 import { verifiedMemberData } from "../../apiServices/verify";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import Accordion from "@material-ui/core/Accordion";
-
-// const progress = (18 / 38) * 100;
-// const progress5 = (8 / 20) * 100;
-// const progress4 = (12 / 20) * 100;
-// const progress3 = (0 / 20) * 100;
-// const progress2 = (0 / 20) * 100;
-// const progress1 = (0 / 20) * 100;
+import ScrollToTopFab from "../../scrollToTopFab";
+import ChatIcon from "@mui/icons-material/Chat";
 
 /** REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
@@ -91,6 +84,7 @@ const targetProductsRetriever = createSelector(
 
 export function OneBrand(props: any) {
   /** INITIALIZATIONS */
+  const [scrollDisabled, setScrollDisabled] = useState(true);
   let { brand_id } = useParams<{ brand_id: string }>();
   const { randomBrands } = useSelector(randomBrandsRetriever);
   const { chosenBrand } = useSelector(chosenBrandRetriever);
@@ -106,18 +100,49 @@ export function OneBrand(props: any) {
       order: "createdAt",
       brand_mb_id: brand_id,
       product_name: "all",
-      product_collection: "clothing",
+      product_collection: "all",
       product_size: "all",
       product_color: "all",
       product_type: "all",
+      product_volume: "all",
     });
+  const [timeRemainingArray, setTimeRemainingArray] = useState<string[]>([]);
+
+  const formatTimeRemaining = (endTime: string): string => {
+    const now = new Date();
+    const endDate = new Date(endTime);
+    const diff = endDate.getTime() - now.getTime();
+
+    if (diff <= 0) {
+      return "00:00:00";
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    return `${days > 0 ? `${days}d ` : ""}${hours
+      .toString()
+      .padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
+  };
+  const [productRebuild, setProductRebuild] = useState<Date>(new Date());
   const history = useHistory();
   const refs: any = useRef([]);
-  const [productRebuild, setProductRebuild] = useState<Date>(new Date());
   const { product } = props;
   useEffect(() => {
     console.log("Product:", product);
   }, [product]);
+
+  useLayoutEffect(() => {
+    const scrollIntoView = () => {
+      window.scrollTo({ top: 0, left: 0 });
+    };
+
+    scrollIntoView();
+  }, [history.location.pathname]);
 
   useEffect(() => {
     const brandService = new BrandApiService();
@@ -138,6 +163,20 @@ export function OneBrand(props: any) {
       .catch((err) => console.log(err));
   }, [chosenBrandId, targetProductSearchObj, productRebuild]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeRemainingArray(
+        targetProducts.map((product: Product) =>
+          formatTimeRemaining(product.discount.endDate)
+        )
+      );
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [targetProducts]);
+
   /** HANDLERS */
   const chosenBrandHandler = (id: string) => {
     setchosenBrandId(id);
@@ -145,17 +184,27 @@ export function OneBrand(props: any) {
     setTargetProductSearchObj({ ...targetProductSearchObj });
     history.push(`/brand/${id}`);
   };
+  const changeNameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    targetProductSearchObj.page = 1;
+    targetProductSearchObj.product_name = event.target.value;
+    targetProductSearchObj.product_collection = "all";
+    setTargetProductSearchObj({ ...targetProductSearchObj });
+  };
   const searchCollectionHandler = (collection: string) => {
     targetProductSearchObj.page = 1;
     targetProductSearchObj.product_collection = collection;
     setTargetProductSearchObj({ ...targetProductSearchObj });
   };
+  /** Enabling search */
 
-  const searchTypeHandler = (type: string) => {
-    targetProductSearchObj.page = 1;
-    targetProductSearchObj.product_type = type;
-    setTargetProductSearchObj({ ...targetProductSearchObj });
+  const handleSearchIconClick = () => {
+    // Perform the search with the searchValue
+    console.log(
+      "targetProductSearchObj.product_name:",
+      targetProductSearchObj.product_name
+    );
   };
+
   const searchOrderHandler = (order: string) => {
     targetProductSearchObj.page = 1;
     targetProductSearchObj.order = order;
@@ -163,6 +212,7 @@ export function OneBrand(props: any) {
   };
   const handlePaginationChange = (event: any, value: number) => {
     targetProductSearchObj.page = value;
+    setScrollDisabled(false);
     setTargetProductSearchObj({ ...targetProductSearchObj });
   };
   const chosenProductHandler = (id: string) => {
@@ -221,7 +271,7 @@ export function OneBrand(props: any) {
               spaceBetween={30}
               navigation={{
                 nextEl: ".restaurant-next",
-                prevEl: ".resturant-prev",
+                prevEl: ".restaurant-prev",
               }}
             >
               {randomBrands.map((ele: Brand) => {
@@ -357,170 +407,212 @@ export function OneBrand(props: any) {
                 </FormControl>
               </Stack>
               <Stack className="shop_products">
-                {targetProducts.map((product: Product) => {
-                  const image_path = `${serverApi}/${product.product_images[0]}`;
-                  return (
-                    <Stack className="shop_product-info">
-                      <Stack
-                        className={"product-box"}
-                        key={product._id}
-                        onClick={() => chosenProductHandler(product._id)}
-                      >
-                        <Box
-                          className={"img"}
-                          sx={{
-                            backgroundImage: `url(${image_path})`,
-                          }}
+                {targetProducts.length > 0 ? (
+                  targetProducts.map((product: Product, index: number) => {
+                    const image_path = `${serverApi}/${product.product_images[0]}`;
+                    let discountedPrice = Math.floor(product.discountedPrice);
+                    return (
+                      <Stack className="shop_product-info">
+                        <Stack
+                          className={"product-box"}
+                          key={`${product._id}`}
+                          onClick={() => chosenProductHandler(product._id)}
                         >
-                          <Box className={"dish_sale"}>
-                            <div className={"dish_sale-txt"}>Sale 20%</div>
-                          </Box>
-                          <Button
-                            className={"like_view_btn"}
-                            style={{ left: "36px" }}
+                          <Box
+                            className={"img"}
+                            sx={{
+                              backgroundImage: `url(${image_path})`,
+                            }}
                           >
-                            <Badge
-                              badgeContent={product.product_likes}
-                              onClick={(e: React.MouseEvent) => {
-                                e.stopPropagation();
-                                console.log("Badge clicked!");
-                                console.log(
-                                  "product_likes:",
-                                  product.product_likes
-                                );
-                                console.log(
-                                  "my_favorite value:",
-                                  product?.me_liked?.[0]?.my_favorite
-                                );
-                              }}
-                              color="secondary"
-                            >
-                              <Checkbox
-                                icon={
-                                  <FavoriteBorder style={{ color: "white" }} />
-                                }
-                                id={product._id}
-                                checkedIcon={
-                                  <Favorite style={{ color: "red" }} />
-                                }
-                                onClick={targetLikeProduct}
-                                checked={
-                                  product?.me_liked &&
-                                  product?.me_liked[0]?.my_favorite
-                                    ? true
-                                    : false
-                                }
-                              />
-                            </Badge>
-                          </Button>
+                            {product.discountedPrice !== 0 && (
+                              <Box className={"dish_sale"}>
+                                <span className={"dish_sale-txt"}>
+                                  {product.discount?.type === "amount" ? (
+                                    <Box className="discount_fon">
+                                      -{product.discount?.value}$
+                                    </Box>
+                                  ) : (
+                                    <Box className="discount_fon">
+                                      -{product.discount?.value}%
+                                    </Box>
+                                  )}
+                                </span>
+                                <span className="endDate">
+                                  {product.discountedPrice ? (
+                                    <span className={"discount_timer"}>
+                                      {timeRemainingArray[index]}
+                                    </span>
+                                  ) : null}
+                                </span>
+                              </Box>
+                            )}
 
+                            <Button
+                              className={"like_view_btn"}
+                              style={{ left: "36px" }}
+                            >
+                              <Badge
+                                badgeContent={product.product_likes}
+                                onClick={(e: React.MouseEvent) => {
+                                  e.stopPropagation();
+                                  console.log("Badge clicked!");
+                                  console.log(
+                                    "product_likes:",
+                                    product.product_likes
+                                  );
+                                  console.log(
+                                    "my_favorite value:",
+                                    product?.me_liked?.[0]?.my_favorite
+                                  );
+                                }}
+                                color="secondary"
+                              >
+                                <Checkbox
+                                  icon={
+                                    <FavoriteBorder
+                                      style={{ color: "white" }}
+                                    />
+                                  }
+                                  id={product._id}
+                                  checkedIcon={
+                                    <Favorite style={{ color: "red" }} />
+                                  }
+                                  onClick={targetLikeProduct}
+                                  checked={
+                                    product?.me_liked &&
+                                    product?.me_liked[0]?.my_favorite
+                                      ? true
+                                      : false
+                                  }
+                                />
+                              </Badge>
+                            </Button>
+
+                            <Button
+                              onClick={(e) => {
+                                props.onAdd(product);
+                                e.stopPropagation();
+                              }}
+                              className={"like_view_btn"}
+                              style={{ right: "36px" }}
+                            >
+                              <Badge
+                                badgeContent={product.product_reviews}
+                                color="secondary"
+                              >
+                                <ChatIcon style={{ color: "white" }} />
+                              </Badge>
+                            </Button>
+                          </Box>
+                        </Stack>
+                        <Stack className={"product_name"}>
+                          {product.product_name}
+                        </Stack>
+                        <Stack className={"rating_box"}>
+                          <Rating
+                            className="half-rating"
+                            defaultValue={0}
+                            value={product.product_rating}
+                            precision={0.5}
+                          />
+                        </Stack>
+                        <Stack className={"price"}>
+                          <span
+                            style={{
+                              fontFamily: "Nunito",
+                              fontWeight: "900",
+                              color: "orange",
+                              fontSize: "20px",
+                              marginLeft: product.discountedPrice
+                                ? "0px"
+                                : "20px",
+                            }}
+                          >
+                            $
+                            {product.discountedPrice ? (
+                              <>
+                                <span
+                                  style={{
+                                    color: "orange",
+                                    position: "relative",
+                                  }}
+                                >
+                                  {product.product_price}
+                                  <span
+                                    style={{
+                                      position: "absolute",
+                                      bottom: "50%",
+                                      left: 0,
+                                      right: 0,
+                                      height: "3px",
+                                      backgroundColor: "orange",
+                                    }}
+                                  ></span>
+                                </span>
+                                <span
+                                  style={{
+                                    fontFamily: "Nunito",
+                                    fontWeight: "900",
+                                    color: "#423127",
+                                    fontSize: "20px",
+                                    marginLeft: "6px",
+                                  }}
+                                >
+                                  ${discountedPrice}
+                                </span>
+                              </>
+                            ) : (
+                              <>
+                                <span>{product.product_price}</span>
+                              </>
+                            )}
+                          </span>
+                        </Stack>
+                        <Stack
+                          display={"flex"}
+                          marginLeft={"40px"}
+                          marginTop={"15px"}
+                          className="btn"
+                        >
                           <Button
+                            variant="contained"
+                            style={{
+                              borderRadius: "30px",
+                              color: "#ffffff",
+                              background: "#ffa600",
+                              fontFamily: "Nunito",
+                              height: "45px",
+                              width: "160px",
+                              fontWeight: "900",
+                              fontSize: "16px",
+                            }}
                             onClick={(e) => {
                               props.onAdd(product);
                               e.stopPropagation();
                             }}
-                            className={"like_view_btn"}
-                            style={{ right: "36px" }}
                           >
-                            <Badge
-                              badgeContent={product.product_views}
-                              color="secondary"
-                            >
-                              <Checkbox
-                                icon={
-                                  <RemoveRedEyeIcon
-                                    style={{ color: "white" }}
-                                  />
-                                }
-                              />
-                            </Badge>
+                            ADD TO CART
                           </Button>
-                        </Box>
+                        </Stack>
                       </Stack>
-                      <Stack className={"product_name"}>
-                        {product.product_name}
-                      </Stack>
-                      <Stack className={"rating_box"}>
-                        <Rating
-                          className="half-rating"
-                          defaultValue={3.5}
-                          precision={0.5}
-                        />
-                      </Stack>
-                      <Stack className={"price"}>
-                        <span
-                        //   style={{
-                        //     fontFamily: "Nunito",
-                        //     fontWeight: "900",
-                        //     textDecoration: "line-through",
-                        //     fontSize: "19px",
-                        //   }}
-                        // >
-                        //   {product.product_price}
-                        // </span>
-                        // <span
-                        //   style={{
-                        //     fontFamily: "Nunito",
-                        //     fontWeight: "900",
-                        //     color: "orange",
-                        //     fontSize: "20px",
-                        //   }}
-                        // >
-                        //   {product.discountedPrice ? (
-                        //     <p>
-                        //       <span className="original-price">
-                        //         {product.product_price}
-                        //       </span>{" "}
-                        //       -{" "}
-                        //       <span className="discounted-price">
-                        //         {product.discountedPrice}
-                        //       </span>
-                        //     </p>
-                        //   ) : (
-                        //     <p>{product.product_price}</p>
-                        //   )}
-                        >
-                          {product.discountedPrice ? (
-                            <p>
-                              <span className="original-price strikethrough">
-                                {product.product_price}
-                              </span>{" "}
-                              -{" "}
-                              <span className="discounted-price">
-                                {product.discountedPrice}
-                              </span>
-                            </p>
-                          ) : (
-                            <p>{product.product_price}</p>
-                          )}
-                        </span>
-                      </Stack>
-                      <Stack
-                        display={"flex"}
-                        marginLeft={"40px"}
-                        marginTop={"15px"}
-                        className="btn"
-                      >
-                        <Button
-                          variant="contained"
-                          style={{
-                            borderRadius: "30px",
-                            color: "#ffffff",
-                            background: "#ffa600",
-                            fontFamily: "Nunito",
-                            height: "45px",
-                            width: "160px",
-                            fontWeight: "900",
-                            fontSize: "16px",
-                          }}
-                          //onClick={props.handleLoginOpen}
-                        >
-                          ADD TO CART
-                        </Button>
-                      </Stack>
-                    </Stack>
-                  );
-                })}
+                    );
+                  })
+                ) : (
+                  <div
+                    style={{
+                      textAlign: "center",
+                      marginTop: "200px",
+                      color: "#cccccc",
+                      marginBottom: "600px",
+                      fontSize: "40px",
+                      fontWeight: "660",
+                      fontFamily: "nunito",
+                      marginLeft: "100px",
+                    }}
+                  >
+                    No products found on this page
+                  </div>
+                )}
               </Stack>
               <Stack>
                 <Box marginTop={"30px"} width={"820px"}>
@@ -556,7 +648,11 @@ export function OneBrand(props: any) {
             </Stack>
 
             <Stack className="right_shop">
-              <Stack className="right_shop-top">
+              <Stack
+                className={`right_shop-top ${
+                  scrollDisabled ? "no-scroll" : ""
+                }`}
+              >
                 <Stack className="search">
                   <Box className="right_shop-title">Search</Box>
                   <Box className={"search_big_box"}>
@@ -565,76 +661,14 @@ export function OneBrand(props: any) {
                       type={"search"}
                       name={"resSearch"}
                       placeholder={"Input product name here ..."}
+                      onChange={changeNameHandler}
                     />
                     <Button
                       className={"button_search"}
                       variant="contained"
-                      endIcon={<SearchIcon />}
+                      endIcon={<SearchIcon onClick={handleSearchIconClick} />}
                     ></Button>
                   </Box>
-                </Stack>
-
-                <Stack className="gender_category">
-                  <Box
-                    className="right_shop-title"
-                    style={{ marginRight: "10px" }}
-                  >
-                    Gender
-                  </Box>
-                  <Stack style={{ marginTop: "10px" }}>
-                    <FormControl component="fieldset">
-                      <FormGroup aria-label="position">
-                        <FormControlLabel
-                          value="boy"
-                          control={<Checkbox style={{ color: "#423123" }} />}
-                          label={
-                            <span
-                              style={{
-                                fontFamily: "Nunito",
-                                fontWeight: "550",
-                                fontSize: "19px",
-                                paddingLeft: "5px",
-                              }}
-                            >
-                              Boy
-                            </span>
-                          }
-                        />
-                        <FormControlLabel
-                          value="girl"
-                          control={<Checkbox style={{ color: "#423123" }} />}
-                          label={
-                            <span
-                              style={{
-                                fontFamily: "Nunito",
-                                fontWeight: "550",
-                                fontSize: "19px",
-                                paddingLeft: "5px",
-                              }}
-                            >
-                              Girl
-                            </span>
-                          }
-                        />
-                        <FormControlLabel
-                          value="unisex"
-                          control={<Checkbox style={{ color: "#423123" }} />}
-                          label={
-                            <span
-                              style={{
-                                fontFamily: "Nunito",
-                                fontWeight: "550",
-                                fontSize: "19px",
-                                paddingLeft: "5px",
-                              }}
-                            >
-                              Uni
-                            </span>
-                          }
-                        />
-                      </FormGroup>
-                    </FormControl>
-                  </Stack>
                 </Stack>
                 <Stack className="category">
                   <Box
@@ -779,7 +813,7 @@ export function OneBrand(props: any) {
                         style={{
                           width: "160px",
                           marginTop: "8px",
-                          marginLeft: "-38px",
+                          marginLeft: "8px",
                         }}
                       >
                         <span
@@ -788,7 +822,6 @@ export function OneBrand(props: any) {
                             fontSize: "16px",
                             fontWeight: "850",
                             lineHeight: "20px",
-                            marginRight: "-80px",
                           }}
                         >
                           Baby Care Products
@@ -830,6 +863,7 @@ export function OneBrand(props: any) {
             </Stack>
           </Stack>
         </Stack>
+        <ScrollToTopFab />
       </Container>
     </div>
   );

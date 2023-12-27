@@ -201,7 +201,10 @@ export function AllProducts() {
                             fontWeight: "900",
                             fontSize: "16px",
                           }}
-                          //onClick={props.handleLoginOpen}
+                          onClick={(e) => {
+                            //props.onAdd(chosenProduct);
+                            e.stopPropagation();
+                          }}
                         >
                           ADD TO CART
                         </Button>

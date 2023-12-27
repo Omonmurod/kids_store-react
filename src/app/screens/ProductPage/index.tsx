@@ -4,6 +4,7 @@ import { Route, Switch, useRouteMatch } from "react-router-dom";
 import { ChosenProduct } from "./chosenProduct";
 import { AllProducts } from "./allProducts";
 import "../../../css/product.css";
+import ScrollToTopFab from "../../scrollToTopFab";
 
 export function ProductPage() {
   let product = useRouteMatch();
@@ -11,8 +12,12 @@ export function ProductPage() {
   return (
     <div className="product_page">
       <Switch>
-        <Route path={`${product.path}/:product_id`}><ChosenProduct /></Route>
-        <Route path={`${product.path}`}><AllProducts /></Route>
+        <Route path={`${product.path}/:product_id`}>
+          <ChosenProduct />
+        </Route>
+        <Route path={`${product.path}`}>
+          <AllProducts />
+        </Route>
       </Switch>
     </div>
   );

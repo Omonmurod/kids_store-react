@@ -1,6 +1,6 @@
 import { Box, Button, Container } from "@mui/material";
 import { Stack } from "@mui/system";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Typography from "@mui/joy/Typography";
 import { CssVarsProvider } from "@mui/joy/styles";
 import { CardOverflow, IconButton } from "@mui/joy";
@@ -27,6 +27,7 @@ import {
   sweetTopSmallSuccessAlert,
 } from "../../../lib/sweetAlert";
 import { useHistory } from "react-router-dom";
+import ScrollToTopFab from "../../scrollToTopFab";
 
 //const brands_list = Array.from(Array(8).keys());
 
@@ -55,6 +56,14 @@ export function AllBrands() {
   const refs: any = useRef([]);
   const history = useHistory();
 
+  useLayoutEffect(() => {
+    const scrollIntoView = () => {
+      window.scrollTo({ top: 0, left: 0 });
+    };
+
+    scrollIntoView();
+  }, [history.location.pathname]);
+
   useEffect(() => {
     const brandService = new BrandApiService();
     brandService
@@ -67,6 +76,7 @@ export function AllBrands() {
   const chosenBrandHandler = (id: string) => {
     history.push(`/brand/${id}`);
   };
+  const [activeLink, setActiveLink] = useState("mb_point");
   const searchHandler = (category: string) => {
     targetSearchObject.page = 1;
     targetSearchObject.order = category;
@@ -76,6 +86,22 @@ export function AllBrands() {
     targetSearchObject.page = value;
     setTargetSearchObject({ ...targetSearchObject });
   };
+
+   /** Enabling search */
+   const [query, setQuery] = useState("");
+
+   const searchedShops = targetBrands.filter((product) => {
+    const lowerCaseQuery = query.toLowerCase();
+
+    const nick = product.mb_nick ? product.mb_nick.toLowerCase() : '';
+    const address = product.mb_address ? product.mb_address.toLowerCase() : '';
+    const phone = product.mb_phone ? product.mb_phone.toLowerCase() : '';
+
+    return nick.includes(lowerCaseQuery) || 
+           address.includes(lowerCaseQuery) || 
+           phone.includes(lowerCaseQuery);
+});
+
 
   const targetLikeHandler = async (e: any, id: string) => {
     try {
@@ -113,6 +139,7 @@ export function AllBrands() {
           justifyContent: "center",
         }}
       >
+        <ScrollToTopFab />
         <Stack className="search">
           <Stack className="search_box">
             <form className="search_form" action="" method="">
@@ -121,6 +148,7 @@ export function AllBrands() {
                 type={"search"}
                 name={"resSearch"}
                 placeholder={"Input desired brand name here ..."}
+                onChange={(e) => setQuery(e.target.value)}
               />
             </form>
           </Stack>
@@ -141,11 +169,12 @@ export function AllBrands() {
             flexDirection={"row"}
             justifyContent={"space-between"}
           >
-            {targetBrands.map((ele: Brand) => {
+            {searchedShops.map((ele: Brand) => {
               const image_path = `${serverApi}/${ele.mb_image}`;
               return (
                 <Stack
                   className="top-brands_box"
+                  key={ele._id}
                   onClick={() => chosenBrandHandler(ele._id)}
                 >
                   <Stack className="brand-img">
@@ -189,7 +218,6 @@ export function AllBrands() {
                             transform: "translateY(70%)",
                             color: "rgba(0, 0, 0, .4)",
                           }}
-
                           onClick={(e) => {
                             e.stopPropagation();
                           }}
@@ -233,7 +261,6 @@ export function AllBrands() {
                             display: "flex",
                             fontSize: "15px",
                           }}
-
                         >
                           <Favorite
                             sx={{
