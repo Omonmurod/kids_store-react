@@ -1,9 +1,9 @@
 import React from "react";
 import { Container, Box, Stack } from "@mui/material";
+import useDeviceDetect from "../../../lib/responsive/useDeviceDetect";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
 SwiperCore.use([Autoplay, Navigation, Pagination]);
-import useDeviceDetect from "../../../lib/responsive/useDeviceDetect";
 
 export function Events() {
   const events_list = [

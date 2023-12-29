@@ -11,6 +11,7 @@ export interface MeLiked {
 // }
 
 export interface Product {
+  length: number;
   me_viewed: any;
   _id: string;
   me_liked: MeLiked[];
