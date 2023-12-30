@@ -108,7 +108,7 @@ export function OneBrand(props: any) {
     });
   const [timeRemainingArray, setTimeRemainingArray] = useState<string[]>([]);
 
-  const formatTimeRemaining = (endTime: string): string => {
+  const formatTimeRemaining = (endTime: Date): string => {
     const now = new Date();
     const endDate = new Date(endTime);
     const diff = endDate.getTime() - now.getTime();

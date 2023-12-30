@@ -1076,6 +1076,7 @@
   display: flex;
   font-size: 30px;
   line-height: 40px;
+  width: 450px;
   color: orange;
 }
 
@@ -1086,7 +1087,7 @@
   flex-direction: row;
   color: #1976d2;
   width: 300px;
-  margin-left: 40px;
+  margin-left: 20px;
 }
 
 .brand_page .brand_product .chosen_dish_info_box .resto_name {
@@ -1095,7 +1096,6 @@
   margin-top: 12px;
   flex-direction: column;
   flex-shrink: 0;
-  color: #747474;
   font-family: "Nunito";
   font-size: 19px;
   font-style: normal;
