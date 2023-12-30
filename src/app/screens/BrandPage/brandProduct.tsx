@@ -161,7 +161,7 @@ export function BrandProduct(props: any) {
     scrollIntoView();
   }, [history.location.pathname]);
 
-  const formatTimeRemaining = (endTime: string): string => {
+  const formatTimeRemaining = (endTime: Date): string => {
     const now = new Date();
     const endDate = new Date(endTime);
     const diff = endDate.getTime() - now.getTime();
@@ -182,7 +182,7 @@ export function BrandProduct(props: any) {
       .padStart(2, "0")}`;
   };
 
-  const formatTimeRemainingOne = (endTime: string): string => {
+  const formatTimeRemainingOne = (endTime: Date): string => {
     const now = new Date();
     const endDate = new Date(endTime);
     const diff = endDate.getTime() - now.getTime();
@@ -269,7 +269,6 @@ export function BrandProduct(props: any) {
       clearInterval(interval);
     };
   }, [targetProducts]);
-
   //** for Creating values *//
   const [rating, setRating] = useState<number | null>(0);
   const [comment, setComment] = useState<string>("");
@@ -423,7 +422,7 @@ export function BrandProduct(props: any) {
                     display: "flex",
                     flexDirection: "row",
                     marginTop: "12px",
-                    marginLeft: "210px",
+                    marginLeft: "0px",
                   }}
                 >
                   {chosenProduct?.discountedPrice ? (

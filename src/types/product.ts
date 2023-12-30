@@ -19,7 +19,7 @@ export interface Product {
   product_type: string;
   product_status: string;
   product_price: number;
-  discount: Discount[];
+  discount: Discount;
   product_left_cnt: number;
   product_size: string;
   product_volume: number;
