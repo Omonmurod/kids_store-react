@@ -6,10 +6,18 @@ export function Advertisements() {
   const { isMobile } = useDeviceDetect();
   if (isMobile()) {
     return (
-      <div className="ads_frame">
+      <div
+        className="ads_frame"
+        style={{
+          width: "430px"
+        }}
+      >
         <Container>
           <Box className="title">
-            <span className="category_title" style={{ marginLeft: "60px", fontSize: "36px" }}>
+            <span
+              className="category_title"
+              style={{ marginLeft: "60px", fontSize: "36px" }}
+            >
               Our Partners
             </span>
           </Box>

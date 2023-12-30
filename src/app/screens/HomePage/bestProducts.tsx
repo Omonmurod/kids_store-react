@@ -101,7 +101,7 @@ export function BestProducts(props: any) {
     return () => {
       clearInterval(interval);
     };
-  }, [bestProducts]);  
+  }, [bestProducts]);
 
   /** HANDLERS */
   const chosenProductHandler = (id: string) => {
@@ -131,12 +131,17 @@ export function BestProducts(props: any) {
     return (
       <div
         className="p_products_frame"
-        style={{ height: "700px" }}
+        style={{ height: "700px", width: "430px" }}
       >
         <Container sx={{ overflow: "hidden" }}>
           <Stack className={"p_products_main"}>
             <Box className={"p_products_text"}>
-              <span className={"title"} style={{ marginTop: "20px", fontSize: "36px"}}>Popular Sellers this Week</span>
+              <span
+                className={"title"}
+                style={{ marginTop: "20px", fontSize: "36px" }}
+              >
+                Popular Sellers this Week
+              </span>
             </Box>
             <Stack className="swiper">
               <Swiper
@@ -208,7 +213,7 @@ export function BestProducts(props: any) {
                       </Stack>
                       <Stack
                         className={"rating_box"}
-                        style={{ marginLeft: "20px"}}
+                        style={{ marginLeft: "20px" }}
                       >
                         <Rating
                           className="half-rating"
@@ -217,7 +222,10 @@ export function BestProducts(props: any) {
                           value={product.product_rating}
                         />
                       </Stack>
-                      <Stack className={"price"} style={{marginLeft: "170px"}}>
+                      <Stack
+                        className={"price"}
+                        style={{ marginLeft: "170px" }}
+                      >
                         <span
                           style={{
                             fontFamily: "Nunito",
@@ -270,7 +278,11 @@ export function BestProducts(props: any) {
                           )}
                         </span>
                       </Stack>
-                      <Stack marginLeft={"45px"} marginTop={"15px"} style={{ marginLeft: "130px"}}>
+                      <Stack
+                        marginLeft={"45px"}
+                        marginTop={"15px"}
+                        style={{ marginLeft: "130px" }}
+                      >
                         <Button
                           variant="contained"
                           style={{

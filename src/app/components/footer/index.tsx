@@ -8,7 +8,7 @@ export function Footer() {
   const { isMobile } = useDeviceDetect();
   if (isMobile()) {
     return (
-      <div className="footer" style={{ height: "320px" }}>
+      <div className="footer" style={{ height: "320px", width: "430px" }}>
         <div className="footer_top" style={{ height: "220px" }}>
           <Container style={{ height: "220px" }}>
             <Stack flexDirection={"row"} justifyContent={"space-between"}>
@@ -53,7 +53,14 @@ export function Footer() {
                   </Box>
                 </Stack>
 
-                <Box style={{ marginLeft: "-70px", marginTop: "20px", color: "#423127", fontWeight: "770" }}>
+                <Box
+                  style={{
+                    marginLeft: "-70px",
+                    marginTop: "20px",
+                    color: "#423127",
+                    fontWeight: "770",
+                  }}
+                >
                   Copyright KidsWorld 2023, All right reserved.
                 </Box>
               </Stack>

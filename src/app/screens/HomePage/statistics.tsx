@@ -6,10 +6,19 @@ export function Statistics() {
   const { isMobile } = useDeviceDetect();
   if (isMobile()) {
     return (
-      <div className="statistics" style={{ backgroundColor: "white", height: "480px" }}>
+      <div
+        className="statistics"
+        style={{ backgroundColor: "white", height: "480px", width: "430px" }}
+      >
         <Container className="statistics_frame">
-          <Stack className="frame" style={{ display: "flex", flexDirection: "column"}}>
-            <Stack className="frame_info" style={{ marginTop: "-10px", width: "330px", marginLeft: "45px" }}>
+          <Stack
+            className="frame"
+            style={{ display: "flex", flexDirection: "column" }}
+          >
+            <Stack
+              className="frame_info"
+              style={{ marginTop: "-10px", width: "330px", marginLeft: "45px" }}
+            >
               <Box className="frame_info-img">
                 <img src="/icons/delivery.png" />
               </Box>
@@ -18,7 +27,10 @@ export function Statistics() {
                 <Box className="frame_info-bottom">When ordering from $100</Box>
               </Stack>
             </Stack>
-            <Stack className="frame_info" style={{ marginTop: "-10px", width: "330px", marginLeft: "45px" }}>
+            <Stack
+              className="frame_info"
+              style={{ marginTop: "-10px", width: "330px", marginLeft: "45px" }}
+            >
               <Box className="frame_info-img">
                 <img src="/icons/return.png" />
               </Box>
@@ -29,7 +41,10 @@ export function Statistics() {
                 </Box>
               </Stack>
             </Stack>
-            <Stack className="frame_info" style={{ marginTop: "-10px", width: "330px", marginLeft: "45px" }}>
+            <Stack
+              className="frame_info"
+              style={{ marginTop: "-10px", width: "330px", marginLeft: "45px" }}
+            >
               <Box className="frame_info-img">
                 <img src="/icons/secure.png" />
               </Box>
@@ -40,7 +55,10 @@ export function Statistics() {
                 </Box>
               </Stack>
             </Stack>
-            <Stack className="frame_info" style={{ marginTop: "-10px", width: "330px", marginLeft: "45px" }}>
+            <Stack
+              className="frame_info"
+              style={{ marginTop: "-10px", width: "330px", marginLeft: "45px" }}
+            >
               <Box className="frame_info-img">
                 <img src="/icons/support.png" />
               </Box>

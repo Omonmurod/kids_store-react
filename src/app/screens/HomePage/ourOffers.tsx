@@ -93,26 +93,43 @@ export function OurOffers() {
   const { isMobile } = useDeviceDetect();
   if (isMobile()) {
     return (
-      <div className="our-offers" style={{ height: "580px"}}>
+      <div className="our-offers" style={{ height: "580px", width: "430px" }}>
         <Container className="our-offers_frame">
           <Box className="title">
-            <span className="category_title" style={{ marginTop: "-60px", fontSize: "36px"}} >Our Offers</span>
+            <span
+              className="category_title"
+              style={{ marginTop: "-60px", fontSize: "36px" }}
+            >
+              Our Offers
+            </span>
           </Box>
-          <Stack className="offer-bottom" style={{ marginTop: "-80px"}}>
+          <Stack className="offer-bottom" style={{ marginTop: "-80px" }}>
             <Stack style={{ marginRight: "50px" }}>
               <Stack
                 className="info-box1"
                 onClick={() => {
                   window.location.href = "/mobile";
                 }}
-                style={{ width: "400px", marginTop: "-40px"}}
+                style={{ width: "400px", marginTop: "-40px" }}
               >
                 <Box className="info-img">
                   <img src="/icons/offer1.svg" />
                 </Box>
                 <Stack className="info">
-                  <div className="bottom-info1" style={{ fontSize: "16px", marginLeft: "-20px", marginTop: "20px"}}>New Born & Baby Care Shop</div>
-                  <div className="bottom-info" style={{ fontSize: "14px", marginLeft: "-20px"}}>
+                  <div
+                    className="bottom-info1"
+                    style={{
+                      fontSize: "16px",
+                      marginLeft: "-20px",
+                      marginTop: "20px",
+                    }}
+                  >
+                    New Born & Baby Care Shop
+                  </div>
+                  <div
+                    className="bottom-info"
+                    style={{ fontSize: "14px", marginLeft: "-20px" }}
+                  >
                     Cras efficitur, lacus non luctus facilisis
                   </div>
                 </Stack>
@@ -122,16 +139,26 @@ export function OurOffers() {
                 onClick={() => {
                   window.location.href = "/mobile";
                 }}
-                style={{ width: "400px", marginTop: "10px"}}
+                style={{ width: "400px", marginTop: "10px" }}
               >
                 <Box className="info-img">
                   <img src="/icons/offer2.svg" />
                 </Box>
                 <Stack className="info">
-                  <div className="bottom-info2" style={{ fontSize: "16px", marginLeft: "-20px", marginTop: "20px"}}>
+                  <div
+                    className="bottom-info2"
+                    style={{
+                      fontSize: "16px",
+                      marginLeft: "-20px",
+                      marginTop: "20px",
+                    }}
+                  >
                     Toddlers Clothing & Accessories
                   </div>
-                  <div className="bottom-info" style={{ fontSize: "14px", marginLeft: "-20px"}}>
+                  <div
+                    className="bottom-info"
+                    style={{ fontSize: "14px", marginLeft: "-20px" }}
+                  >
                     Etiam vulputate efficitur nibh sed euismod
                   </div>
                 </Stack>
@@ -141,14 +168,26 @@ export function OurOffers() {
                 onClick={() => {
                   window.location.href = "/mobile";
                 }}
-                style={{ width: "400px", marginTop: "10px"}}
+                style={{ width: "400px", marginTop: "10px" }}
               >
                 <Box className="info-img">
                   <img src="/icons/offer3.svg" />
                 </Box>
                 <Stack className="info">
-                  <div className="bottom-info3" style={{ fontSize: "16px", marginLeft: "-20px", marginTop: "20px"}}>Toys and Games</div>
-                  <div className="bottom-info" style={{ fontSize: "14px", marginLeft: "-20px"}}>
+                  <div
+                    className="bottom-info3"
+                    style={{
+                      fontSize: "16px",
+                      marginLeft: "-20px",
+                      marginTop: "20px",
+                    }}
+                  >
+                    Toys and Games
+                  </div>
+                  <div
+                    className="bottom-info"
+                    style={{ fontSize: "14px", marginLeft: "-20px" }}
+                  >
                     Etiam vulputate efficitur nibh sed euismod
                   </div>
                 </Stack>
@@ -158,14 +197,26 @@ export function OurOffers() {
                 onClick={() => {
                   window.location.href = "/mobile";
                 }}
-                style={{ width: "400px", marginTop: "10px"}}
+                style={{ width: "400px", marginTop: "10px" }}
               >
                 <Box className="info-img">
                   <img src="/icons/offer4.svg" />
                 </Box>
                 <Stack className="info">
-                  <div className="bottom-info4" style={{ fontSize: "16px", marginLeft: "-20px", marginTop: "20px"}}>Strollers & Ride-Ons</div>
-                  <div className="bottom-info" style={{ fontSize: "14px", marginLeft: "-20px"}}>
+                  <div
+                    className="bottom-info4"
+                    style={{
+                      fontSize: "16px",
+                      marginLeft: "-20px",
+                      marginTop: "20px",
+                    }}
+                  >
+                    Strollers & Ride-Ons
+                  </div>
+                  <div
+                    className="bottom-info"
+                    style={{ fontSize: "14px", marginLeft: "-20px" }}
+                  >
                     Cras efficitur, lacus non luctus facilisis
                   </div>
                 </Stack>

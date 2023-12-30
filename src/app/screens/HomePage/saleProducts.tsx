@@ -129,11 +129,21 @@ export function SaleProducts(props: any) {
   const { isMobile } = useDeviceDetect();
   if (isMobile()) {
     return (
-      <div className="p_products_sale">
+      <div
+        className="p_products_sale"
+        style={{
+          width: "430px",
+        }}
+      >
         <Container sx={{ overflow: "hidden" }}>
           <Stack className={"p_products_main"}>
             <Box className={"p_products_text"}>
-              <span className={"title"} style={{ marginTop: "20px", fontSize: "36px"}}>Products on Sale</span>
+              <span
+                className={"title"}
+                style={{ marginTop: "20px", fontSize: "36px" }}
+              >
+                Products on Sale
+              </span>
             </Box>
             <Stack className="swiper">
               <Swiper
