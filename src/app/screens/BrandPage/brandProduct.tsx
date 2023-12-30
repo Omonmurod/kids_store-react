@@ -555,7 +555,8 @@ export function BrandProduct(props: any) {
                 >
                   Made of organic cotton rib knit stretch fabric that feels
                   gentle and soft on babies' sensitive skin, this coverall is
-                  all about comfort the smallest.
+                  all about comfort the smallest. We have the same overall
+                  available for adults.
                 </div>
               </div>
               <div className={"dish_price_box"}>
