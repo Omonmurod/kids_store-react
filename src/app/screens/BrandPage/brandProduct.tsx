@@ -567,11 +567,11 @@ export function BrandProduct(props: any) {
                       <span
                         style={{
                           textDecoration: "line-through",
-                          marginLeft: "8px",
+                          marginLeft: "55px",
                           textDecorationThickness: "2px",
                           color: "#423127",
                           position: "absolute",
-                          right: "200px",
+                          
                           zIndex: "3",
                         }}
                       >
