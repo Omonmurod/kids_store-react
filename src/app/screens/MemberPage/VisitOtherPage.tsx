@@ -185,9 +185,9 @@ export function VisitOtherPage(props: any) {
       sweetErrorHandling(err).then();
     }
   };
-  const image_path = chosenMember?.mb_image 
-  ? `${serverApi}/${chosenMember.mb_image}` 
-  : "/icons/default_user.svg";
+  const image_path = chosenMember?.mb_image
+    ? `${serverApi}/${chosenMember.mb_image}`
+    : "/icons/default_user.svg";
   return (
     <div className={"my_page"}>
       <Container maxWidth="lg" sx={{ mt: "50px", mb: "50px" }}>
@@ -326,6 +326,7 @@ export function VisitOtherPage(props: any) {
                       borderColor: "divider",
                     }}
                     aria-label="lab API tabs example"
+                    orientation="vertical"
                   >
                     {chosenMember?.me_followed &&
                     chosenMember.me_followed[0]?.my_following ? (
@@ -346,7 +347,7 @@ export function VisitOtherPage(props: any) {
                               fontSize: "18px",
                               letterSpacing: "1px",
                               fontWeight: "660",
-                              marginLeft: "3px"
+                              marginLeft: "3px",
                             }}
                             onClick={unsubscribeHandler}
                           >
@@ -381,7 +382,7 @@ export function VisitOtherPage(props: any) {
                       />
                     )}
 
-                    <TabList
+                    {/* <TabList
                       orientation="vertical"
                       value={value}
                       style={{
@@ -392,77 +393,77 @@ export function VisitOtherPage(props: any) {
                       }}
                       onChange={handleChange}
                       aria-label="Vertical tabs example"
-                    >
-                      <Tab
-                        style={{ flexDirection: "column" }}
-                        value={"1"}
-                        component={() => (
-                          <Button
-                            variant={"contained"}
-                            style={{
-                              backgroundColor: "orange",
-                              borderRadius: "43px",
-                              marginBottom: "7px",
-                              width: "280px",
-                              height: "45px",
-                              fontFamily: "nunito",
-                              fontSize: "18px",
-                              letterSpacing: "1.5px",
-                              fontWeight: "660",
-                            }}
-                            onClick={() => setValue("1")}
-                          >
-                            <span className="menu_box">Articles</span>
-                          </Button>
-                        )}
-                      />
-                      <Tab
-                        style={{ flexDirection: "column" }}
-                        value={"2"}
-                        component={() => (
-                          <Button
-                            variant={"contained"}
-                            style={{
-                              backgroundColor: "orange",
-                              borderRadius: "43px",
-                              marginBottom: "7px",
-                              width: "280px",
-                              height: "45px",
-                              fontFamily: "nunito",
-                              fontSize: "18px",
-                              letterSpacing: "1.5px",
-                              fontWeight: "660",
-                            }}
-                            onClick={() => setValue("2")}
-                          >
-                            <span>Followers</span>
-                          </Button>
-                        )}
-                      />
-                      <Tab
-                        style={{ flexDirection: "column" }}
-                        value={"3"}
-                        component={() => (
-                          <Button
-                            variant={"contained"}
-                            style={{
-                              backgroundColor: "orange",
-                              borderRadius: "43px",
-                              marginBottom: "15px",
-                              width: "280px",
-                              height: "45px",
-                              fontFamily: "nunito",
-                              fontSize: "18px",
-                              letterSpacing: "1.5px",
-                              fontWeight: "660",
-                            }}
-                            onClick={() => setValue("3")}
-                          >
-                            <span>Followings</span>
-                          </Button>
-                        )}
-                      />
-                    </TabList>
+                    > */}
+                    <Tab
+                      style={{ flexDirection: "column" }}
+                      value={"1"}
+                      component={() => (
+                        <Button
+                          variant={"contained"}
+                          style={{
+                            backgroundColor: "orange",
+                            borderRadius: "43px",
+                            marginBottom: "7px",
+                            width: "280px",
+                            height: "45px",
+                            fontFamily: "nunito",
+                            fontSize: "18px",
+                            letterSpacing: "1.5px",
+                            fontWeight: "660",
+                          }}
+                          onClick={() => setValue("1")}
+                        >
+                          <span className="menu_box">Articles</span>
+                        </Button>
+                      )}
+                    />
+                    <Tab
+                      style={{ flexDirection: "column" }}
+                      value={"2"}
+                      component={() => (
+                        <Button
+                          variant={"contained"}
+                          style={{
+                            backgroundColor: "orange",
+                            borderRadius: "43px",
+                            marginBottom: "7px",
+                            width: "280px",
+                            height: "45px",
+                            fontFamily: "nunito",
+                            fontSize: "18px",
+                            letterSpacing: "1.5px",
+                            fontWeight: "660",
+                          }}
+                          onClick={() => setValue("2")}
+                        >
+                          <span>Followers</span>
+                        </Button>
+                      )}
+                    />
+                    <Tab
+                      style={{ flexDirection: "column" }}
+                      value={"3"}
+                      component={() => (
+                        <Button
+                          variant={"contained"}
+                          style={{
+                            backgroundColor: "orange",
+                            borderRadius: "43px",
+                            marginBottom: "15px",
+                            width: "280px",
+                            height: "45px",
+                            fontFamily: "nunito",
+                            fontSize: "18px",
+                            letterSpacing: "1.5px",
+                            fontWeight: "660",
+                          }}
+                          onClick={() => setValue("3")}
+                        >
+                          <span>Followings</span>
+                        </Button>
+                      )}
+                    />
+                    {/* </TabList> */}
                   </TabList>
                 </Box>
               </Box>
