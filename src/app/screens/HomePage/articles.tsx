@@ -53,12 +53,16 @@ export function Articles(props: any) {
   const { isMobile } = useDeviceDetect();
   if (isMobile()) {
     return (
-      <div className="articles_frame">
+      <div
+        className="articles_frame"
+        style={{
+          width: "430px",
+        }}
+      >
         <Container
           style={{
             display: "flex",
             flexDirection: "column",
-            width: "430px",
           }}
         >
           <Stack
