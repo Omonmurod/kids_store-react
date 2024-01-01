@@ -238,7 +238,7 @@ export function BrandProduct(props: any) {
       .getTargetProducts(targetProductSearchObj)
       .then((data) => setTargetProducts(data))
       .catch((err) => console.log(err));
-  }, [productRebuild]);
+  }, [productRebuild, targetCommentSearchObj]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -279,6 +279,7 @@ export function BrandProduct(props: any) {
 
   /** HANDLERS */
   const handleCommentPaginationChange = (event: any, value: number) => {
+    window.scrollTo({ left: 0, top: 600, behavior: "smooth" });
     setTargetCommentSearchObj((prevObj) => ({
       ...prevObj,
       page: value,
@@ -1024,7 +1025,7 @@ export function BrandProduct(props: any) {
             <Stack className="reviews">
               <Stack>
                 {targetComments.length > 0 ? (
-                  targetComments?.map((comment: Comments) => {
+                  targetComments.map((comment: Comments) => {
                     const image_member = comment?.member_data?.mb_image
                       ? `${serverApi}/${comment?.member_data?.mb_image}`
                       : "/icons/default_user.svg";
@@ -1148,7 +1149,7 @@ export function BrandProduct(props: any) {
                       fontFamily: "nunito",
                     }}
                   >
-                    {targetCommentSearchObj.page === 1
+                    {targetCommentSearchObj.page == 1
                       ? "Feel free to evaluate our product"
                       : "No comments found on this page"}
                   </div>
@@ -1176,7 +1177,7 @@ export function BrandProduct(props: any) {
                         className="pagination"
                       />
                     )}
-                    onChange={handleCommentPaginationChange}
+                    onChange={(event, value) => handleCommentPaginationChange(event, value)}
                   />
                 </Stack>
               </Stack>

@@ -212,7 +212,7 @@ export function OneBrand(props: any) {
   };
   const handlePaginationChange = (event: any, value: number) => {
     targetProductSearchObj.page = value;
-    setScrollDisabled(false);
+    window.scrollTo({ left: 0, top: 60, behavior: "smooth" });
     setTargetProductSearchObj({ ...targetProductSearchObj });
   };
   const chosenProductHandler = (id: string) => {

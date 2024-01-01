@@ -345,10 +345,12 @@ export function SaleProducts(props: any) {
                   const image_path = `${serverApi}/${product.product_images[0]}`;
                   let discountedPrice = Math.floor(product.discountedPrice);
                   return (
-                    <SwiperSlide className={"product_info_frame"}>
+                    <SwiperSlide
+                      className={"product_info_frame"}
+                      key={product._id}
+                    >
                       <Stack
                         className={"product-box"}
-                        key={product._id}
                         onClick={() => chosenProductHandler(product._id)}
                       >
                         <Box

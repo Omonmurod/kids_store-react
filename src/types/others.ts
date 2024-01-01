@@ -35,7 +35,7 @@ export interface ProductSearch {
 export interface CommentsSearchObj {
   page: number;
   limit: number;
-  comment_ref_product_id?: string;
+  comment_ref_product_id: string;
   order: string;
 }
 

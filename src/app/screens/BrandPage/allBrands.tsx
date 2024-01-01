@@ -48,10 +48,11 @@ export function AllBrands() {
   /** INITIALIZATIONS */
   const { setTargetBrands } = actionDispatch(useDispatch());
   const { targetBrands } = useSelector(targetBrandsRetriever);
+  const [activeCategory, setActiveCategory] = useState<string>("createdAt");
   const [targetSearchObject, setTargetSearchObject] = useState<SearchObj>({
     page: 1,
     limit: 8,
-    order: "mb_point",
+    order: "createdAt",
   });
   const refs: any = useRef([]);
   const history = useHistory();
@@ -76,11 +77,11 @@ export function AllBrands() {
   const chosenBrandHandler = (id: string) => {
     history.push(`/brand/${id}`);
   };
-  const [activeLink, setActiveLink] = useState("mb_point");
   const searchHandler = (category: string) => {
     targetSearchObject.page = 1;
     targetSearchObject.order = category;
     setTargetSearchObject({ ...targetSearchObject });
+    setActiveCategory(category);
   };
   const handlePaginationChange = (event: any, value: number) => {
     targetSearchObject.page = value;
@@ -92,6 +93,7 @@ export function AllBrands() {
 
    const searchedShops = targetBrands.filter((product) => {
     const lowerCaseQuery = query.toLowerCase();
+
 
     const nick = product.mb_nick ? product.mb_nick.toLowerCase() : '';
     const address = product.mb_address ? product.mb_address.toLowerCase() : '';
@@ -153,10 +155,10 @@ export function AllBrands() {
             </form>
           </Stack>
           <Stack className="category_box">
-            <a onClick={() => searchHandler("createdAt")}>Newly added</a>
-            <a onClick={() => searchHandler("mb_point")}>Trending</a>
-            <a onClick={() => searchHandler("mb_likes")}>Most Liked</a>
-            <a onClick={() => searchHandler("mb_views")}>Most Viewed</a>
+            <a onClick={() => searchHandler("createdAt")} className={activeCategory === "createdAt" ? "active" : ""}>Newly added</a>
+            <a onClick={() => searchHandler("mb_likes")} className={activeCategory === "mb_likes" ? "active" : ""}>Most Liked</a>
+            <a onClick={() => searchHandler("mb_views")} className={activeCategory === "mb_views" ? "active" : ""}>Most Viewed</a>
+            <a onClick={() => searchHandler("mb_point")} className={activeCategory === "mb_point" ? "active" : ""}>Trending</a>
           </Stack>
         </Stack>
         <Stack className="brands">

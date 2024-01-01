@@ -101,6 +101,14 @@
   align-items: center;
 }
 
+.brand_page .all_brands_frame .search .category_box a.active {
+  background-color: orange;
+  color: white;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  cursor: pointer;
+}
+
 .brand_page .all_brands_frame .search .category_box a:hover {
   background-color: orange;
   color: white;
