@@ -1,9 +1,9 @@
-import React, { ChangeEvent, useRef, useState } from "react";
+import React, { ChangeEvent, useLayoutEffect, useRef, useState } from "react";
 import { Box, Container, Stack } from "@mui/material";
 import moment from "moment";
 import Checkbox from "@mui/material/Checkbox";
 import { CalendarMonth, ThumbUp, Visibility } from "@mui/icons-material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { FavoriteBorder } from "@mui/icons-material";
 import { Favorite } from "@mui/icons-material";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
@@ -24,6 +24,15 @@ export function MemberPosts(props: any) {
     renderChosenArticlehandler,
     setArticlesRebuild,
   } = props;
+  const history = useHistory();
+
+  useLayoutEffect(() => {
+    const scrollIntoView = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    };
+
+    scrollIntoView();
+  }, [history.location.pathname]);
 
   /** HANDLERS */
   const targetLikeHandler = async (e: any) => {

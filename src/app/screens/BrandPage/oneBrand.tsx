@@ -138,7 +138,7 @@ export function OneBrand(props: any) {
 
   useLayoutEffect(() => {
     const scrollIntoView = () => {
-      window.scrollTo({ top: 0, left: 0 });
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     };
 
     scrollIntoView();

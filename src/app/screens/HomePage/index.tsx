@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { Entrance } from "./entrance";
 import { Events } from "./events";
 import { TopBrands } from "./topBrands";
@@ -19,6 +19,7 @@ import { Brand } from "../../../types/user";
 import BrandApiService from "../../apiServices/brandApiService";
 import ScrollToTopFab from "../../scrollToTopFab";
 import { SaleProducts } from "./saleProducts";
+import { useHistory } from "react-router-dom";
 
 /** REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
@@ -32,6 +33,7 @@ const topBrandsRetriever = createSelector(retrieveTopBrands, (topBrands) => ({
 
 export function HomePage(props: any) {
   /** INITIALIZATIONS */
+  const history = useHistory();
   const { setTopBrands } = actionDispatch(useDispatch());
 
   useEffect(() => {
@@ -43,6 +45,14 @@ export function HomePage(props: any) {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  useLayoutEffect(() => {
+    const scrollIntoView = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    };
+
+    scrollIntoView();
+  }, [history.location.pathname]);
 
   return (
     <div className="homepage">

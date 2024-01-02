@@ -16,7 +16,6 @@ import MemberApiService from "../../apiServices/memberApiService";
 import { verifiedMemberData } from "../../apiServices/verify";
 
 export function TargetArticles(props: any) {
-  //const { setArticlesRebuild } = props; props dan olishning yana bir usuli
   /** HANDLERS */
   const targetLikeHandler = async (e: any) => {
     try {

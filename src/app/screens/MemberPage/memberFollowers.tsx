@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Box, Stack } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -53,6 +53,14 @@ export function MemberFollowers(props: any) {
       .catch((err) => console.log(err));
   }, [followersSearchObj, followRebuild]);
 
+  useLayoutEffect(() => {
+    const scrollIntoView = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    };
+
+    scrollIntoView();
+  }, [history.location.pathname]);
+
   /** HANDLERS */
   const subscribeHandler = async (e: any, id: string) => {
     try {
@@ -72,6 +80,7 @@ export function MemberFollowers(props: any) {
 
   const handlePaginationChange = (event: any, value: number) => {
     followersSearchObj.page = value;
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     setFollowersSearchObj({ ...followersSearchObj });
   };
 

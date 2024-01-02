@@ -27,6 +27,8 @@ import ScrollToTopFab from "../../scrollToTopFab";
 import { ProductSearchObj } from "../../../types/others";
 import BrandApiService from "../../apiServices/brandApiService";
 import useDeviceDetect from "../../../lib/responsive/useDeviceDetect";
+import Zoom from "react-reveal/Zoom";
+import Fade from "react-reveal/Fade";
 
 /** REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
@@ -230,72 +232,84 @@ export function OurOffers() {
     return (
       <div className="our-offers">
         <Container className="our-offers_frame">
-          <Box className="title">
-            <span className="category_title">Our Offers</span>
-          </Box>
+          <Zoom delay={500}>
+            <Box className="title">
+              <span className="category_title">Our Offers</span>
+            </Box>
+          </Zoom>
           <Stack className="offer-bottom">
             <Box className="offer-img">
               <img src="/icons/offer-bunny.png" />
             </Box>
             <Stack style={{ marginRight: "50px" }}>
-              <Stack
-                className="info-box1"
-                onClick={() => chosenBrandHandler("baby care")}
-              >
-                <Box className="info-img">
-                  <img src="/icons/offer1.svg" />
-                </Box>
-                <Stack className="info">
-                  <div className="bottom-info1">New Born & Baby Care Shop</div>
-                  <div className="bottom-info">
-                    Cras efficitur, lacus non luctus facilisis
-                  </div>
+              <Fade right duration={1350}>
+                <Stack
+                  className="info-box1"
+                  onClick={() => chosenBrandHandler("baby care")}
+                >
+                  <Box className="info-img">
+                    <img src="/icons/offer1.svg" />
+                  </Box>
+                  <Stack className="info">
+                    <div className="bottom-info1">
+                      New Born & Baby Care Shop
+                    </div>
+                    <div className="bottom-info">
+                      Cras efficitur, lacus non luctus facilisis
+                    </div>
+                  </Stack>
                 </Stack>
-              </Stack>
-              <Stack
-                className="info-box2"
-                onClick={() => chosenBrandHandler("baby care")}
-              >
-                <Box className="info-img">
-                  <img src="/icons/offer2.svg" />
-                </Box>
-                <Stack className="info">
-                  <div className="bottom-info2">
-                    Toddlers Clothing & Accessories
-                  </div>
-                  <div className="bottom-info">
-                    Etiam vulputate efficitur nibh sed euismod
-                  </div>
+              </Fade>
+              <Fade right duration={1550}>
+                <Stack
+                  className="info-box2"
+                  onClick={() => chosenBrandHandler("baby care")}
+                >
+                  <Box className="info-img">
+                    <img src="/icons/offer2.svg" />
+                  </Box>
+                  <Stack className="info">
+                    <div className="bottom-info2">
+                      Toddlers Clothing & Accessories
+                    </div>
+                    <div className="bottom-info">
+                      Etiam vulputate efficitur nibh sed euismod
+                    </div>
+                  </Stack>
                 </Stack>
-              </Stack>
-              <Stack
-                className="info-box3"
-                onClick={() => chosenBrandHandler("baby care")}
-              >
-                <Box className="info-img">
-                  <img src="/icons/offer3.svg" />
-                </Box>
-                <Stack className="info">
-                  <div className="bottom-info3">Toys and Games</div>
-                  <div className="bottom-info">
-                    Etiam vulputate efficitur nibh sed euismod
-                  </div>
+              </Fade>
+              <Fade right duration={1750}>
+                <Stack
+                  className="info-box3"
+                  onClick={() => chosenBrandHandler("baby care")}
+                >
+                  <Box className="info-img">
+                    <img src="/icons/offer3.svg" />
+                  </Box>
+                  <Stack className="info">
+                    <div className="bottom-info3">Toys and Games</div>
+                    <div className="bottom-info">
+                      Etiam vulputate efficitur nibh sed euismod
+                    </div>
+                  </Stack>
                 </Stack>
-              </Stack>
-              <Stack
-                className="info-box4"
-                onClick={() => chosenBrandHandler("baby care")}
-              >
-                <Box className="info-img">
-                  <img src="/icons/offer4.svg" />
-                </Box>
-                <Stack className="info">
-                  <div className="bottom-info4">Strollers & Ride-Ons</div>
-                  <div className="bottom-info">
-                    Cras efficitur, lacus non luctus facilisis
-                  </div>
+              </Fade>
+              <Fade right duration={1950}>
+                <Stack
+                  className="info-box4"
+                  onClick={() => chosenBrandHandler("baby care")}
+                >
+                  <Box className="info-img">
+                    <img src="/icons/offer4.svg" />
+                  </Box>
+                  <Stack className="info">
+                    <div className="bottom-info4">Strollers & Ride-Ons</div>
+                    <div className="bottom-info">
+                      Cras efficitur, lacus non luctus facilisis
+                    </div>
+                  </Stack>
                 </Stack>
-              </Stack>
+              </Fade>
             </Stack>
           </Stack>
         </Container>

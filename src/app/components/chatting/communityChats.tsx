@@ -20,6 +20,7 @@ import assert from "assert";
 import { RippleBadge } from "../../../app/MaterialTheme/styled";
 import CloseIcon from "@mui/icons-material/Close";
 import ReactScrollableFeed from "react-scrollable-feed";
+import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 
 const NewMessage = (data: any) => {
   if (data.new_message.mb_id == verifiedMemberData?._id) {

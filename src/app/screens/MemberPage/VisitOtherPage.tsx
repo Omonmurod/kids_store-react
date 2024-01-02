@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Box, Container, Stack } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -95,6 +95,14 @@ export function VisitOtherPage(props: any) {
   const [articlesRebuild, setArticlesRebuild] = useState<Date>(new Date());
   const [followRebuild, setFollowRebuild] = useState<boolean>(false);
 
+  useLayoutEffect(() => {
+    const scrollIntoView = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    };
+
+    scrollIntoView();
+  }, [history.location.pathname]);
+
   useEffect(() => {
     if (chosen_mb_id === verifiedMemberData?._id) {
       history.push("/member-page");
@@ -135,6 +143,7 @@ export function VisitOtherPage(props: any) {
 
   const handlePaginationChange = (event: any, value: number) => {
     memberArticleSearchObj.page = value;
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     setMemberArticleSearchObj({ ...memberArticleSearchObj });
   };
 

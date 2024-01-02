@@ -34,34 +34,35 @@
 .homepage .entrance .main .main-box .box1 .box1-1_txt {
   color: #ff961a;
   font-family: "Nunito";
-  font-size: 76px;
+  font-size: 80px;
   font-style: normal;
   font-weight: 900;
   line-height: normal;
-  margin-top: -120px;
-  margin-left: 75px;
+  margin-top: -122px;
+  margin-left: 73px;
 }
 
 .homepage .entrance .main .main-box .box1-2 {
   color: #423127;
   font-family: "Nunito";
-  font-size: 76px;
+  font-size: 72px;
   font-style: normal;
   font-weight: 900;
   line-height: normal;
   margin-top: 10px;
-  margin-left: 75px;
+  margin-left: 65px;
 }
 
 .homepage .entrance .main .main-box .box1-3 {
   color: #706147;
   font-family: "Nunito";
-  font-size: 18px;
+  font-size: 21px;
   font-style: normal;
   font-weight: 900;
   line-height: normal;
-  margin-top: 10px;
-  margin-left: 75px;
+  margin-top: 15px;
+  margin-left: 55px;
+  letter-spacing: 1px;
 }
 
 .homepage .category_title {

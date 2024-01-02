@@ -3,6 +3,7 @@ import { Container, Box, Stack } from "@mui/material";
 import useDeviceDetect from "../../../lib/responsive/useDeviceDetect";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
+import Zoom from "react-reveal/Zoom";
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
 export function Events() {
@@ -58,9 +59,11 @@ export function Events() {
       <div className="events_frame">
         <Container>
           <Stack className={"events_main"}>
-            <Box className={"events_text"}>
-              <span className={"category_title"}>Ongoing Events</span>
-            </Box>
+            <Zoom duration={2200}>
+              <Box className={"events_text"}>
+                <span className={"category_title"}>Ongoing Events</span>
+              </Box>
+            </Zoom>
             <Stack className="event_swiper">
               <Swiper
                 className={"events_info"}

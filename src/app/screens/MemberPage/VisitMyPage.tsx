@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useLayoutEffect, useState } from "react";
 import { Box, Container, Stack } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -46,6 +46,7 @@ import { verifiedMemberData } from "../../apiServices/verify";
 import { Member } from "../../../types/user";
 import { BoArticle, SearchMemberArticlesObj } from "../../../types/boArticle";
 import ScrollToTopFab from "../../scrollToTopFab";
+import { useHistory } from "react-router-dom";
 
 /** REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
@@ -81,6 +82,8 @@ export function VisitMyPage(props: any) {
   const { chosenMemberBoArticles } = useSelector(
     chosenMemberBoArticlesRetriever
   );
+
+  const history = useHistory();
   const { chosenSingleBoArticle } = useSelector(chosenSingleBoArticleRetriever);
   const [value, setValue] = React.useState("1");
   const [articlesRebuild, setArticlesRebuild] = useState<Date>(new Date());
@@ -106,6 +109,14 @@ export function VisitMyPage(props: any) {
       .catch((err) => console.log(err));
   }, [memberArticleSearchObj, articlesRebuild, followRebuild]);
 
+  useLayoutEffect(() => {
+    const scrollIntoView = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    };
+
+    scrollIntoView();
+  }, [history.location.pathname]);
+
   /** HANDLERS */
   const handleChange = (event: any, newValue: string) => {
     setValue(newValue);
@@ -113,6 +124,7 @@ export function VisitMyPage(props: any) {
 
   const handlePaginationChange = (event: any, value: number) => {
     memberArticleSearchObj.page = value;
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     setMemberArticleSearchObj({ ...memberArticleSearchObj });
   };
 

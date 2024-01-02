@@ -1,6 +1,6 @@
 import { Box, Container, Link } from "@mui/material";
 import { Stack } from "@mui/system";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import { CalendarMonth, ThumbUp, Visibility } from "@mui/icons-material";
 import { NavLink, useHistory } from "react-router-dom";
@@ -15,6 +15,11 @@ import CommunityApiService from "../../apiServices/communityApiService";
 import { serverApi } from "../../../lib/config";
 import moment from "moment";
 import useDeviceDetect from "../../../lib/responsive/useDeviceDetect";
+import { verifiedMemberData } from "../../apiServices/verify";
+import MemberApiService from "../../apiServices/memberApiService";
+import { Definer } from "../../../lib/Definer";
+import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
+import assert from "assert";
 
 /** REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
@@ -32,6 +37,7 @@ export function Articles(props: any) {
   const history = useHistory();
   const { setBestBoArticles } = actionDispatch(useDispatch());
   const { bestBoArticles } = useSelector(bestBoArticlesRetriever);
+  const [articlesRebuild, setArticlesRebuild] = useState<Date>(new Date());
 
   useEffect(() => {
     const communityService = new CommunityApiService();
@@ -44,7 +50,7 @@ export function Articles(props: any) {
         bo_id: "all",
         page: 1,
         limit,
-        order: "art_likes",
+        order: "all",
       })
       .then((data) => setBestBoArticles(data))
       .catch((err) => console.log(err));
@@ -274,7 +280,7 @@ export function Articles(props: any) {
                           checked={false}
                         />
                         <span style={{ marginTop: "-1px" }}>
-                          {article?.art_views}
+                          {article.art_views}
                         </span>
                         <Checkbox
                           icon={
@@ -287,8 +293,27 @@ export function Articles(props: any) {
                               }}
                             />
                           }
+                          checkedIcon={
+                            <ThumbUp
+                              style={{
+                                color: "red",
+                                height: "20px",
+                                marginRight: "-5px",
+                                marginBottom: "4px",
+                              }}
+                            />
+                          }
+                          id={article._id}
+                          //onClick={targetLikeHandler}
+                          //*@ts-ignore*/
+                          checked={
+                            article?.me_liked &&
+                            article?.me_liked[0]?.my_favorite
+                              ? true
+                              : false
+                          }
                         />
-                        <span>{article?.art_likes}</span>
+                        <span>{article.art_likes}</span>
                       </Box>
                     </Stack>
                     <Stack className="link">

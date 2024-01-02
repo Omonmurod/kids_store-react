@@ -59,7 +59,7 @@ export function AllBrands() {
 
   useLayoutEffect(() => {
     const scrollIntoView = () => {
-      window.scrollTo({ top: 0, left: 0 });
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     };
 
     scrollIntoView();
@@ -85,6 +85,7 @@ export function AllBrands() {
   };
   const handlePaginationChange = (event: any, value: number) => {
     targetSearchObject.page = value;
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     setTargetSearchObject({ ...targetSearchObject });
   };
 

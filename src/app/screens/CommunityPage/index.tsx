@@ -52,7 +52,7 @@ export function CommunityPage(props: any) {
 
   useLayoutEffect(() => {
     const scrollIntoView = () => {
-      window.scrollTo({ top: 0, left: 0 });
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     };
 
     scrollIntoView();
@@ -88,6 +88,7 @@ export function CommunityPage(props: any) {
   };
 
   const handlePaginationChange = (event: any, value: number) => {
+    window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
     serachArticlesObj.page = value;
     setSearchArticlesObj({ ...serachArticlesObj });
   };

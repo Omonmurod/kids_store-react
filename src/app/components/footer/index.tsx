@@ -26,14 +26,15 @@ export function Footer() {
                 <Box
                   className="text"
                   style={{
-                    marginLeft: "-50px",
+                    marginLeft: "-10px",
                     fontSize: "14px",
                     lineHeight: "18px",
+                    width: "250px",
                   }}
                 >
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor Sed ut perspiciatis unde omnis iste lorem
-                  ipsum dolor sit amet.
+                  Our company has an ongoing commitment to its customers around
+                  the world in providing an excellent customer experience to
+                  all.
                 </Box>
                 <Stack
                   className="contact_links"
@@ -55,13 +56,23 @@ export function Footer() {
 
                 <Box
                   style={{
-                    marginLeft: "-70px",
+                    marginLeft: "-65px",
                     marginTop: "20px",
                     color: "#423127",
                     fontWeight: "770",
                   }}
                 >
-                  Copyright KidsWorld 2023, All right reserved.
+                  Copyright{" "}
+                  <span
+                    style={{
+                      color: "#FF9619",
+                      fontWeight: "880",
+                      fontFamily: "nunito",
+                    }}
+                  >
+                    KidsWorld
+                  </span>{" "}
+                  2023, All right reserved.
                 </Box>
               </Stack>
             </Stack>
@@ -83,13 +94,13 @@ export function Footer() {
                 <Box>
                   <img
                     src={"/icons/cropped-logo.png"}
-                    style={{ width: "150px" }}
+                    style={{ width: "150px", marginTop: "-30px" }}
                   />
                 </Box>
                 <Box className="text">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor Sed ut perspiciatis unde omnis iste lorem
-                  ipsum dolor sit amet.
+                  Our company has an ongoing commitment to its customers around
+                  the world in providing an excellent customer experience to
+                  all.
                 </Box>
                 <Stack className="contact_links">
                   <Box>
@@ -238,7 +249,17 @@ export function Footer() {
               className="footer_bottom"
             >
               <Box className="footer_txt">
-                Copyright KidsWorld 2023, All right reserved.
+                Copyright{" "}
+                <span
+                  style={{
+                    color: "#FF9619",
+                    fontWeight: "880",
+                    fontFamily: "nunito",
+                  }}
+                >
+                  KidsWorld
+                </span>{" "}
+                2023, All right reserved.
               </Box>
               <Box className="footer_icon" flexDirection={"row"}>
                 <img src="/icons/Visa.png" />

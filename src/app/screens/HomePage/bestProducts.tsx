@@ -27,6 +27,7 @@ import {
   sweetTopSmallSuccessAlert,
 } from "../../../lib/sweetAlert";
 import useDeviceDetect from "../../../lib/responsive/useDeviceDetect";
+import Fade from "react-reveal/Fade";
 
 /** REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({

@@ -22,6 +22,7 @@ import MemberApiService from "../../apiServices/memberApiService";
 import { MemberLiken } from "../../../types/others";
 import { useHistory } from "react-router-dom";
 import useDeviceDetect from "../../../lib/responsive/useDeviceDetect";
+import Zoom from "react-reveal/Zoom";
 
 /** REDUX SELECTOR */
 const topBrandsRetriever = createSelector(retrieveTopBrands, (topBrands) => ({
@@ -69,9 +70,7 @@ export function TopBrands() {
 
   const { isMobile } = useDeviceDetect();
   if (isMobile()) {
-    return (
-     null
-    );
+    return null;
   } else {
     return (
       <div className="top_brands_frame">
@@ -82,20 +81,22 @@ export function TopBrands() {
             justifyContent: "center",
           }}
         >
-          <Box
-            style={{ height: "75px", marginTop: "30px" }}
-            display={"flex"}
-            flexDirection={"row"}
-            justifyContent={"center"}
-          >
-            <div style={{ marginTop: "-15px", marginRight: "30px" }}>
-              <img src="/icons/left.png" style={{ marginTop: "0px" }} />
-            </div>
-            <span className="category_title">Featured Brands</span>
-            <div style={{ marginTop: "-15px", marginLeft: "30px" }}>
-              <img src="/icons/right.png" />
-            </div>
-          </Box>
+          <Zoom duration={1000}>
+            <Box
+              style={{ height: "75px", marginTop: "30px" }}
+              display={"flex"}
+              flexDirection={"row"}
+              justifyContent={"center"}
+            >
+              <div style={{ marginTop: "-15px", marginRight: "30px" }}>
+                <img src="/icons/left.png" style={{ marginTop: "0px" }} />
+              </div>
+              <span className="category_title">Featured Brands</span>
+              <div style={{ marginTop: "-15px", marginLeft: "30px" }}>
+                <img src="/icons/right.png" />
+              </div>
+            </Box>
+          </Zoom>
           <Stack
             className="top-brands"
             style={{
