@@ -124,7 +124,7 @@ export function Entrance() {
                   width: "580px",
                   height: "550px",
                   marginTop: "-60px",
-                  marginRight: "44px",
+                  marginRight: "22px",
                 }}
               />
             </Box>
