@@ -29,12 +29,12 @@ export function Entrance() {
                 <span
                   className="box1-1_txt"
                   style={{
-                    fontSize: "32px",
-                    marginTop: "-55px",
+                    fontSize: "38px",
+                    marginTop: "-58px",
                     marginLeft: "45px",
                   }}
                 >
-                  Fun to care,
+                  Babylandia
                 </span>
               </Stack>
             </div>
@@ -46,7 +46,7 @@ export function Entrance() {
                 marginLeft: "45px",
               }}
             >
-              comfy feel
+              quality first
             </Box>
             <Box
               className="box1-3"
@@ -57,8 +57,9 @@ export function Entrance() {
                 width: "300px",
               }}
             >
-              Sed congue, eros et feugiat tincidunt, nulla diam iaculis lorem,
-              quis hendrerit lorem nisl vel mauris.
+              Let’s make your babies happy.
+              <br />
+              We know that babies deserve the best.
             </Box>
           </Stack>
         </Container>
@@ -123,7 +124,7 @@ export function Entrance() {
                   width: "580px",
                   height: "550px",
                   marginTop: "-60px",
-                  marginRight: "-40px",
+                  marginRight: "44px",
                 }}
               />
             </Box>

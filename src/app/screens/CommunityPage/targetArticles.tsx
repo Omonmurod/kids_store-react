@@ -49,7 +49,13 @@ export function TargetArticles(props: any) {
               ? `${serverApi}/${article.art_image}`
               : "/icons/default_article.svg";
             return (
-              <Stack className={"article_box"} sx={{ textDecoration: "none" }}>
+              <Stack
+                className={"article_box"}
+                sx={{ textDecoration: "none" }}
+                onClick={() => {
+                  window.location.href = `/member-page/other?mb_id=${article.mb_id}&art_id=${article._id}`;
+                }}
+              >
                 <Stack className="article_img">
                   <img
                     src={art_image_url}
@@ -100,7 +106,11 @@ export function TargetArticles(props: any) {
                       </span>
                       <span>{moment(article?.createdAt).format("HH:mm")}</span>
                     </Box>
-                    <Box>
+                    <Box
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                    >
                       <Checkbox
                         icon={
                           <Visibility
@@ -154,12 +164,7 @@ export function TargetArticles(props: any) {
                   </Stack>
                   <Stack className="link">
                     <Box>
-                      <NavLink
-                        to={`/member-page/other?mb_id=${article.mb_id}&art_id=${article._id}`}
-                        className="readmore"
-                      >
-                        see the article
-                      </NavLink>
+                      <Box className="readmore">see the article</Box>
                     </Box>
                   </Stack>
                 </Stack>
@@ -177,7 +182,7 @@ export function TargetArticles(props: any) {
               fontWeight: "660",
               fontFamily: "nunito",
               width: "600px",
-              marginLeft: "280px"
+              marginLeft: "280px",
             }}
           >
             {props.serachArticlesObj === 1

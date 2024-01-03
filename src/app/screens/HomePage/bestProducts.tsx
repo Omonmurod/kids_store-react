@@ -390,15 +390,6 @@ export function BestProducts(props: any) {
                               badgeContent={product.product_likes}
                               onClick={(e: React.MouseEvent) => {
                                 e.stopPropagation();
-                                console.log("Badge clicked!");
-                                console.log(
-                                  "product_likes:",
-                                  product.product_likes
-                                );
-                                console.log(
-                                  "my_favorite value:",
-                                  product?.me_liked?.[0]?.my_favorite
-                                );
                               }}
                               color="secondary"
                             >

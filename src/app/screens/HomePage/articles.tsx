@@ -18,7 +18,10 @@ import useDeviceDetect from "../../../lib/responsive/useDeviceDetect";
 import { verifiedMemberData } from "../../apiServices/verify";
 import MemberApiService from "../../apiServices/memberApiService";
 import { Definer } from "../../../lib/Definer";
-import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../../lib/sweetAlert";
 import assert from "assert";
 
 /** REDUX SLICE */
@@ -54,7 +57,27 @@ export function Articles(props: any) {
       })
       .then((data) => setBestBoArticles(data))
       .catch((err) => console.log(err));
-  }, []);
+  }, [articlesRebuild]);
+
+  /** HANDLERS */
+  const targetLikeHandler = async (e: any) => {
+    console.log("Like button clicked");
+    try {
+      assert.ok(verifiedMemberData, Definer.auth_err1);
+
+      const memberService = new MemberApiService();
+      const like_result = await memberService.memberLikeTarget({
+        like_ref_id: e.target.id,
+        group_type: "community",
+      });
+      assert.ok(like_result, Definer.general_err1);
+      await sweetTopSmallSuccessAlert("Success", 1000, false);
+      setArticlesRebuild(new Date());
+    } catch (err: any) {
+      console.log(err);
+      sweetErrorHandling(err).then();
+    }
+  };
 
   const { isMobile } = useDeviceDetect();
   if (isMobile()) {
@@ -218,7 +241,12 @@ export function Articles(props: any) {
                 ? `${serverApi}/${article.art_image}`
                 : "/icons/default_article.svg";
               return (
-                <Stack className="article_box">
+                <Stack
+                  className="article_box"
+                  onClick={() => {
+                    window.location.href = `/member-page/other?mb_id=${article.mb_id}&art_id=${article._id}`;
+                  }}
+                >
                   <Stack className="article_img">
                     <img
                       src={art_image_url}
@@ -264,7 +292,11 @@ export function Articles(props: any) {
                           {moment(article?.createdAt).format("YYYY-MM-DD")}
                         </span>
                       </Box>
-                      <Box>
+                      <Box
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
+                      >
                         <Checkbox
                           icon={
                             <Visibility
@@ -304,7 +336,7 @@ export function Articles(props: any) {
                             />
                           }
                           id={article._id}
-                          //onClick={targetLikeHandler}
+                          onClick={targetLikeHandler}
                           //*@ts-ignore*/
                           checked={
                             article?.me_liked &&
