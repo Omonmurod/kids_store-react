@@ -414,7 +414,12 @@ export function BrandProduct(props: any) {
           <Stack className={"chosen_dish_info_container"}>
             <Box className={"chosen_dish_info_box"}>
               <Box style={{ display: "flex", flexDirection: "row" }}>
-                <span className={"dish_txt"}>
+                <span
+                  className={"dish_txt"}
+                  style={{
+                    width: chosenProduct?.discountedPrice ? "450px" : "750px",
+                  }}
+                >
                   {chosenProduct?.product_name}
                 </span>
                 <span
@@ -424,6 +429,7 @@ export function BrandProduct(props: any) {
                     flexDirection: "row",
                     marginTop: "12px",
                     marginLeft: "0px",
+                    width: chosenProduct?.discountedPrice ? "300px" : "0px",
                   }}
                 >
                   {chosenProduct?.discountedPrice ? (
@@ -572,7 +578,7 @@ export function BrandProduct(props: any) {
                           textDecorationThickness: "2px",
                           color: "#423127",
                           position: "absolute",
-                          
+
                           zIndex: "3",
                         }}
                       >
@@ -1177,7 +1183,9 @@ export function BrandProduct(props: any) {
                         className="pagination"
                       />
                     )}
-                    onChange={(event, value) => handleCommentPaginationChange(event, value)}
+                    onChange={(event, value) =>
+                      handleCommentPaginationChange(event, value)
+                    }
                   />
                 </Stack>
               </Stack>

@@ -1084,7 +1084,6 @@
   display: flex;
   font-size: 30px;
   line-height: 40px;
-  width: 450px;
   color: orange;
 }
 
@@ -1094,7 +1093,6 @@
   font-weight: 880;
   flex-direction: row;
   color: #1976d2;
-  width: 300px;
   margin-left: 20px;
 }
 
