@@ -187,7 +187,7 @@ export function Navbar(props: any) {
             <Stack flexDirection={"row"} justifyContent={"space-between"}>
               <Box style={{ width: "15%" }}>
                 <NavLink
-                  to="/home"
+                  to="/"
                   style={{
                     textDecoration: "none",
                     color: "white",
